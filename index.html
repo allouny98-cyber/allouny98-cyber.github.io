@@ -6,13 +6,92 @@
 -->
 <html>
 	<head>
-		<title>Yoni Alloun - Data Analyst Portfolio</title>
+		<title>Yoni Alloun · Data Analyst Portfolio — SQL, Python & Power BI</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<meta name="description" content="Portfolio of Yoni Alloun — Data Analyst skilled in SQL Server, Python (Pandas, Seaborn) and Power BI. End-to-end analytics projects: database design, exploratory analysis, interactive dashboards." />
+		<meta name="keywords" content="Yoni Alloun, Data Analyst, SQL Server, T-SQL, Python, Pandas, Power BI, DAX, Data Analytics Portfolio, John Bryce" />
+		<meta name="author" content="Yoni Alloun" />
+		<!-- Open Graph / social sharing -->
+		<meta property="og:title" content="Yoni Alloun · Data Analyst Portfolio" />
+		<meta property="og:description" content="End-to-end data analytics projects in SQL, Python and Power BI — built around a single dataset to demonstrate the full workflow." />
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content="https://allouny98-cyber.github.io/" />
+		<meta name="twitter:card" content="summary_large_image" />
 		<link rel="stylesheet" href="assets/css/main.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 		<style>
-			/* Power BI gallery — make screenshots feel like a real gallery */
+			/* === Modern accent palette === */
+			:root {
+				--accent: #2dd4bf;
+				--accent-2: #0ea5e9;
+				--accent-gradient: linear-gradient(135deg, #2dd4bf 0%, #0ea5e9 100%);
+				--card-shadow: 0 8px 24px rgba(0,0,0,0.12);
+				--card-shadow-hover: 0 14px 36px rgba(14,165,233,0.25);
+			}
+
+			/* === Hero / Banner upgrades === */
+			#banner .inner {
+				animation: fadeUp 0.9s ease both;
+			}
+			#banner .logo {
+				background: var(--accent-gradient) !important;
+				box-shadow: 0 10px 30px rgba(45,212,191,0.35);
+			}
+			#banner h2 {
+				letter-spacing: 0.5px;
+			}
+			.hero-tagline {
+				display: block;
+				margin-top: 0.6em;
+				font-size: 0.95em;
+				opacity: 0.85;
+				font-style: italic;
+			}
+			.hero-badges {
+				display: flex;
+				flex-wrap: wrap;
+				justify-content: center;
+				gap: 10px;
+				margin-top: 1.8em;
+			}
+			.hero-badges span {
+				background: rgba(255,255,255,0.12);
+				border: 1px solid rgba(255,255,255,0.25);
+				color: #fff;
+				padding: 6px 14px;
+				border-radius: 999px;
+				font-size: 0.8em;
+				letter-spacing: 0.5px;
+				backdrop-filter: blur(4px);
+				transition: transform 0.2s ease, background 0.2s ease;
+			}
+			.hero-badges span:hover {
+				transform: translateY(-2px);
+				background: rgba(255,255,255,0.22);
+			}
+
+			/* === Tech tag badges on project cards === */
+			.tech-tags {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px;
+				margin: 1em 0 1.3em 0;
+			}
+			.tech-tags span {
+				display: inline-block;
+				padding: 4px 12px;
+				background: rgba(14,165,233,0.10);
+				color: #0ea5e9;
+				border: 1px solid rgba(14,165,233,0.25);
+				border-radius: 4px;
+				font-size: 0.78em;
+				font-weight: 600;
+				letter-spacing: 0.4px;
+				text-transform: uppercase;
+			}
+
+			/* === Power BI gallery === */
 			.gallery {
 				display: grid;
 				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -22,26 +101,103 @@
 			.gallery a {
 				display: block;
 				overflow: hidden;
-				border-radius: 4px;
-				box-shadow: 0 4px 14px rgba(0,0,0,0.15);
-				transition: transform 0.25s ease, box-shadow 0.25s ease;
+				border-radius: 6px;
+				box-shadow: var(--card-shadow);
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
 			}
 			.gallery a:hover {
-				transform: translateY(-4px);
-				box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+				transform: translateY(-6px);
+				box-shadow: var(--card-shadow-hover);
 			}
 			.gallery img {
 				display: block;
 				width: 100%;
 				height: auto;
+				transition: transform 0.4s ease;
+			}
+			.gallery a:hover img {
+				transform: scale(1.03);
 			}
 			.gallery figcaption {
 				display: block;
-				padding: 10px 12px;
+				padding: 12px 14px;
 				font-size: 0.85em;
 				color: #6f7178;
 				background-color: #f5f6f7;
 				text-align: center;
+				font-weight: 600;
+				letter-spacing: 0.5px;
+			}
+
+			/* === Background / Education section === */
+			.background-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+				gap: 20px;
+				margin-top: 2em;
+			}
+			.background-card {
+				background: #fff;
+				border-radius: 8px;
+				padding: 24px;
+				box-shadow: var(--card-shadow);
+				border-left: 4px solid var(--accent-2);
+				transition: transform 0.25s ease, box-shadow 0.25s ease;
+				text-align: left;
+			}
+			.background-card:hover {
+				transform: translateY(-4px);
+				box-shadow: var(--card-shadow-hover);
+			}
+			.background-card .icon {
+				font-size: 1.6em;
+				color: var(--accent-2);
+				margin-bottom: 10px;
+				display: block;
+			}
+			.background-card h4 {
+				margin: 0 0 6px 0;
+				font-size: 1.05em;
+				color: #2a2f36;
+			}
+			.background-card .muted {
+				color: #6f7178;
+				font-size: 0.85em;
+				margin-bottom: 0.6em;
+				display: block;
+			}
+			.background-card p {
+				margin: 0;
+				font-size: 0.9em;
+				color: #4a4f56;
+				line-height: 1.55;
+			}
+
+			/* === Section spotlight image hover === */
+			.spotlight .image img {
+				transition: transform 0.4s ease;
+			}
+			.spotlight:hover .image img {
+				transform: scale(1.04);
+			}
+
+			/* === Animations === */
+			@keyframes fadeUp {
+				from { opacity: 0; transform: translateY(20px); }
+				to   { opacity: 1; transform: translateY(0); }
+			}
+
+			/* === Contact section polish === */
+			#footer ul.contact li a {
+				transition: color 0.2s ease;
+			}
+			#footer ul.contact li a:hover {
+				color: var(--accent);
+			}
+
+			/* === Section headers accent === */
+			h2.major:after {
+				background: var(--accent-gradient) !important;
 			}
 		</style>
 	</head>
@@ -65,6 +221,7 @@
 							<ul class="links">
 								<li><a href="index.html">Home</a></li>
 								<li><a href="#one">Projects</a></li>
+								<li><a href="#background">Background</a></li>
 								<li><a href="#about">About</a></li>
 								<li><a href="#footer">Contact</a></li>
 								<li><a href="https://github.com/allouny98-cyber/my-projects" target="_blank">GitHub</a></li>
@@ -78,7 +235,17 @@
 						<div class="inner">
 							<div class="logo"><span class="icon solid fa-chart-bar"></span></div>
 							<h2>Yoni Alloun</h2>
-							<p>Aspiring Data Analyst &mdash; SQL &middot; Python &middot; Power BI</p>
+							<p>Data Analyst &mdash; turning raw data into clear, actionable insights<span class="hero-tagline">SQL Server &middot; Python &middot; Power BI &middot; end-to-end analytics</span></p>
+							<div class="hero-badges">
+								<span>SQL Server</span>
+								<span>T-SQL</span>
+								<span>Python</span>
+								<span>Pandas</span>
+								<span>Seaborn</span>
+								<span>Power BI</span>
+								<span>DAX</span>
+								<span>Power Query</span>
+							</div>
 						</div>
 					</section>
 
@@ -91,7 +258,13 @@
 									<a href="https://github.com/allouny98-cyber/my-projects/blob/main/database-project/database_project.sql" class="image" target="_blank"><img src="images/project-database.svg" alt="Database Design Project" /></a>
 									<div class="content">
 										<h2 class="major">Database Design with SQL</h2>
-										<p>Relational database design for a video games catalog. Built in SQL Server with normalized schema, primary and foreign keys, and analytical queries across multiple tables (Games, Developers, Genres, Platforms).</p>
+										<p>Designed and built a fully normalized relational database for a video games catalog in SQL Server. Implemented primary/foreign keys, indexes and constraints across 4 connected tables (Games, Developers, Genres, Platforms), then wrote analytical T-SQL queries combining JOINs, CTEs and window functions to surface market insights.</p>
+										<div class="tech-tags">
+											<span>SQL Server</span>
+											<span>T-SQL</span>
+											<span>Schema Design</span>
+											<span>Joins &amp; CTEs</span>
+										</div>
 										<a href="https://github.com/allouny98-cyber/my-projects/blob/main/database-project/database_project.sql" class="special" target="_blank">View SQL code on GitHub</a>
 									</div>
 								</div>
@@ -103,7 +276,15 @@
 									<a href="https://github.com/allouny98-cyber/my-projects/tree/main/jupyter-project" class="image" target="_blank"><img src="images/project-python.svg" alt="Python Jupyter Analysis" /></a>
 									<div class="content">
 										<h2 class="major">Python &amp; Jupyter Analysis</h2>
-										<p>Exploratory data analysis on the video games database using Python, Pandas and Seaborn. The notebook connects to SQL Server via SQLAlchemy, joins multiple tables, and produces clear visualizations of market trends.</p>
+										<p>Exploratory data analysis on the video games database. The Jupyter notebook connects directly to SQL Server through SQLAlchemy, loads the joined dataset into Pandas, cleans and transforms it, and produces a series of clear visualizations (price distribution, top genres, developer activity, release trends) using Matplotlib and Seaborn.</p>
+										<div class="tech-tags">
+											<span>Python</span>
+											<span>Pandas</span>
+											<span>NumPy</span>
+											<span>SQLAlchemy</span>
+											<span>Matplotlib</span>
+											<span>Seaborn</span>
+										</div>
 										<a href="https://github.com/allouny98-cyber/my-projects/tree/main/jupyter-project" class="special" target="_blank">View notebook on GitHub</a>
 									</div>
 								</div>
@@ -115,7 +296,14 @@
 									<a href="https://github.com/allouny98-cyber/my-projects/tree/main/powerbi-project" class="image" target="_blank"><img src="images/project-powerbi.svg" alt="Power BI Dashboard" /></a>
 									<div class="content">
 										<h2 class="major">Power BI Dashboard</h2>
-										<p>Interactive 5-page Power BI dashboard analyzing the video games catalog: home, catalog overview, developer analysis, pricing, and quality trends. Built with Power Query and DAX measures for full interactivity.</p>
+										<p>Interactive 5-page Power BI report analyzing the video games catalog: Home, Catalog Overview, Developers Analysis, Price Analysis, and Quality &amp; Trends. Data modeling and transformations built in Power Query, KPIs and analytical logic delivered with DAX measures, and a cohesive navigation experience across all pages.</p>
+										<div class="tech-tags">
+											<span>Power BI</span>
+											<span>DAX</span>
+											<span>Power Query</span>
+											<span>Data Modeling</span>
+											<span>KPIs</span>
+										</div>
 										<a href="https://github.com/allouny98-cyber/my-projects/tree/main/powerbi-project" class="special" target="_blank">View project on GitHub</a>
 									</div>
 								</div>
@@ -151,11 +339,39 @@
 								</div>
 							</section>
 
+						<!-- Background / Education -->
+							<section id="background" class="wrapper style3">
+								<div class="inner">
+									<h2 class="major">Background &amp; Training</h2>
+									<p>I&rsquo;ve just completed an intensive Data Analyst program at <strong>John Bryce</strong>, one of the leading professional training centers for tech and data. The diploma is on its way. Throughout the program I built every project on this page from scratch, going deep on the three skills employers actually ask for: writing clean SQL, analyzing data in Python, and shipping decision-ready dashboards in Power BI.</p>
+									<div class="background-grid">
+										<div class="background-card">
+											<span class="icon solid fa-graduation-cap"></span>
+											<h4>Data Analyst Program</h4>
+											<span class="muted">John Bryce &middot; Diploma incoming</span>
+											<p>Comprehensive curriculum covering SQL Server, T-SQL, Python for data analysis, statistics, and Power BI &mdash; with capstone projects assessed end-to-end.</p>
+										</div>
+										<div class="background-card">
+											<span class="icon solid fa-database"></span>
+											<h4>End-to-End Case Study</h4>
+											<span class="muted">VideoGamesDB &middot; 3 connected projects</span>
+											<p>One dataset modeled in SQL, analyzed in Python, then visualized in Power BI &mdash; demonstrating the complete data analytics workflow.</p>
+										</div>
+										<div class="background-card">
+											<span class="icon solid fa-bullseye"></span>
+											<h4>Currently looking for</h4>
+											<span class="muted">Open to opportunities</span>
+											<p>A first Data Analyst role (junior / entry-level) where I can keep building, learning from a real team, and turning data into decisions.</p>
+										</div>
+									</div>
+								</div>
+							</section>
+
 						<!-- About / Skills -->
 							<section id="about" class="wrapper alt style1">
 								<div class="inner">
 									<h2 class="major">About me</h2>
-									<p>Aspiring Data Analyst with hands-on experience in SQL, Python, and Power BI. I enjoy turning raw data into clear, actionable insights &mdash; from designing the database to delivering an interactive dashboard. All three projects on this page are built around the same dataset (VideoGamesDB), demonstrating the full data analytics workflow end-to-end.</p>
+									<p>I&rsquo;m a Data Analyst with hands-on training in SQL, Python and Power BI, and a clear preference for projects where I own the whole pipeline &mdash; from database design to the final dashboard. What you see here is a single end-to-end case study: <strong>one dataset (VideoGamesDB) turned into a relational SQL database, then explored in Python, then visualized in an interactive Power BI report</strong>. Same data, three angles, one analytical story. I&rsquo;m now looking for a first Data Analyst role where I can keep doing exactly that &mdash; ask the right questions, model the data cleanly, and ship insights that help the team decide faster.</p>
 									<section class="features">
 										<article>
 											<a href="https://github.com/allouny98-cyber/my-projects/blob/main/database-project/database_project.sql" class="image" target="_blank"><img src="images/skill-sql.svg" alt="SQL Server" /></a>
@@ -187,8 +403,8 @@
 				<!-- Footer -->
 					<section id="footer">
 						<div class="inner">
-							<h2 class="major">Get in touch</h2>
-							<p>I am open to opportunities and collaborations. Feel free to reach out by email or check out my work directly on GitHub.</p>
+							<h2 class="major">Let&rsquo;s talk data</h2>
+							<p>I&rsquo;m actively looking for a first Data Analyst role &mdash; junior, entry-level, or internship. If you have an opening, a question about one of the projects, or just want to chat about data, the fastest way to reach me is by email &mdash; you&rsquo;ll usually get a reply the same day.</p>
 							<ul class="contact">
 								<li class="icon solid fa-envelope"><a href="mailto:allouny98@gmail.com">allouny98@gmail.com</a></li>
 								<li class="icon brands fa-github"><a href="https://github.com/allouny98-cyber" target="_blank">github.com/allouny98-cyber</a></li>
@@ -211,3 +427,4 @@
 
 	</body>
 </html>
+
