@@ -1,0 +1,13 @@
+<svg viewBox="0 0 600 400" xmlns="http://www.w3.org/2000/svg">
+  <rect width="600" height="400" fill="#F5F5F7"/>
+  <g transform="translate(300, 200)">
+    <ellipse cx="0" cy="60" rx="80" ry="16" fill="#CC2927" opacity="0.85"/>
+    <path d="M -80,30 L -80,60 A 80,16 0 0 0 80,60 L 80,30 Z" fill="#CC2927" opacity="0.9"/>
+    <ellipse cx="0" cy="30" rx="80" ry="16" fill="#CC2927" opacity="0.95"/>
+    <path d="M -80,0 L -80,30 A 80,16 0 0 0 80,30 L 80,0 Z" fill="#CC2927"/>
+    <ellipse cx="0" cy="0" rx="80" ry="16" fill="#CC2927"/>
+    <path d="M -80,-30 L -80,0 A 80,16 0 0 0 80,0 L 80,-30 Z" fill="#A02020"/>
+    <ellipse cx="0" cy="-30" rx="80" ry="16" fill="#A02020"/>
+  </g>
+  <text x="300" y="340" text-anchor="middle" font-family="Arial, sans-serif" font-size="22" font-weight="500" fill="#3B3B3B">SQL Server</text>
+</svg>
