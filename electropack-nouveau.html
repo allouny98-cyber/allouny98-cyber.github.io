@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Electropack — Électricité générale & courants faibles à Casablanca depuis 2007</title>
+<meta name="description" content="Electropack réalise vos installations électriques, courants faibles, contrôle d'accès et vidéosurveillance au Maroc. Références : Sofitel, SGMB, Teleperformance. Devis gratuit.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#0A1826;          /* bleu nuit isolant */
+  --ink-soft:#13263B;
+  --paper:#FAFBFC;        /* blanc technique */
+  --grey:#5C6B7A;
+  --line:#DDE3E9;
+  --volt:#FFC400;         /* jaune sécurité électrique */
+  --volt-dark:#B88900;
+  --radius:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:16px}
+h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1.1}
+.mono{font-family:'IBM Plex Mono',monospace}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{font-family:'Archivo';font-weight:900;font-size:1.3rem;letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:8px}
+.logo .bolt{width:22px;height:22px;background:var(--volt);display:inline-flex;align-items:center;justify-content:center;border-radius:3px;font-size:.9rem}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;font-weight:500;font-size:.92rem;color:var(--grey)}
+.nav-links a:hover{color:var(--ink)}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
+.btn:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
+.btn-volt{background:var(--volt);color:var(--ink)}
+.btn-volt:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,196,0,.35)}
+.btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#fff}
+.nav .btn{padding:9px 16px}
+.burger{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:88px 0 72px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.eyebrow{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--volt-dark);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--volt)}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.025em;margin-bottom:20px}
+.hero h1 .hl{background:linear-gradient(transparent 62%, var(--volt) 62%)}
+.hero p.lede{font-size:1.12rem;color:var(--grey);max-width:32rem;margin-bottom:32px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-visual{position:relative;min-height:340px;background:var(--ink);border-radius:10px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-visual .ph-label{position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono';font-size:.72rem;color:#8FA3B8;border:1px dashed #35506B;padding:4px 8px;border-radius:4px}
+.hero-visual svg{width:100%;opacity:.9}
+.trust{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.trust p{font-family:'IBM Plex Mono';font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px}
+.trust-logos{display:flex;gap:36px;flex-wrap:wrap;font-family:'Archivo';font-weight:700;font-size:1.05rem;color:#8B99A8}
+
+/* ---------- Chiffres ---------- */
+.stats{background:var(--ink);color:#fff;padding:56px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.stat .num{font-family:'IBM Plex Mono';font-size:2.4rem;font-weight:500;color:var(--volt)}
+.stat .lbl{font-size:.9rem;color:#9FB2C4;margin-top:4px}
+
+/* ---------- Sections ---------- */
+section{padding:80px 0}
+.sec-head{margin-bottom:44px;max-width:38rem}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
+.sec-head p{color:var(--grey)}
+
+/* Services */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{border:1px solid var(--line);border-radius:10px;padding:28px 24px;background:#fff;transition:border-color .15s, transform .15s}
+.svc:hover{border-color:var(--volt);transform:translateY(-3px)}
+.svc .ico{width:44px;height:44px;border-radius:8px;background:var(--ink);color:var(--volt);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:18px}
+.svc h3{font-size:1.08rem;margin-bottom:10px}
+.svc p{font-size:.92rem;color:var(--grey)}
+.svc ul{margin-top:12px;list-style:none}
+.svc li{font-size:.88rem;color:var(--grey);padding-left:18px;position:relative;margin-bottom:5px}
+.svc li::before{content:"—";position:absolute;left:0;color:var(--volt-dark)}
+
+/* Projets */
+.projects{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.proj{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
+.proj .thumb{height:170px;background:linear-gradient(135deg,#13263B,#0A1826);position:relative}
+.proj .thumb span{position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono';font-size:.7rem;color:#8FA3B8;border:1px dashed #35506B;padding:3px 7px;border-radius:4px}
+.proj .body{padding:20px}
+.proj h3{font-size:1rem;margin-bottom:6px}
+.proj .meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-family:'IBM Plex Mono';font-size:.78rem}
+.proj .meta .amount{color:var(--volt-dark);font-weight:500}
+.proj .meta .year{color:var(--grey)}
+.proj p{font-size:.88rem;color:var(--grey)}
+
+/* Pourquoi nous */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 40px}
+.why{display:flex;gap:16px;align-items:flex-start}
+.why .n{font-family:'IBM Plex Mono';color:var(--volt-dark);font-size:.85rem;margin-top:3px;white-space:nowrap}
+.why h3{font-size:1.02rem;margin-bottom:4px}
+.why p{font-size:.9rem;color:var(--grey)}
+
+/* Contact */
+.contact{background:var(--ink);color:#fff}
+.contact .sec-head h2{color:#fff}
+.contact .sec-head p{color:#9FB2C4}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px}
+.c-info div{margin-bottom:22px}
+.c-info .lbl{font-family:'IBM Plex Mono';font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--volt);margin-bottom:4px}
+.c-info a{color:#fff;text-decoration:none}
+.c-info a:hover{text-decoration:underline}
+form{display:grid;gap:14px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-size:.82rem;font-weight:600;color:#C7D3DE;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:var(--radius);border:1px solid #2C4257;background:var(--ink-soft);color:#fff;font-family:'Inter';font-size:.95rem}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--volt);border-color:var(--volt)}
+form .btn{border:none;cursor:pointer;justify-self:start;font-family:'Inter'}
+
+/* Footer */
+footer{background:#061019;color:#7E93A8;padding:36px 0;font-size:.86rem}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+footer a{color:#B9C8D6;text-decoration:none}
+footer a:hover{color:#fff}
+
+/* WhatsApp flottant */
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.25);text-decoration:none}
+.wa svg{width:30px;height:30px;fill:#fff}
+.wa:hover{transform:scale(1.06)}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero-grid,.contact-grid{grid-template-columns:1fr}
+  .svc-grid,.proj-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+  .why-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .burger{display:block}
+  .nav-links.open{display:flex;position:absolute;top:68px;left:0;right:0;background:var(--paper);flex-direction:column;padding:20px 24px;border-bottom:1px solid var(--line);gap:16px;align-items:flex-start}
+}
+@media (max-width:600px){
+  .svc-grid,.proj-grid{grid-template-columns:1fr}
+  section{padding:56px 0}
+  .hero{padding:56px 0 48px}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="container nav">
+    <a class="logo" href="#"><span class="bolt">⚡</span>ELECTROPACK</a>
+    <nav>
+      <ul class="nav-links" id="menu">
+        <li><a href="#services">Services</a></li>
+        <li><a href="#projets">Réalisations</a></li>
+        <li><a href="#pourquoi">Pourquoi nous</a></li>
+        <li><a href="#contact">Contact</a></li>
+        <li><a class="btn btn-volt" href="#contact">Demander un devis</a></li>
+      </ul>
+      <button class="burger" aria-label="Ouvrir le menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+<!-- HERO -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-grid">
+      <div>
+        <p class="eyebrow">Casablanca · Depuis 2007</p>
+        <h1>L'électricité de vos bâtiments, <span class="hl">sans mauvaise surprise.</span></h1>
+        <p class="lede">Installations électriques, courants faibles, contrôle d'accès et vidéosurveillance pour hôtels, banques et entreprises au Maroc. 19 ans d'expérience, des chantiers livrés dans les délais.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-volt" href="#contact">Demander un devis gratuit</a>
+          <a class="btn btn-ghost" href="#projets">Voir nos réalisations</a>
+        </div>
+      </div>
+      <div class="hero-visual" role="img" aria-label="Photo de chantier Electropack (à remplacer)">
+        <span class="ph-label">[ PHOTO CHANTIER RÉEL À INSÉRER ICI ]</span>
+        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#FFC400" stroke-width="2"/>
+          <circle cx="90" cy="220" r="5" fill="#FFC400"/>
+          <circle cx="180" cy="140" r="5" fill="#FFC400"/>
+          <circle cx="260" cy="220" r="5" fill="#FFC400"/>
+          <circle cx="340" cy="90" r="5" fill="#FFC400"/>
+          <path d="M0 260 H400" stroke="#22384E" stroke-width="1"/>
+          <path d="M0 190 H400" stroke="#16283A" stroke-width="1"/>
+        </svg>
+      </div>
+    </div>
+    <div class="trust">
+      <p>Ils nous font confiance</p>
+      <div class="trust-logos">
+        <span>SOFITEL</span><span>SOCIÉTÉ GÉNÉRALE</span><span>TELEPERFORMANCE</span><span>[ + LOGOS CLIENTS ]</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CHIFFRES -->
+<div class="stats">
+  <div class="container stats-grid">
+    <div class="stat"><div class="num" data-count="19">0</div><div class="lbl">années d'expérience</div></div>
+    <div class="stat"><div class="num" data-count="120" data-suffix="+">0</div><div class="lbl">projets livrés <em>(à valider)</em></div></div>
+    <div class="stat"><div class="num" data-count="10" data-prefix="" data-suffix=" M Dh">0</div><div class="lbl">plus grand projet réalisé</div></div>
+    <div class="stat"><div class="num" data-count="30" data-suffix="+">0</div><div class="lbl">électriciens qualifiés <em>(à valider)</em></div></div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Nos domaines d'intervention</h2>
+      <p>De l'étude à la mise en service, une seule équipe responsable de votre installation.</p>
+    </div>
+    <div class="svc-grid">
+      <div class="svc">
+        <div class="ico">⚡</div>
+        <h3>Électricité générale — courants forts</h3>
+        <p>Installations complètes pour bâtiments tertiaires, hôtels et sites industriels.</p>
+        <ul>
+          <li>Tableaux généraux et divisionnaires</li>
+          <li>Distribution et éclairage</li>
+          <li>Mise en conformité</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="ico">📡</div>
+        <h3>Courants faibles</h3>
+        <p>Les réseaux qui font vivre vos bâtiments, câblés et certifiés.</p>
+        <ul>
+          <li>Câblage informatique et téléphonie</li>
+          <li>Détection incendie</li>
+          <li>Sonorisation, GTB</li>
+        </ul>
+      </div>
+      <div class="svc">
+        <div class="ico">🔐</div>
+        <h3>Contrôle d'accès & vidéosurveillance</h3>
+        <p>Sécurisez vos locaux avec des systèmes fiables et évolutifs.</p>
+        <ul>
+          <li>Badges, interphonie, portiques</li>
+          <li>Caméras IP et enregistrement</li>
+          <li>Maintenance et supervision</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJETS -->
+<section id="projets" class="projects">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Réalisations récentes</h2>
+      <p>Des chantiers concrets, des montants réels, des clients qui reviennent.</p>
+    </div>
+    <div class="proj-grid">
+      <div class="proj">
+        <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
+        <div class="body">
+          <h3>Hôtel Sofitel</h3>
+          <p>Travaux d'électricité et courants faibles.</p>
+          <div class="meta"><span class="amount">[ MONTANT ] Dh HT</span><span class="year">[ ANNÉE ]</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
+        <div class="body">
+          <h3>Société Générale Maroc</h3>
+          <p>Installation électrique d'agences bancaires.</p>
+          <div class="meta"><span class="amount">[ MONTANT ] Dh HT</span><span class="year">[ ANNÉE ]</span></div>
+        </div>
+      </div>
+      <div class="proj">
+        <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
+        <div class="body">
+          <h3>Teleperformance</h3>
+          <p>Électricité et câblage de plateaux de centre d'appels.</p>
+          <div class="meta"><span class="amount">[ MONTANT ] Dh HT</span><span class="year">[ ANNÉE ]</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POURQUOI NOUS -->
+<section id="pourquoi">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Pourquoi les maîtres d'ouvrage nous choisissent</h2>
+    </div>
+    <div class="why-grid">
+      <div class="why"><span class="n">01</span><div><h3>19 ans sur le terrain</h3><p>Depuis 2007, nous livrons des chantiers pour des donneurs d'ordre exigeants : hôtellerie, banque, tertiaire.</p></div></div>
+      <div class="why"><span class="n">02</span><div><h3>Capacité de projets jusqu'à 10 M Dh</h3><p>Une structure dimensionnée pour des lots électricité complets, du CFO au CFA.</p></div></div>
+      <div class="why"><span class="n">03</span><div><h3>Un interlocuteur unique</h3><p>Étude, exécution, essais et mise en service : vous suivez votre chantier avec une seule équipe responsable.</p></div></div>
+      <div class="why"><span class="n">04</span><div><h3>Conformité et sécurité</h3><p>Installations réalisées selon les normes en vigueur, réceptionnées avec les bureaux de contrôle.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact" class="contact">
+  <div class="container">
+    <div class="sec-head">
+      <h2>Parlons de votre projet</h2>
+      <p>Réponse sous 24 h ouvrées. Devis gratuit et sans engagement.</p>
+    </div>
+    <div class="contact-grid">
+      <div class="c-info">
+        <div><div class="lbl">Téléphone</div><a href="tel:+212522369714">05 22 36 97 14</a> · <a href="tel:+212522369715">05 22 36 97 15</a></div>
+        <div><div class="lbl">Email</div><a href="mailto:contact@electro-pack.ma">contact@electro-pack.ma</a></div>
+        <div><div class="lbl">Adresse</div>[ ADRESSE COMPLÈTE ], Casablanca</div>
+        <div><div class="lbl">Horaires</div>Lundi – Vendredi, 8h30 – 18h00</div>
+      </div>
+      <form onsubmit="sendWA(event)">
+        <div class="f-row">
+          <div><label for="nom">Nom</label><input id="nom" required></div>
+          <div><label for="tel">Téléphone</label><input id="tel" type="tel" required></div>
+        </div>
+        <div><label for="type">Type de projet</label>
+          <select id="type">
+            <option>Électricité générale</option>
+            <option>Courants faibles</option>
+            <option>Contrôle d'accès / vidéosurveillance</option>
+            <option>Autre</option>
+          </select>
+        </div>
+        <div><label for="msg">Décrivez votre besoin</label><textarea id="msg" rows="4"></textarea></div>
+        <button class="btn btn-volt" type="submit">Envoyer ma demande</button>
+      </form>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="container foot">
+    <span>© 2026 Electropack — Électricité générale, Casablanca</span>
+    <span class="mono">RC [ N° ] · ICE [ N° ]</span>
+    <a href="#contact">Demander un devis</a>
+  </div>
+</footer>
+
+<!-- WhatsApp flottant : remplacer le numéro -->
+<a class="wa" href="https://wa.me/212XXXXXXXXX?text=Bonjour%20Electropack%2C%20je%20souhaite%20un%20devis" aria-label="Contacter Electropack sur WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 32 32"><path d="M16 3C9.4 3 4 8.4 4 15c0 2.6.8 5 2.3 7L4 29l7.2-2.2c1.9 1 4 1.6 6.2 1.6 6.6 0 12-5.4 12-12S22.6 3 16 3zm0 21.8c-2 0-3.9-.6-5.5-1.6l-.4-.2-4.3 1.3 1.3-4.1-.3-.4C5.7 18.3 5 16.7 5 15 5 9 9.9 4 16 4s11 5 11 11-4.9 9.8-11 9.8zm5.6-7.2c-.3-.2-1.8-.9-2.1-1-.3-.1-.5-.2-.7.2s-.8 1-.9 1.2c-.2.2-.4.2-.7.1-.3-.2-1.3-.5-2.4-1.5-.9-.8-1.5-1.8-1.7-2.1-.2-.3 0-.5.1-.6l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6-.1-.2-.7-1.7-1-2.3-.2-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.1 1.1-1.1 2.7s1.2 3.1 1.3 3.3c.2.2 2.3 3.6 5.7 5 3.4 1.4 3.4.9 4 .9.6-.1 1.8-.7 2.1-1.5.3-.7.3-1.4.2-1.5-.1-.1-.3-.2-.6-.4z"/></svg>
+</a>
+
+<script>
+// Navigation interne : défilement JS (fonctionne aussi dans les aperçus sandboxés)
+document.querySelectorAll('a[href^="#"]').forEach(a=>{
+  a.addEventListener('click',ev=>{
+    const id=a.getAttribute('href').slice(1);
+    const target=document.getElementById(id);
+    if(target){ev.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
+    document.getElementById('menu').classList.remove('open');
+  });
+});
+
+// Compteurs animés (déclenchés au scroll)
+const io = new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(!e.isIntersecting) return;
+    const el=e.target, target=+el.dataset.count, suf=el.dataset.suffix||'', pre=el.dataset.prefix||'';
+    let cur=0; const step=Math.max(1,Math.round(target/40));
+    const t=setInterval(()=>{cur+=step; if(cur>=target){cur=target;clearInterval(t);} el.textContent=pre+cur+suf;},30);
+    io.unobserve(el);
+  });
+},{threshold:.5});
+document.querySelectorAll('[data-count]').forEach(el=>io.observe(el));
+
+// Formulaire → ouvre WhatsApp avec le message pré-rempli (à brancher plus tard sur un vrai envoi email)
+function sendWA(ev){
+  ev.preventDefault();
+  const n=document.getElementById('nom').value, t=document.getElementById('tel').value,
+        ty=document.getElementById('type').value, m=document.getElementById('msg').value;
+  const txt=encodeURIComponent(`Bonjour Electropack,\nNom : ${n}\nTél : ${t}\nProjet : ${ty}\n${m}`);
+  window.open(`https://wa.me/212XXXXXXXXX?text=${txt}`,'_blank');
+}
+</script>
+</body>
+</html>
