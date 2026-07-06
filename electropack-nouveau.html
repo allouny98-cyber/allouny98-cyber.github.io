@@ -9,13 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#0A1826;          /* bleu nuit isolant */
-  --ink-soft:#13263B;
+  --ink:#1C3B6E;          /* bleu marine du logo Electropack */
+  --ink-soft:#274C86;     /* marine clair (champs, dégradés) */
+  --ink-deep:#122647;     /* marine profond (footer, dégradés) */
   --paper:#FAFBFC;        /* blanc technique */
   --grey:#5C6B7A;
   --line:#DDE3E9;
-  --volt:#FFC400;         /* jaune sécurité électrique */
-  --volt-dark:#B88900;
+  --volt:#F28C00;         /* orange accent du logo */
+  --volt-dark:#B85E00;    /* orange foncé (texte sur fond clair) */
   --radius:6px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -28,7 +29,7 @@ h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1.1}
 a{color:inherit}
 
 /* ---------- Header ---------- */
-header{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+header{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);border-top:3px solid var(--volt)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
 .logo{font-family:'Archivo';font-weight:900;font-size:1.3rem;letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:8px}
 .logo .bolt{width:22px;height:22px;background:var(--volt);display:inline-flex;align-items:center;justify-content:center;border-radius:3px;font-size:.9rem}
@@ -38,7 +39,7 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.92);backdro
 .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
 .btn:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
 .btn-volt{background:var(--volt);color:var(--ink)}
-.btn-volt:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(255,196,0,.35)}
+.btn-volt:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(242,140,0,.38)}
 .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
 .btn-ghost:hover{background:var(--ink);color:#fff}
 .nav .btn{padding:9px 16px}
@@ -87,7 +88,7 @@ section{padding:80px 0}
 .projects{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .proj{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
-.proj .thumb{height:170px;background:linear-gradient(135deg,#13263B,#0A1826);position:relative}
+.proj .thumb{height:170px;background:linear-gradient(135deg,#274C86,#122647);position:relative}
 .proj .thumb span{position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono';font-size:.7rem;color:#8FA3B8;border:1px dashed #35506B;padding:3px 7px;border-radius:4px}
 .proj .body{padding:20px}
 .proj h3{font-size:1rem;margin-bottom:6px}
@@ -120,7 +121,7 @@ input:focus,select:focus,textarea:focus{outline:2px solid var(--volt);border-col
 form .btn{border:none;cursor:pointer;justify-self:start;font-family:'Inter'}
 
 /* Footer */
-footer{background:#061019;color:#7E93A8;padding:36px 0;font-size:.86rem}
+footer{background:var(--ink-deep);color:#8CA0BC;padding:36px 0;font-size:.86rem}
 .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
 footer a{color:#B9C8D6;text-decoration:none}
 footer a:hover{color:#fff}
@@ -182,11 +183,11 @@ footer a:hover{color:#fff}
       <div class="hero-visual" role="img" aria-label="Photo de chantier Electropack (à remplacer)">
         <span class="ph-label">[ PHOTO CHANTIER RÉEL À INSÉRER ICI ]</span>
         <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#FFC400" stroke-width="2"/>
-          <circle cx="90" cy="220" r="5" fill="#FFC400"/>
-          <circle cx="180" cy="140" r="5" fill="#FFC400"/>
-          <circle cx="260" cy="220" r="5" fill="#FFC400"/>
-          <circle cx="340" cy="90" r="5" fill="#FFC400"/>
+          <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#F28C00" stroke-width="2"/>
+          <circle cx="90" cy="220" r="5" fill="#F28C00"/>
+          <circle cx="180" cy="140" r="5" fill="#F28C00"/>
+          <circle cx="260" cy="220" r="5" fill="#F28C00"/>
+          <circle cx="340" cy="90" r="5" fill="#F28C00"/>
           <path d="M0 260 H400" stroke="#22384E" stroke-width="1"/>
           <path d="M0 190 H400" stroke="#16283A" stroke-width="1"/>
         </svg>
