@@ -95,10 +95,13 @@
 
   // --- 7. Header compact au scroll + bouton retour en haut ---
   var header = D.querySelector('header'), toTop = D.querySelector('.to-top');
+  var heroSchem = D.querySelector('.hero-schematic');
   function onScroll(){
     var y = window.pageYOffset || D.documentElement.scrollTop || 0;
     if (header) header.classList.toggle('scrolled', y > 20);
     if (toTop) toTop.classList.toggle('show', y > window.innerHeight * 0.9);
+    // Parallaxe très discrète du schéma de fond du hero (max 30px, transform only)
+    if (heroSchem && !reduce) heroSchem.style.transform = 'translate3d(0,' + Math.min(30, y * 0.06).toFixed(1) + 'px,0)';
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
@@ -134,6 +137,8 @@
   }
   if (lb) {
     docBtns.forEach(function(b, i){ b.addEventListener('click', function(){ openAt(i); }); });
+    var attOpen = D.querySelector('.att-open');
+    if (attOpen) attOpen.addEventListener('click', function(){ openAt(0); });
     var lbClose = lb.querySelector('.lb-close');
     var lbPrev = lb.querySelector('.lb-prev'), lbNext = lb.querySelector('.lb-next');
     if (lbClose) lbClose.addEventListener('click', closeLb);

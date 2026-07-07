@@ -126,14 +126,14 @@
 <div class="stats">
   <div class="container stats-grid reveal stagger">
     <div class="stat"><div class="num" data-count="19">0</div><div class="lbl">années d'expérience</div></div>
-    <div class="stat"><div class="num" data-count="120" data-suffix="+">0</div><div class="lbl">projets livrés <em>(à valider)</em></div></div>
+    <div class="stat"><div class="num" data-count="120" data-suffix="+">0</div><div class="lbl">projets livrés</div></div>
     <div class="stat"><div class="num" data-count="10" data-prefix="" data-suffix=" M Dh">0</div><div class="lbl">plus grand projet réalisé</div></div>
-    <div class="stat"><div class="num" data-count="30" data-suffix="+">0</div><div class="lbl">électriciens qualifiés <em>(à valider)</em></div></div>
+    <div class="stat"><div class="num" data-count="30" data-suffix="+">0</div><div class="lbl">électriciens qualifiés</div></div>
   </div>
 </div>
 
 <!-- SERVICES -->
-<section id="services">
+<section id="services" class="tech-grid">
   <div class="container">
     <div class="sec-head reveal">
       <h2>Nos domaines d'intervention</h2>
@@ -141,7 +141,7 @@
     </div>
     <div class="svc-grid reveal stagger">
       <div class="svc">
-        <div class="ico">⚡</div>
+        <div class="ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 2 4 14h6l-1 8 9-12h-6z"/></svg></div>
         <h3>Électricité générale — courants forts</h3>
         <p>Installations complètes pour bâtiments tertiaires, hôtels et sites industriels.</p>
         <ul>
@@ -151,7 +151,7 @@
         </ul>
       </div>
       <div class="svc">
-        <div class="ico">📡</div>
+        <div class="ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4.5 11a11 11 0 0 1 15 0"/><path d="M7.5 14.2a6.5 6.5 0 0 1 9 0"/><path d="M10.5 17.3a2.5 2.5 0 0 1 3 0"/><circle cx="12" cy="20" r=".7" fill="currentColor" stroke="none"/></svg></div>
         <h3>Courants faibles</h3>
         <p>Les réseaux qui font vivre vos bâtiments, câblés et certifiés.</p>
         <ul>
@@ -161,7 +161,7 @@
         </ul>
       </div>
       <div class="svc">
-        <div class="ico">🔐</div>
+        <div class="ico"><svg class="ico-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3 5 6v5.5c0 4.2 3 7.4 7 8.5 4-1.1 7-4.3 7-8.5V6z"/><path d="M9 12l2 2 4-4"/></svg></div>
         <h3>Contrôle d'accès & vidéosurveillance</h3>
         <p>Sécurisez vos locaux avec des systèmes fiables et évolutifs.</p>
         <ul>
@@ -191,43 +191,34 @@
 </section>
 
 <!-- PROJETS -->
-<section id="projets" class="projects">
+<section id="projets" class="projects tech-grid">
   <div class="container">
     <div class="sec-head reveal">
       <h2>Réalisations récentes</h2>
       <p>Des chantiers concrets, des montants réels, des clients qui reviennent.</p>
     </div>
     <div class="proj-grid reveal stagger">
-      <div class="proj">
-        <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
-        <div class="body">
-          <h3>Hôtel Sofitel</h3>
-          <p>Travaux d'électricité et courants faibles.</p>
-          <div class="meta"><span class="amount">[ MONTANT ] Dh HT</span><span class="year">[ ANNÉE ]</span></div>
-        </div>
-      </div>
-      <div class="proj">
-        <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
-        <div class="body">
-          <h3>Société Générale Maroc</h3>
-          <p>Installation électrique d'agences bancaires.</p>
-          <div class="meta"><span class="amount">[ MONTANT ] Dh HT</span><span class="year">[ ANNÉE ]</span></div>
-        </div>
-      </div>
-      <div class="proj">
-        <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
-        <div class="body">
-          <h3>Teleperformance</h3>
-          <p>Électricité et câblage de plateaux de centre d'appels.</p>
-          <div class="meta"><span class="amount">[ MONTANT ] Dh HT</span><span class="year">[ ANNÉE ]</span></div>
-        </div>
-      </div>
+      <article class="proj">
+        <span class="proj-badge">Hôtellerie</span>
+        <h3>Hôtel Sofitel</h3>
+        <p>Électricité générale &amp; courants faibles</p>
+      </article>
+      <article class="proj">
+        <span class="proj-badge">Banque</span>
+        <h3>Société Générale Maroc</h3>
+        <p>Installation électrique d'agences bancaires</p>
+      </article>
+      <article class="proj">
+        <span class="proj-badge">Centre d'appels</span>
+        <h3>Teleperformance</h3>
+        <p>Électricité &amp; câblage de plateaux</p>
+      </article>
     </div>
   </div>
 </section>
 
 <!-- POURQUOI NOUS -->
-<section id="pourquoi">
+<section id="pourquoi" class="alt-grey tech-grid">
   <div class="container">
     <div class="sec-head reveal">
       <h2>Pourquoi les maîtres d'ouvrage nous choisissent</h2>
@@ -387,32 +378,36 @@
     </div>
   </div>
 
-  <!-- ATTESTATIONS : galerie de documents en grand -->
+  <!-- ATTESTATIONS : accès à la galerie navigable (lightbox) -->
   <div class="container">
     <div class="att reveal">
-      <h3 class="att-title">14 attestations de référence de nos clients</h3>
-      <div class="doc-grid">
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/gtr.jpg" data-label="GTR" aria-label="Voir l'attestation GTR en grand"><img src="assets/attestations/thumbs/gtr.jpg" alt="Attestation GTR" loading="lazy"></button><figcaption>GTR</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/teleperformance.jpg" data-label="Teleperformance" aria-label="Voir l'attestation Teleperformance en grand"><img src="assets/attestations/thumbs/teleperformance.jpg" alt="Attestation Teleperformance" loading="lazy"></button><figcaption>Teleperformance</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/a2s-industries.jpg" data-label="A2S Industries" aria-label="Voir l'attestation A2S Industries en grand"><img src="assets/attestations/thumbs/a2s-industries.jpg" alt="Attestation A2S Industries" loading="lazy"></button><figcaption>A2S Industries</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/asting-invest.jpg" data-label="Asting Invest" aria-label="Voir l'attestation Asting Invest en grand"><img src="assets/attestations/thumbs/asting-invest.jpg" alt="Attestation Asting Invest" loading="lazy"></button><figcaption>Asting Invest</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/liatech.jpg" data-label="Lia Tech Maroc" aria-label="Voir l'attestation Lia Tech Maroc en grand"><img src="assets/attestations/thumbs/liatech.jpg" alt="Attestation Lia Tech Maroc" loading="lazy"></button><figcaption>Lia Tech Maroc</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/xerox.jpg" data-label="Xerox" aria-label="Voir l'attestation Xerox en grand"><img src="assets/attestations/thumbs/xerox.jpg" alt="Attestation Xerox" loading="lazy"></button><figcaption>Xerox</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/fiat.jpg" data-label="Fiat" aria-label="Voir l'attestation Fiat en grand"><img src="assets/attestations/thumbs/fiat.jpg" alt="Attestation Fiat" loading="lazy"></button><figcaption>Fiat</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/auto-distribution.jpg" data-label="Auto Distribution" aria-label="Voir l'attestation Auto Distribution en grand"><img src="assets/attestations/thumbs/auto-distribution.jpg" alt="Attestation Auto Distribution" loading="lazy"></button><figcaption>Auto Distribution</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/gtc.jpg" data-label="GTC" aria-label="Voir l'attestation GTC en grand"><img src="assets/attestations/thumbs/gtc.jpg" alt="Attestation GTC" loading="lazy"></button><figcaption>GTC</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/ithaca.jpg" data-label="Ithaca" aria-label="Voir l'attestation Ithaca en grand"><img src="assets/attestations/thumbs/ithaca.jpg" alt="Attestation Ithaca" loading="lazy"></button><figcaption>Ithaca</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/archi.jpg" data-label="Archi" aria-label="Voir l'attestation Archi en grand"><img src="assets/attestations/thumbs/archi.jpg" alt="Attestation Archi" loading="lazy"></button><figcaption>Archi</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/fgc.jpg" data-label="FGC" aria-label="Voir l'attestation FGC en grand"><img src="assets/attestations/thumbs/fgc.jpg" alt="Attestation FGC" loading="lazy"></button><figcaption>FGC</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/ad.jpg" data-label="Réf. AD" aria-label="Voir l'attestation AD en grand"><img src="assets/attestations/thumbs/ad.jpg" alt="Attestation AD" loading="lazy"></button><figcaption>Réf. AD</figcaption></figure>
-        <figure class="doc"><button class="doc-btn" type="button" data-full="assets/attestations/adb.jpg" data-label="Réf. ADB" aria-label="Voir l'attestation ADB en grand"><img src="assets/attestations/thumbs/adb.jpg" alt="Attestation ADB" loading="lazy"></button><figcaption>Réf. ADB</figcaption></figure>
+      <p class="att-line">
+        <span class="att-count">14 attestations de référence vérifiables</span>
+        <button class="att-open" type="button">Les consulter →</button>
+      </p>
+      <!-- Données de la galerie (ouvertes en grand dans la lightbox, images chargées à la demande) -->
+      <div class="doc-data" hidden aria-hidden="true">
+        <button class="doc-btn" type="button" data-full="assets/attestations/gtr.jpg" data-label="GTR"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/teleperformance.jpg" data-label="Teleperformance"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/a2s-industries.jpg" data-label="A2S Industries"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/asting-invest.jpg" data-label="Asting Invest"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/liatech.jpg" data-label="Lia Tech Maroc"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/xerox.jpg" data-label="Xerox"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/fiat.jpg" data-label="Fiat"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/auto-distribution.jpg" data-label="Auto Distribution"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/gtc.jpg" data-label="GTC"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/ithaca.jpg" data-label="Ithaca"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/archi.jpg" data-label="Younes El Hadiri"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/fgc.jpg" data-label="FG Capital"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/ad.jpg" data-label="Loudghiri Rachad"></button>
+        <button class="doc-btn" type="button" data-full="assets/attestations/adb.jpg" data-label="Cabinet ABD"></button>
       </div>
     </div>
   </div>
 </section>
 
 <!-- CONTACT -->
-<section id="contact" class="contact">
+<section id="contact" class="contact contact-light tech-grid">
   <div class="container">
     <div class="sec-head reveal">
       <h2>Parlons de votre projet</h2>
@@ -422,7 +417,7 @@
       <div class="c-info">
         <div><div class="lbl">Téléphone</div><a href="tel:+212522369714">05 22 36 97 14</a> · <a href="tel:+212522369715">05 22 36 97 15</a></div>
         <div><div class="lbl">Email</div><a href="mailto:contact@electro-pack.ma">contact@electro-pack.ma</a></div>
-        <div><div class="lbl">Adresse</div>[ ADRESSE COMPLÈTE ], Casablanca</div>
+        <div><div class="lbl">Adresse</div>Casablanca, Maroc</div>
         <div><div class="lbl">Horaires</div>Lundi – Vendredi, 8h30 – 18h00</div>
         <div><div class="lbl">WhatsApp 24h/7j</div><a href="https://wa.me/212611137488" target="_blank" rel="noopener">+212 611 137 488</a></div>
         <div><div class="lbl">Recrutement</div><a href="recrutement.html">Voir nos offres et postuler →</a></div>
@@ -450,6 +445,7 @@
 
 <!-- BANDEAU FINAL D'APPEL À L'ACTION -->
 <div class="cta-band">
+  <div class="sparks" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
   <div class="container wrap">
     <h2>Un projet électrique ? Parlons-en.</h2>
     <div class="cta-actions">
@@ -476,13 +472,13 @@
         <h4>Contact</h4>
         <a href="tel:+212522369714">05 22 36 97 14</a>
         <a href="mailto:contact@electro-pack.ma">contact@electro-pack.ma</a>
-        <p>[ ADRESSE COMPLÈTE ], Casablanca</p>
+        <p>Casablanca, Maroc</p>
         <a href="recrutement.html">Recrutement</a>
       </div>
     </div>
     <div class="foot-bottom">
       <span>© 2026 Electropack — Électricité générale, Casablanca</span>
-      <span class="mono">RC [ N° ] · ICE [ N° ]</span>
+      <span class="mono">Casablanca · Maroc</span>
     </div>
   </div>
 </footer>

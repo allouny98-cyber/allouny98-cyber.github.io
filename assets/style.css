@@ -442,3 +442,90 @@ html.js .hero-home .dash-wrap.dash-in{opacity:1;transform:none;transition:opacit
   .tslide{transition:none}
   .doc-btn{transition:none}
 }
+
+/* ============================================================
+   GRANDE FINITION — icônes SVG, cartes typographiques, rythme
+   des fonds, filigranes techniques, étincelles, ligne attestations
+   ============================================================ */
+
+/* Icônes de services en SVG trait (suivent la couleur au survol) */
+.svc .ico svg.ico-svg{width:24px;height:24px;display:block}
+
+/* Filigrane technique très discret sur les sections claires */
+.tech-grid{position:relative}
+.tech-grid>.container{position:relative;z-index:1}
+.tech-grid::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background-image:linear-gradient(rgba(27,58,107,.045) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(27,58,107,.045) 1px,transparent 1px);
+  background-size:48px 48px;
+  -webkit-mask-image:radial-gradient(125% 95% at 50% 0%,#000 55%,transparent 100%);
+          mask-image:radial-gradient(125% 95% at 50% 0%,#000 55%,transparent 100%);}
+
+/* Rythme visuel : Méthode en marine */
+.methode{background:var(--ink);color:#fff}
+.methode .sec-head h2{color:#fff}
+.methode .sec-head p{color:#C7D3DE}
+.methode .step h3{color:#fff}
+.methode .step p{color:#B9C7DA}
+.methode .timeline::before{background:rgba(255,255,255,.16)}
+.methode .step .dot{background:#12294D;border-color:rgba(255,255,255,.22);color:var(--steel-light)}
+
+/* Pourquoi nous : gris très clair */
+.alt-grey{background:#EEF2F7}
+
+/* Réalisations : cartes typographiques marine + filigrane circuit */
+.proj{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:12px;
+  background:linear-gradient(160deg,#24436F 0%,#12294D 100%);padding:26px 24px;min-height:210px;
+  display:flex;flex-direction:column;justify-content:flex-end}
+.proj::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cg fill='none' stroke='%238FB4E0' stroke-width='1.3'%3E%3Cpath d='M0 40 H50 V95 H110 V25 H150'/%3E%3Cpath d='M30 150 V110 H85 V60 H150'/%3E%3C/g%3E%3Cg fill='%238FB4E0'%3E%3Ccircle cx='50' cy='95' r='3.2'/%3E%3Ccircle cx='110' cy='25' r='3.2'/%3E%3Ccircle cx='85' cy='60' r='3.2'/%3E%3C/g%3E%3C/svg%3E");
+  background-size:150px 150px}
+.proj-badge{position:relative;align-self:flex-start;margin-bottom:auto;font-family:'IBM Plex Mono';
+  font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cta);
+  border:1px solid rgba(249,115,22,.45);border-radius:999px;padding:4px 11px}
+.proj h3{position:relative;color:#fff;font-size:clamp(1.15rem,2vw,1.4rem);margin:20px 0 6px;letter-spacing:-.01em}
+.proj p{position:relative;color:#C7D3DE;font-size:.92rem}
+.proj:hover{transform:translateY(-5px);box-shadow:0 20px 42px rgba(9,20,40,.30);border-color:rgba(249,115,22,.35)}
+
+/* Contact : passage en fond clair (page d'accueil uniquement) */
+.contact-light{background:var(--paper);color:var(--ink)}
+.contact-light .sec-head h2{color:var(--ink)}
+.contact-light .sec-head p{color:var(--grey)}
+.contact-light .c-info{color:var(--ink)}
+.contact-light .c-info .lbl{color:var(--steel)}
+.contact-light .c-info a{color:var(--ink)}
+.contact-light label{color:var(--ink)}
+.contact-light input,.contact-light select,.contact-light textarea{background:#fff;border-color:var(--line);color:var(--ink)}
+.contact-light input::placeholder,.contact-light textarea::placeholder{color:#9AA7B4}
+.contact-light input:focus,.contact-light select:focus,.contact-light textarea:focus{outline-color:var(--steel);border-color:var(--steel)}
+
+/* Ligne d'accès aux attestations (remplace la grille de vignettes) */
+.att-line{display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:6px 14px;text-align:center}
+.att-count{font-family:'IBM Plex Mono';font-size:.92rem;color:var(--grey)}
+.att-open{background:none;border:none;cursor:pointer;font-family:'Inter';font-weight:700;font-size:.95rem;color:var(--cta);padding:6px 4px}
+.att-open:hover{text-decoration:underline}
+.att-open:focus-visible{outline:3px solid var(--steel-light);outline-offset:3px;border-radius:4px}
+.doc-data{display:none}
+
+/* Bandeau final : étincelles orange qui montent lentement */
+.cta-band{position:relative;overflow:hidden}
+.cta-band .container{position:relative;z-index:1}
+.sparks{position:absolute;inset:0;z-index:0;pointer-events:none}
+.sparks i{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:var(--cta);opacity:0;
+  box-shadow:0 0 6px rgba(249,115,22,.6);animation:spark 8s linear infinite}
+.sparks i:nth-child(1){left:7%;animation-delay:0s;animation-duration:8.5s}
+.sparks i:nth-child(2){left:16%;animation-delay:2.4s;animation-duration:9.5s}
+.sparks i:nth-child(3){left:27%;animation-delay:5.1s;animation-duration:7.8s}
+.sparks i:nth-child(4){left:38%;animation-delay:1.2s;animation-duration:10s}
+.sparks i:nth-child(5){left:47%;animation-delay:3.8s;animation-duration:8.2s}
+.sparks i:nth-child(6){left:58%;animation-delay:6.2s;animation-duration:9s}
+.sparks i:nth-child(7){left:68%;animation-delay:.6s;animation-duration:8.8s}
+.sparks i:nth-child(8){left:79%;animation-delay:4.3s;animation-duration:7.6s}
+.sparks i:nth-child(9){left:88%;animation-delay:2.9s;animation-duration:9.8s}
+.sparks i:nth-child(10){left:95%;animation-delay:5.6s;animation-duration:8.4s}
+@keyframes spark{
+  0%{transform:translateY(0) scale(.5);opacity:0}
+  12%{opacity:.55}
+  80%{opacity:.35}
+  100%{transform:translateY(-170px) scale(1);opacity:0}
+}
