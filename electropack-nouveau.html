@@ -17,6 +17,8 @@
   --line:#DDE3E9;
   --steel:#3E6FB0;        /* bleu acier : liens & accents sur fond clair */
   --steel-light:#8FB4E0;  /* bleu acier clair : accents sur fond marine */
+  --cta:#F97316;          /* orange vif : boutons d'action uniquement */
+  --cta-dark:#EA580C;     /* orange survol */
   --radius:6px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -38,12 +40,12 @@ header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px 
 .nav-links a:hover{color:#fff}
 .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
 .btn:focus-visible{outline:3px solid var(--steel-light);outline-offset:2px}
-.btn-solid{background:var(--ink);color:#fff}
-.btn-solid:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(27,58,107,.35)}
-.btn-invert{background:#fff;color:var(--ink)}
-.btn-invert:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.18)}
+.btn-cta{background:var(--cta);color:#fff;font-weight:700}
+.btn-cta:hover{background:var(--cta-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(249,115,22,.45)}
 .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
 .btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-ghost-light{border:1.5px solid rgba(255,255,255,.7);color:#fff}
+.btn-ghost-light:hover{background:#fff;color:var(--ink)}
 .nav .btn{padding:9px 16px}
 .burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
 
@@ -51,7 +53,7 @@ header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px 
 .hero{position:relative;padding:88px 0 72px;overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
 .eyebrow{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.eyebrow::before{content:"";width:34px;height:2px;background:var(--steel)}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--cta)}
 .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.025em;margin-bottom:20px}
 .hero h1 .hl{background:linear-gradient(transparent 62%, var(--steel-light) 62%)}
 .hero p.lede{font-size:1.12rem;color:var(--grey);max-width:32rem;margin-bottom:32px}
@@ -84,7 +86,7 @@ section{padding:80px 0}
 .svc p{font-size:.92rem;color:var(--grey)}
 .svc ul{margin-top:12px;list-style:none}
 .svc li{font-size:.88rem;color:var(--grey);padding-left:18px;position:relative;margin-bottom:5px}
-.svc li::before{content:"—";position:absolute;left:0;color:var(--steel)}
+.svc li::before{content:"—";position:absolute;left:0;color:var(--cta)}
 
 /* Projets */
 .projects{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
@@ -165,7 +167,7 @@ footer a:hover{color:#fff}
         <li><a href="#projets">Réalisations</a></li>
         <li><a href="#pourquoi">Pourquoi nous</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a class="btn btn-invert" href="#contact">Demander un devis</a></li>
+        <li><a class="btn btn-cta" href="#contact">Demander un devis</a></li>
       </ul>
       <button class="burger" aria-label="Ouvrir le menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
     </nav>
@@ -182,7 +184,7 @@ footer a:hover{color:#fff}
         <h1>L'électricité de vos bâtiments, <span class="hl">sans mauvaise surprise.</span></h1>
         <p class="lede">Installations électriques, courants faibles, contrôle d'accès et vidéosurveillance pour hôtels, banques et entreprises au Maroc. 19 ans d'expérience, des chantiers livrés dans les délais.</p>
         <div class="hero-ctas">
-          <a class="btn btn-solid" href="#contact">Demander un devis gratuit</a>
+          <a class="btn btn-cta" href="#contact">Demander un devis gratuit</a>
           <a class="btn btn-ghost" href="#projets">Voir nos réalisations</a>
         </div>
       </div>
@@ -339,7 +341,7 @@ footer a:hover{color:#fff}
           </select>
         </div>
         <div><label for="msg">Décrivez votre besoin</label><textarea id="msg" rows="4"></textarea></div>
-        <button class="btn btn-invert" type="submit">Envoyer ma demande</button>
+        <button class="btn btn-cta" type="submit">Envoyer ma demande</button>
       </form>
     </div>
   </div>
