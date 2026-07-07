@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/style.css">
+<script>document.documentElement.className += ' js';</script>
 </head>
 <body>
 
@@ -19,6 +20,7 @@
     <nav>
       <ul class="nav-links" id="menu">
         <li><a href="#services">Services</a></li>
+        <li><a href="#methode">Méthode</a></li>
         <li><a href="#projets">Réalisations</a></li>
         <li><a href="#pourquoi">Pourquoi nous</a></li>
         <li><a href="#contact">Contact</a></li>
@@ -32,19 +34,32 @@
 
 <main>
 <!-- HERO -->
-<section class="hero">
+<section class="hero hero-home">
+  <svg class="hero-schematic" viewBox="0 0 1200 600" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+    <g fill="none" stroke="#8FB4E0" stroke-width="1.4">
+      <path d="M0 130 H280 V320 H560 V90 H860 V370 H1200"/>
+      <path d="M0 470 H180 V250 H500 V520 H820 V300 H1200"/>
+      <path d="M140 0 V180 H430 V430 H140 Z"/>
+      <path d="M700 600 V420 H980 V210 H1200"/>
+    </g>
+    <g fill="#8FB4E0">
+      <circle cx="280" cy="130" r="5"/><circle cx="560" cy="320" r="5"/><circle cx="860" cy="90" r="5"/>
+      <circle cx="180" cy="470" r="5"/><circle cx="500" cy="250" r="5"/><circle cx="820" cy="520" r="5"/>
+      <circle cx="430" cy="180" r="5"/><circle cx="980" cy="420" r="5"/>
+    </g>
+  </svg>
   <div class="container">
     <div class="hero-grid">
       <div>
         <p class="eyebrow">Casablanca · Depuis 2007</p>
-        <h1>L'électricité de vos bâtiments, <span class="hl">sans mauvaise surprise.</span></h1>
+        <h1 id="heroTitle">L'électricité qui fait tourner vos <span class="rotator"><span class="rot-word">hôtels</span></span>.</h1>
         <p class="lede">Installations électriques, courants faibles, contrôle d'accès et vidéosurveillance pour hôtels, banques et entreprises au Maroc. 19 ans d'expérience, des chantiers livrés dans les délais.</p>
         <div class="hero-ctas">
           <a class="btn btn-cta" href="#contact">Demander un devis gratuit</a>
-          <a class="btn btn-ghost" href="#projets">Voir nos réalisations</a>
+          <a class="btn btn-ghost-light" href="#projets">Voir nos réalisations</a>
         </div>
       </div>
-      <div class="hero-visual" role="img" aria-label="Photo de chantier Electropack (à remplacer)">
+      <div class="hero-visual" role="img" aria-label="Schéma d'installation électrique Electropack">
         <span class="ph-label">[ PHOTO CHANTIER RÉEL À INSÉRER ICI ]</span>
         <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
           <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#8FB4E0" stroke-width="2"/>
@@ -59,8 +74,11 @@
     </div>
     <div class="trust">
       <p>Ils nous font confiance</p>
-      <div class="trust-logos">
-        <span>SOFITEL</span><span>SOCIÉTÉ GÉNÉRALE</span><span>TELEPERFORMANCE</span><span>[ + LOGOS CLIENTS ]</span>
+      <div class="marquee">
+        <div class="marquee-track">
+          <span>SOFITEL</span><span>SOCIÉTÉ GÉNÉRALE</span><span>TELEPERFORMANCE</span><span>[ + VOS RÉFÉRENCES ]</span>
+          <span>SOFITEL</span><span>SOCIÉTÉ GÉNÉRALE</span><span>TELEPERFORMANCE</span><span>[ + VOS RÉFÉRENCES ]</span>
+        </div>
       </div>
     </div>
   </div>
@@ -68,7 +86,7 @@
 
 <!-- CHIFFRES -->
 <div class="stats">
-  <div class="container stats-grid">
+  <div class="container stats-grid reveal stagger">
     <div class="stat"><div class="num" data-count="19">0</div><div class="lbl">années d'expérience</div></div>
     <div class="stat"><div class="num" data-count="120" data-suffix="+">0</div><div class="lbl">projets livrés <em>(à valider)</em></div></div>
     <div class="stat"><div class="num" data-count="10" data-prefix="" data-suffix=" M Dh">0</div><div class="lbl">plus grand projet réalisé</div></div>
@@ -79,11 +97,11 @@
 <!-- SERVICES -->
 <section id="services">
   <div class="container">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <h2>Nos domaines d'intervention</h2>
       <p>De l'étude à la mise en service, une seule équipe responsable de votre installation.</p>
     </div>
-    <div class="svc-grid">
+    <div class="svc-grid reveal stagger">
       <div class="svc">
         <div class="ico">⚡</div>
         <h3>Électricité générale — courants forts</h3>
@@ -118,14 +136,30 @@
   </div>
 </section>
 
+<!-- NOTRE MÉTHODE -->
+<section id="methode" class="methode">
+  <div class="container">
+    <div class="sec-head reveal">
+      <h2>Notre méthode</h2>
+      <p>Une démarche claire et maîtrisée, du premier chiffrage à la réception de votre installation.</p>
+    </div>
+    <div class="timeline">
+      <div class="step"><div class="dot">01</div><h3>Étude &amp; chiffrage</h3><p>Analyse du besoin, visite technique et devis détaillé, transparent et sans engagement.</p></div>
+      <div class="step"><div class="dot">02</div><h3>Planification</h3><p>Planning, approvisionnement et coordination avec les autres corps d'état du chantier.</p></div>
+      <div class="step"><div class="dot">03</div><h3>Exécution &amp; suivi de chantier</h3><p>Installation par nos équipes qualifiées, avec un interlocuteur unique et un suivi régulier.</p></div>
+      <div class="step"><div class="dot">04</div><h3>Essais, réception &amp; garantie</h3><p>Tests, mise en service, réception avec le bureau de contrôle et garantie sur nos travaux.</p></div>
+    </div>
+  </div>
+</section>
+
 <!-- PROJETS -->
 <section id="projets" class="projects">
   <div class="container">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <h2>Réalisations récentes</h2>
       <p>Des chantiers concrets, des montants réels, des clients qui reviennent.</p>
     </div>
-    <div class="proj-grid">
+    <div class="proj-grid reveal stagger">
       <div class="proj">
         <div class="thumb"><span>[ PHOTO PROJET ]</span></div>
         <div class="body">
@@ -157,10 +191,10 @@
 <!-- POURQUOI NOUS -->
 <section id="pourquoi">
   <div class="container">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <h2>Pourquoi les maîtres d'ouvrage nous choisissent</h2>
     </div>
-    <div class="why-grid">
+    <div class="why-grid reveal stagger">
       <div class="why"><span class="n">01</span><div><h3>19 ans sur le terrain</h3><p>Depuis 2007, nous livrons des chantiers pour des donneurs d'ordre exigeants : hôtellerie, banque, tertiaire.</p></div></div>
       <div class="why"><span class="n">02</span><div><h3>Capacité de projets jusqu'à 10 M Dh</h3><p>Une structure dimensionnée pour des lots électricité complets, du CFO au CFA.</p></div></div>
       <div class="why"><span class="n">03</span><div><h3>Un interlocuteur unique</h3><p>Étude, exécution, essais et mise en service : vous suivez votre chantier avec une seule équipe responsable.</p></div></div>
@@ -172,7 +206,7 @@
 <!-- CONTACT -->
 <section id="contact" class="contact">
   <div class="container">
-    <div class="sec-head">
+    <div class="sec-head reveal">
       <h2>Parlons de votre projet</h2>
       <p>Réponse sous 24 h ouvrées. Devis gratuit et sans engagement.</p>
     </div>
@@ -205,14 +239,49 @@
 </section>
 </main>
 
+<!-- BANDEAU FINAL D'APPEL À L'ACTION -->
+<div class="cta-band">
+  <div class="container wrap">
+    <h2>Un projet électrique ? Parlons-en.</h2>
+    <div class="cta-actions">
+      <a class="phone" href="tel:+212522369714">05 22 36 97 14</a>
+      <a class="btn btn-cta" href="#contact">Demander un devis</a>
+    </div>
+  </div>
+</div>
+
 <footer>
-  <div class="container foot">
-    <img class="foot-logo" src="assets/logo-electropack.png" alt="Electropack">
-    <span>© 2026 Electropack — Électricité générale, Casablanca</span>
-    <span class="mono">RC [ N° ] · ICE [ N° ]</span>
-    <a href="#contact">Demander un devis</a>
+  <div class="container">
+    <div class="foot-rich">
+      <div class="foot-col foot-brand">
+        <img class="foot-logo" src="assets/logo-electropack.png" alt="Electropack">
+        <p>Électricité générale, courants faibles, contrôle d'accès et vidéosurveillance pour les professionnels à Casablanca. Depuis 2007.</p>
+      </div>
+      <div class="foot-col">
+        <h4>Nos services</h4>
+        <a href="#services">Électricité générale</a>
+        <a href="#services">Courants faibles</a>
+        <a href="#services">Contrôle d'accès &amp; vidéosurveillance</a>
+      </div>
+      <div class="foot-col">
+        <h4>Contact</h4>
+        <a href="tel:+212522369714">05 22 36 97 14</a>
+        <a href="mailto:contact@electro-pack.ma">contact@electro-pack.ma</a>
+        <p>[ ADRESSE COMPLÈTE ], Casablanca</p>
+        <a href="recrutement.html">Recrutement</a>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 Electropack — Électricité générale, Casablanca</span>
+      <span class="mono">RC [ N° ] · ICE [ N° ]</span>
+    </div>
   </div>
 </footer>
+
+<!-- Retour en haut -->
+<a class="to-top" href="#top" aria-label="Retour en haut de page">
+  <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+</a>
 
 <!-- WhatsApp flottant : remplacer le numéro -->
 <a class="wa" href="https://wa.me/212XXXXXXXXX?text=Bonjour%20Electropack%2C%20je%20souhaite%20un%20devis" aria-label="Contacter Electropack sur WhatsApp" target="_blank" rel="noopener">
@@ -226,17 +295,21 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     const id=a.getAttribute('href').slice(1);
     const target=document.getElementById(id);
     if(target){ev.preventDefault();target.scrollIntoView({behavior:'smooth',block:'start'});}
-    document.getElementById('menu').classList.remove('open');
+    const m=document.getElementById('menu'); if(m) m.classList.remove('open');
   });
 });
 
-// Compteurs animés (déclenchés au scroll)
+// Compteurs animés (déclenchés au scroll) + petit "pop" en fin de comptage
 const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(!e.isIntersecting) return;
     const el=e.target, target=+el.dataset.count, suf=el.dataset.suffix||'', pre=el.dataset.prefix||'';
     let cur=0; const step=Math.max(1,Math.round(target/40));
-    const t=setInterval(()=>{cur+=step; if(cur>=target){cur=target;clearInterval(t);} el.textContent=pre+cur+suf;},30);
+    const t=setInterval(()=>{
+      cur+=step;
+      if(cur>=target){cur=target;clearInterval(t); if(window.__popCounter) window.__popCounter(el);}
+      el.textContent=pre+cur+suf;
+    },30);
     io.unobserve(el);
   });
 },{threshold:.5});
@@ -251,5 +324,6 @@ function sendWA(ev){
   window.open(`https://wa.me/212XXXXXXXXX?text=${txt}`,'_blank');
 }
 </script>
+<script src="assets/enhance.js"></script>
 </body>
 </html>
