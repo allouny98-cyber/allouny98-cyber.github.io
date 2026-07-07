@@ -59,17 +59,55 @@
           <a class="btn btn-ghost-light" href="#projets">Voir nos réalisations</a>
         </div>
       </div>
-      <div class="hero-visual" role="img" aria-label="Schéma d'installation électrique Electropack">
-        <span class="ph-label">[ PHOTO CHANTIER RÉEL À INSÉRER ICI ]</span>
-        <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#8FB4E0" stroke-width="2"/>
-          <circle cx="90" cy="220" r="5" fill="#8FB4E0"/>
-          <circle cx="180" cy="140" r="5" fill="#8FB4E0"/>
-          <circle cx="260" cy="220" r="5" fill="#8FB4E0"/>
-          <circle cx="340" cy="90" r="5" fill="#8FB4E0"/>
-          <path d="M0 260 H400" stroke="#2E4A6B" stroke-width="1"/>
-          <path d="M0 190 H400" stroke="#24405F" stroke-width="1"/>
-        </svg>
+      <div class="hero-visual dash-wrap" role="img" aria-label="Tableau de bord de supervision électrique Electropack : tension réseau 230 V, fréquence 50 Hz, réseau et sécurité actifs.">
+        <div class="dash" id="dash">
+          <div class="dash-inner">
+            <div class="dash-head">
+              <span class="dash-title">SUPERVISION</span>
+              <span class="dash-leds">
+                <span class="led led-green"><i></i>Réseau</span>
+                <span class="led led-green"><i></i>Sécurité</span>
+                <span class="led led-amber"><i></i>Supervision</span>
+              </span>
+            </div>
+            <div class="dash-main">
+              <div class="gauge-wrap">
+                <svg class="gauge" viewBox="0 0 200 118" aria-hidden="true">
+                  <path class="gauge-track" d="M20 100 A80 80 0 0 1 180 100"/>
+                  <path class="gauge-zone" d="M66.19 27.5 A80 80 0 0 1 133.81 27.5"/>
+                  <line class="gauge-tick" x1="20" y1="100" x2="32" y2="100"/>
+                  <line class="gauge-tick" x1="43.43" y1="43.43" x2="51.92" y2="51.92"/>
+                  <line class="gauge-tick maj" x1="100" y1="20" x2="100" y2="38"/>
+                  <line class="gauge-tick" x1="156.57" y1="43.43" x2="148.08" y2="51.92"/>
+                  <line class="gauge-tick" x1="180" y1="100" x2="168" y2="100"/>
+                  <line class="gauge-needle" x1="100" y1="100" x2="100" y2="30"/>
+                  <circle class="gauge-hub" cx="100" cy="100" r="6"/>
+                </svg>
+                <div class="gauge-read"><b id="dV">230</b><span>V</span><em>Réseau 230 V</em></div>
+              </div>
+              <div class="dash-reads">
+                <div class="read"><b id="dHz">50.0<span>Hz</span></b><em>Fréquence</em></div>
+                <div class="read"><b id="dKwh">1 240<span>kWh</span></b><em>Énergie</em></div>
+              </div>
+            </div>
+            <div class="scope-wrap">
+              <svg class="scope" viewBox="0 0 400 90" preserveAspectRatio="none" aria-hidden="true">
+                <g class="scope-grid">
+                  <line x1="0" y1="22.5" x2="400" y2="22.5"/><line x1="0" y1="67.5" x2="400" y2="67.5"/>
+                  <line x1="50" y1="0" x2="50" y2="90"/><line x1="100" y1="0" x2="100" y2="90"/><line x1="150" y1="0" x2="150" y2="90"/><line x1="200" y1="0" x2="200" y2="90"/><line x1="250" y1="0" x2="250" y2="90"/><line x1="300" y1="0" x2="300" y2="90"/><line x1="350" y1="0" x2="350" y2="90"/>
+                </g>
+                <line class="scope-mid" x1="0" y1="45" x2="400" y2="45"/>
+                <path class="scope-wave" d="M0 45 L520 45"/>
+              </svg>
+            </div>
+            <div class="dash-foot">
+              <div class="breakers" aria-hidden="true">
+                <span class="brk on"></span><span class="brk on"></span><span class="brk"></span><span class="brk on"></span><span class="brk on"></span><span class="brk"></span><span class="brk on"></span><span class="brk on"></span>
+              </div>
+              <span class="freq">50 Hz</span>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="trust">

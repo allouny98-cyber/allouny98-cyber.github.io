@@ -353,8 +353,86 @@ html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scale
   .lb-fig img{max-height:80vh}
 }
 
+/* ============================================================
+   HERO — TABLEAU DE BORD ÉLECTRIQUE ANIMÉ (SVG/CSS/vanilla, 60fps)
+   transforms/opacity · pause onglet caché · reduced-motion = statique
+   ============================================================ */
+.hero-home .hero-visual.dash-wrap{align-items:stretch;padding:0;overflow:hidden}
+.dash{display:flex;height:100%;min-height:360px;padding:18px;border-radius:9px;
+  background:linear-gradient(180deg,#0E2038 0%,#0A1830 100%);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),inset 0 0 60px rgba(0,0,0,.35)}
+.dash-inner{display:flex;flex-direction:column;gap:14px;flex:1;min-width:0;will-change:transform;transition:transform .18s ease-out}
+.dash .gauge,.dash .scope{opacity:1}
+
+/* En-tête : titre + voyants LED */
+.dash-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.dash-title{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:var(--steel-light)}
+.dash-leds{display:flex;gap:13px}
+.led{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:#8FA3B8}
+.led i{width:9px;height:9px;border-radius:50%;background:#34D399;box-shadow:0 0 7px #34D399,0 0 2px #34D399;transition:background .3s ease,box-shadow .3s ease,opacity .3s ease}
+.led-amber i{background:var(--cta);box-shadow:0 0 7px var(--cta),0 0 2px var(--cta)}
+/* état éteint pendant la séquence d'allumage */
+.dash.anim .led:not(.lit) i{background:#263a58;box-shadow:none;opacity:.55}
+.dash.anim .led-amber.lit i{animation:ledblink 2.4s ease-in-out infinite}
+@keyframes ledblink{0%,100%{opacity:1}50%{opacity:.32}}
+
+/* Corps : cadran + lectures numériques */
+.dash-main{display:flex;gap:14px;align-items:center;flex:1}
+.gauge-wrap{flex:0 0 auto;width:53%;position:relative;padding-bottom:10px}
+.gauge{width:100%;height:auto;display:block;overflow:visible}
+.gauge-track{fill:none;stroke:rgba(255,255,255,.16);stroke-width:3;stroke-linecap:round}
+.gauge-zone{fill:none;stroke:#34D399;stroke-width:3;stroke-linecap:round;opacity:.55}
+.gauge-tick{stroke:rgba(255,255,255,.35);stroke-width:1.6;stroke-linecap:round}
+.gauge-tick.maj{stroke:var(--cta);stroke-width:2.4}
+.gauge-needle{stroke:var(--cta);stroke-width:2.6;stroke-linecap:round;transform:rotate(0deg);transform-origin:100px 100px;transform-box:view-box}
+.gauge-hub{fill:#dfe8f2}
+.gauge-read{position:absolute;left:0;right:0;bottom:-6px;text-align:center;line-height:1}
+.gauge-read b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:1.35rem;color:#fff}
+.gauge-read span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--steel-light);margin-left:3px}
+.gauge-read em{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#7E93A8;font-style:normal;margin-top:3px}
+
+.dash-reads{flex:1;min-width:0;display:flex;flex-direction:column;gap:11px}
+.read{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:9px 12px}
+.read b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:1.45rem;color:#fff;letter-spacing:.01em}
+.read b span{font-size:.8rem;color:var(--steel-light);margin-left:4px;font-weight:400}
+.read em{display:block;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#7E93A8;font-style:normal;margin-top:2px}
+
+/* Oscilloscope : sinusoïde du courant alternatif qui défile */
+.scope-wrap{height:76px;border:1px solid rgba(255,255,255,.08);border-radius:6px;overflow:hidden;background:rgba(0,0,0,.22);position:relative}
+.scope{position:absolute;inset:0;width:100%;height:100%;display:block}
+.scope-grid{stroke:rgba(255,255,255,.07);stroke-width:1}
+.scope-mid{stroke:rgba(255,255,255,.12);stroke-width:1;stroke-dasharray:3 4}
+.scope-wave{fill:none;stroke:var(--cta);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
+.dash.anim.scope-on .scope-wave{animation:scope 2s linear infinite}
+.dash.paused .scope-wave{animation-play-state:paused}
+.dash.paused .led-amber.lit i{animation-play-state:paused}
+@keyframes scope{to{transform:translateX(-100px)}}
+
+/* Pied : rangée de disjoncteurs + fréquence */
+.dash-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.breakers{display:flex;gap:6px}
+.brk{width:13px;height:26px;border-radius:3px;background:#1B2E49;border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
+.brk::after{content:"";position:absolute;left:2px;right:2px;top:3px;height:9px;border-radius:2px;background:var(--steel-light);transition:top .3s cubic-bezier(.5,0,.4,1.3),background .3s ease}
+.brk.on::after{top:12px;background:var(--cta)}
+.dash-foot .freq{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--steel-light)}
+
+/* Entrée en scène au chargement (fondu du panneau) */
+html.js .hero-home .dash-wrap{opacity:0;transform:translateY(14px)}
+html.js .hero-home .dash-wrap.dash-in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
+
+/* Mobile : version simplifiée (cadran + courbe + voyants) */
+@media (max-width:600px){
+  .dash{min-height:0;padding:16px}
+  .dash-reads,.breakers{display:none}
+  .dash-main{flex-direction:column}
+  .gauge-wrap{width:100%;max-width:210px;margin:0 auto}
+  .dash-foot{justify-content:center}
+}
+
 /* --- Respect de prefers-reduced-motion (sécurité anti-contenu masqué) --- */
 @media (prefers-reduced-motion: reduce){
+  html.js .hero-home .dash-wrap{opacity:1!important;transform:none!important}
+  .gauge-needle{transform:rotate(0deg)}
   html.js .reveal,html.js .reveal.stagger>*{opacity:1!important;transform:none!important}
   html.js .sec-head.reveal h2::after{transform:scaleX(1)!important}
   html.js .hero-home h1 .word{opacity:1!important;transform:none!important}
