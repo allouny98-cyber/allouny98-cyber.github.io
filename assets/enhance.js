@@ -106,4 +106,60 @@
     e.preventDefault();
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
+
+  // --- Carrousel témoignages (scroll-snap + autoplay + pause survol + points) ---
+  var track = D.querySelector('.tst-track');
+  if (track) {
+    var cards = [].slice.call(track.children);
+    var dotsWrap = D.querySelector('.tst-dots');
+    var dots = [];
+    if (dotsWrap) {
+      cards.forEach(function(c, i){
+        var b = D.createElement('button');
+        b.type = 'button';
+        b.setAttribute('aria-label', 'Aller au témoignage ' + (i + 1));
+        b.addEventListener('click', function(){ goTo(i); });
+        dotsWrap.appendChild(b); dots.push(b);
+      });
+    }
+    function step(){ return cards[0].getBoundingClientRect().width + 20; }
+    function current(){ return Math.round(track.scrollLeft / step()); }
+    function goTo(i){ track.scrollTo({ left: i * step(), behavior: reduce ? 'auto' : 'smooth' }); }
+    function update(){ var c = current(); dots.forEach(function(d, i){ d.classList.toggle('active', i === c); }); }
+    track.addEventListener('scroll', function(){ requestAnimationFrame(update); }, { passive: true });
+    update();
+    var timer = null;
+    function next(){
+      var max = track.scrollWidth - track.clientWidth - 2;
+      if (track.scrollLeft >= max) { goTo(0); }
+      else { track.scrollBy({ left: step(), behavior: 'smooth' }); }
+    }
+    function play(){ if (reduce) return; stop(); timer = setInterval(next, 4500); }
+    function stop(){ if (timer) { clearInterval(timer); timer = null; } }
+    track.addEventListener('mouseenter', stop);
+    track.addEventListener('mouseleave', play);
+    track.addEventListener('focusin', stop);
+    track.addEventListener('focusout', play);
+    play();
+  }
+
+  // --- Lightbox attestations (vanilla) ---
+  var lb = D.getElementById('lightbox');
+  if (lb) {
+    var lbImg = lb.querySelector('img'), lbClose = lb.querySelector('.lb-close');
+    function openLb(src, alt){
+      lbImg.src = src; lbImg.alt = alt || 'Attestation de référence';
+      lb.classList.add('open'); D.body.style.overflow = 'hidden';
+    }
+    function closeLb(){
+      lb.classList.remove('open'); D.body.style.overflow = '';
+      setTimeout(function(){ lbImg.src = ''; }, 250);
+    }
+    [].slice.call(D.querySelectorAll('.att-grid button')).forEach(function(b){
+      b.addEventListener('click', function(){ openLb(b.getAttribute('data-full'), b.getAttribute('data-alt')); });
+    });
+    if (lbClose) lbClose.addEventListener('click', closeLb);
+    lb.addEventListener('click', function(e){ if (e.target === lb) closeLb(); });
+    D.addEventListener('keydown', function(e){ if (e.key === 'Escape' && lb.classList.contains('open')) closeLb(); });
+  }
 })();
