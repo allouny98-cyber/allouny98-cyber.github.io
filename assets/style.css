@@ -1,0 +1,157 @@
+:root{
+  --ink:#1B3A6B;          /* bleu marine officiel Electropack (dérivé du logo) */
+  --ink-soft:#2B4F86;     /* marine clair : champs, dégradés */
+  --ink-deep:#12294D;     /* marine profond : footer, dégradés */
+  --paper:#FAFBFC;        /* blanc technique */
+  --grey:#5C6B7A;
+  --line:#DDE3E9;
+  --steel:#3E6FB0;        /* bleu acier : liens & accents sur fond clair */
+  --steel-light:#8FB4E0;  /* bleu acier clair : accents sur fond marine */
+  --cta:#F97316;          /* orange vif : boutons d'action uniquement */
+  --cta-dark:#EA580C;     /* orange survol */
+  --radius:6px;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto} *{animation:none!important;transition:none!important}}
+body{font-family:'Inter',sans-serif;color:var(--ink);background:var(--paper);line-height:1.6;font-size:16px}
+h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1.1}
+.mono{font-family:'IBM Plex Mono',monospace}
+.container{max-width:1120px;margin:0 auto;padding:0 24px}
+a{color:inherit}
+
+/* ---------- Header ---------- */
+header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.12)}
+.nav{display:flex;align-items:center;justify-content:space-between;height:68px}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo img{height:40px;width:auto;display:block}
+.nav-links{display:flex;gap:28px;list-style:none;align-items:center}
+.nav-links a{text-decoration:none;font-weight:500;font-size:.92rem;color:#D8E2EF}
+.nav-links a:hover{color:#fff}
+.nav-links a.active{color:#fff}
+.btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
+.btn:focus-visible{outline:3px solid var(--steel-light);outline-offset:2px}
+.btn-cta{background:var(--cta);color:#fff;font-weight:700}
+.btn-cta:hover{background:var(--cta-dark);transform:translateY(-1px);box-shadow:0 6px 18px rgba(249,115,22,.45)}
+.btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
+.btn-ghost:hover{background:var(--ink);color:#fff}
+.btn-ghost-light{border:1.5px solid rgba(255,255,255,.7);color:#fff}
+.btn-ghost-light:hover{background:#fff;color:var(--ink)}
+.nav .btn{padding:9px 16px}
+.burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
+
+/* ---------- Hero ---------- */
+.hero{position:relative;padding:88px 0 72px;overflow:hidden}
+.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
+.eyebrow{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--cta)}
+.hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.025em;margin-bottom:20px}
+.hero h1 .hl{background:linear-gradient(transparent 62%, var(--steel-light) 62%)}
+.hero p.lede{font-size:1.12rem;color:var(--grey);max-width:32rem;margin-bottom:32px}
+.hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
+.hero-visual{position:relative;min-height:340px;background:var(--ink);border-radius:10px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-visual .ph-label{position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono';font-size:.72rem;color:#8FA3B8;border:1px dashed #35506B;padding:4px 8px;border-radius:4px}
+.hero-visual svg{width:100%;opacity:.9}
+.trust{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.trust p{font-family:'IBM Plex Mono';font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px}
+.trust-logos{display:flex;gap:36px;flex-wrap:wrap;font-family:'Archivo';font-weight:700;font-size:1.05rem;color:#8B99A8}
+
+/* ---------- Chiffres ---------- */
+.stats{background:var(--ink);color:#fff;padding:56px 0}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
+.stat .num{font-family:'IBM Plex Mono';font-size:2.4rem;font-weight:500;color:var(--steel-light)}
+.stat .lbl{font-size:.9rem;color:#B9C7DA;margin-top:4px}
+
+/* ---------- Sections ---------- */
+section{padding:80px 0}
+.sec-head{margin-bottom:44px;max-width:38rem}
+.sec-head h2{font-size:clamp(1.7rem,3.4vw,2.4rem);font-weight:900;letter-spacing:-.02em;margin-bottom:12px}
+.sec-head p{color:var(--grey)}
+
+/* Services */
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.svc{border:1px solid var(--line);border-radius:10px;padding:28px 24px;background:#fff;transition:border-color .15s, transform .15s}
+.svc:hover{border-color:var(--steel);transform:translateY(-3px)}
+.svc .ico{width:44px;height:44px;border-radius:8px;background:var(--ink);color:var(--steel-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:18px}
+.svc h3{font-size:1.08rem;margin-bottom:10px}
+.svc p{font-size:.92rem;color:var(--grey)}
+.svc ul{margin-top:12px;list-style:none}
+.svc li{font-size:.88rem;color:var(--grey);padding-left:18px;position:relative;margin-bottom:5px}
+.svc li::before{content:"—";position:absolute;left:0;color:var(--cta)}
+
+/* Projets */
+.projects{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.proj{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
+.proj .thumb{height:170px;background:linear-gradient(135deg,#2B4F86,#12294D);position:relative}
+.proj .thumb span{position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono';font-size:.7rem;color:#8FA3B8;border:1px dashed #35506B;padding:3px 7px;border-radius:4px}
+.proj .body{padding:20px}
+.proj h3{font-size:1rem;margin-bottom:6px}
+.proj .meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-family:'IBM Plex Mono';font-size:.78rem}
+.proj .meta .amount{color:var(--steel);font-weight:500}
+.proj .meta .year{color:var(--grey)}
+.proj p{font-size:.88rem;color:var(--grey)}
+
+/* Pourquoi nous */
+.why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 40px}
+.why{display:flex;gap:16px;align-items:flex-start}
+.why .n{font-family:'IBM Plex Mono';color:var(--steel);font-size:.85rem;margin-top:3px;white-space:nowrap}
+.why h3{font-size:1.02rem;margin-bottom:4px}
+.why p{font-size:.9rem;color:var(--grey)}
+
+/* Contact / formulaires sur fond marine */
+.contact{background:var(--ink);color:#fff}
+.contact .sec-head h2{color:#fff}
+.contact .sec-head p{color:#B9C7DA}
+.contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px}
+.c-info div{margin-bottom:22px}
+.c-info .lbl{font-family:'IBM Plex Mono';font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-light);margin-bottom:4px}
+.c-info a{color:#fff;text-decoration:none}
+.c-info a:hover{text-decoration:underline}
+form{display:grid;gap:14px}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+label{font-size:.82rem;font-weight:600;color:#C7D3DE;display:block;margin-bottom:6px}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:var(--radius);border:1px solid #3A5680;background:var(--ink-soft);color:#fff;font-family:'Inter';font-size:.95rem}
+input::placeholder,textarea::placeholder{color:#B9C7DA}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--steel-light);border-color:var(--steel-light)}
+input[type=file]{padding:10px 12px;cursor:pointer;color:#C7D3DE}
+input[type=file]::file-selector-button{font-family:'Inter';font-weight:600;border:none;border-radius:4px;padding:8px 14px;margin-right:12px;background:#fff;color:var(--ink);cursor:pointer}
+form .btn{border:none;cursor:pointer;justify-self:start;font-family:'Inter'}
+.form-wrap{max-width:660px;margin:0 auto}
+.form-note{font-size:.8rem;color:#B9C7DA;margin-top:-4px}
+.req{color:var(--cta);font-weight:700}
+
+/* Page merci */
+.thanks{min-height:56vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:16px}
+.thanks .check{width:76px;height:76px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;color:#fff;font-size:2.3rem}
+.thanks h1{font-size:clamp(1.9rem,4vw,2.8rem);font-weight:900}
+.thanks p{color:var(--grey);max-width:34rem}
+
+/* Footer */
+footer{background:var(--ink-deep);color:#9DB2CC;padding:36px 0;font-size:.86rem}
+.foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
+.foot-logo{height:34px;width:auto;opacity:.95}
+footer a{color:#C7D6E6;text-decoration:none}
+footer a:hover{color:#fff}
+
+/* WhatsApp flottant */
+.wa{position:fixed;right:20px;bottom:20px;z-index:60;width:56px;height:56px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 8px 24px rgba(0,0,0,.25);text-decoration:none}
+.wa svg{width:30px;height:30px;fill:#fff}
+.wa:hover{transform:scale(1.06)}
+
+/* Responsive */
+@media (max-width:900px){
+  .hero-grid,.contact-grid{grid-template-columns:1fr}
+  .svc-grid,.proj-grid{grid-template-columns:1fr 1fr}
+  .stats-grid{grid-template-columns:repeat(2,1fr);gap:24px}
+  .why-grid{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .burger{display:block}
+  .nav-links.open{display:flex;position:absolute;top:68px;left:0;right:0;background:var(--ink);flex-direction:column;padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.12);gap:16px;align-items:flex-start}
+}
+@media (max-width:600px){
+  .svc-grid,.proj-grid{grid-template-columns:1fr}
+  .f-row{grid-template-columns:1fr}
+  section{padding:56px 0}
+  .hero{padding:56px 0 48px}
+}
