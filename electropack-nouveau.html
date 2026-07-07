@@ -9,14 +9,14 @@
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 :root{
-  --ink:#1C3B6E;          /* bleu marine du logo Electropack */
-  --ink-soft:#274C86;     /* marine clair (champs, dégradés) */
-  --ink-deep:#122647;     /* marine profond (footer, dégradés) */
+  --ink:#1B3A6B;          /* bleu marine officiel Electropack (dérivé du logo) */
+  --ink-soft:#2B4F86;     /* marine clair : champs, dégradés */
+  --ink-deep:#12294D;     /* marine profond : footer, dégradés */
   --paper:#FAFBFC;        /* blanc technique */
   --grey:#5C6B7A;
   --line:#DDE3E9;
-  --volt:#F28C00;         /* orange accent du logo */
-  --volt-dark:#B85E00;    /* orange foncé (texte sur fond clair) */
+  --steel:#3E6FB0;        /* bleu acier : liens & accents sur fond clair */
+  --steel-light:#8FB4E0;  /* bleu acier clair : accents sur fond marine */
   --radius:6px;
 }
 *{margin:0;padding:0;box-sizing:border-box}
@@ -29,29 +29,31 @@ h1,h2,h3{font-family:'Archivo',sans-serif;line-height:1.1}
 a{color:inherit}
 
 /* ---------- Header ---------- */
-header{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.92);backdrop-filter:blur(8px);border-bottom:1px solid var(--line);border-top:3px solid var(--volt)}
+header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px solid rgba(255,255,255,.12)}
 .nav{display:flex;align-items:center;justify-content:space-between;height:68px}
-.logo{font-family:'Archivo';font-weight:900;font-size:1.3rem;letter-spacing:-.02em;text-decoration:none;display:flex;align-items:center;gap:8px}
-.logo .bolt{width:22px;height:22px;background:var(--volt);display:inline-flex;align-items:center;justify-content:center;border-radius:3px;font-size:.9rem}
+.logo{display:flex;align-items:center;text-decoration:none}
+.logo img{height:40px;width:auto;display:block}
 .nav-links{display:flex;gap:28px;list-style:none;align-items:center}
-.nav-links a{text-decoration:none;font-weight:500;font-size:.92rem;color:var(--grey)}
-.nav-links a:hover{color:var(--ink)}
+.nav-links a{text-decoration:none;font-weight:500;font-size:.92rem;color:#D8E2EF}
+.nav-links a:hover{color:#fff}
 .btn{display:inline-block;text-decoration:none;font-weight:600;font-size:.95rem;padding:12px 22px;border-radius:var(--radius);transition:transform .15s ease, box-shadow .15s ease}
-.btn:focus-visible{outline:3px solid var(--volt);outline-offset:2px}
-.btn-volt{background:var(--volt);color:var(--ink)}
-.btn-volt:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(242,140,0,.38)}
+.btn:focus-visible{outline:3px solid var(--steel-light);outline-offset:2px}
+.btn-solid{background:var(--ink);color:#fff}
+.btn-solid:hover{transform:translateY(-1px);box-shadow:0 6px 18px rgba(27,58,107,.35)}
+.btn-invert{background:#fff;color:var(--ink)}
+.btn-invert:hover{transform:translateY(-1px);box-shadow:0 8px 20px rgba(0,0,0,.18)}
 .btn-ghost{border:1.5px solid var(--ink);color:var(--ink)}
 .btn-ghost:hover{background:var(--ink);color:#fff}
 .nav .btn{padding:9px 16px}
-.burger{display:none;background:none;border:none;font-size:1.6rem;cursor:pointer}
+.burger{display:none;background:none;border:none;color:#fff;font-size:1.6rem;cursor:pointer}
 
 /* ---------- Hero ---------- */
 .hero{position:relative;padding:88px 0 72px;overflow:hidden}
 .hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
-.eyebrow{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--volt-dark);display:flex;align-items:center;gap:10px;margin-bottom:18px}
-.eyebrow::before{content:"";width:34px;height:2px;background:var(--volt)}
+.eyebrow{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:10px;margin-bottom:18px}
+.eyebrow::before{content:"";width:34px;height:2px;background:var(--steel)}
 .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.025em;margin-bottom:20px}
-.hero h1 .hl{background:linear-gradient(transparent 62%, var(--volt) 62%)}
+.hero h1 .hl{background:linear-gradient(transparent 62%, var(--steel-light) 62%)}
 .hero p.lede{font-size:1.12rem;color:var(--grey);max-width:32rem;margin-bottom:32px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
 .hero-visual{position:relative;min-height:340px;background:var(--ink);border-radius:10px;display:flex;align-items:flex-end;overflow:hidden}
@@ -64,8 +66,8 @@ header{position:sticky;top:0;z-index:50;background:rgba(250,251,252,.92);backdro
 /* ---------- Chiffres ---------- */
 .stats{background:var(--ink);color:#fff;padding:56px 0}
 .stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:32px}
-.stat .num{font-family:'IBM Plex Mono';font-size:2.4rem;font-weight:500;color:var(--volt)}
-.stat .lbl{font-size:.9rem;color:#9FB2C4;margin-top:4px}
+.stat .num{font-family:'IBM Plex Mono';font-size:2.4rem;font-weight:500;color:var(--steel-light)}
+.stat .lbl{font-size:.9rem;color:#B9C7DA;margin-top:4px}
 
 /* ---------- Sections ---------- */
 section{padding:80px 0}
@@ -76,54 +78,56 @@ section{padding:80px 0}
 /* Services */
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .svc{border:1px solid var(--line);border-radius:10px;padding:28px 24px;background:#fff;transition:border-color .15s, transform .15s}
-.svc:hover{border-color:var(--volt);transform:translateY(-3px)}
-.svc .ico{width:44px;height:44px;border-radius:8px;background:var(--ink);color:var(--volt);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:18px}
+.svc:hover{border-color:var(--steel);transform:translateY(-3px)}
+.svc .ico{width:44px;height:44px;border-radius:8px;background:var(--ink);color:var(--steel-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:18px}
 .svc h3{font-size:1.08rem;margin-bottom:10px}
 .svc p{font-size:.92rem;color:var(--grey)}
 .svc ul{margin-top:12px;list-style:none}
 .svc li{font-size:.88rem;color:var(--grey);padding-left:18px;position:relative;margin-bottom:5px}
-.svc li::before{content:"—";position:absolute;left:0;color:var(--volt-dark)}
+.svc li::before{content:"—";position:absolute;left:0;color:var(--steel)}
 
 /* Projets */
 .projects{background:#fff;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .proj{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
-.proj .thumb{height:170px;background:linear-gradient(135deg,#274C86,#122647);position:relative}
+.proj .thumb{height:170px;background:linear-gradient(135deg,#2B4F86,#12294D);position:relative}
 .proj .thumb span{position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono';font-size:.7rem;color:#8FA3B8;border:1px dashed #35506B;padding:3px 7px;border-radius:4px}
 .proj .body{padding:20px}
 .proj h3{font-size:1rem;margin-bottom:6px}
 .proj .meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-family:'IBM Plex Mono';font-size:.78rem}
-.proj .meta .amount{color:var(--volt-dark);font-weight:500}
+.proj .meta .amount{color:var(--steel);font-weight:500}
 .proj .meta .year{color:var(--grey)}
 .proj p{font-size:.88rem;color:var(--grey)}
 
 /* Pourquoi nous */
 .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 40px}
 .why{display:flex;gap:16px;align-items:flex-start}
-.why .n{font-family:'IBM Plex Mono';color:var(--volt-dark);font-size:.85rem;margin-top:3px;white-space:nowrap}
+.why .n{font-family:'IBM Plex Mono';color:var(--steel);font-size:.85rem;margin-top:3px;white-space:nowrap}
 .why h3{font-size:1.02rem;margin-bottom:4px}
 .why p{font-size:.9rem;color:var(--grey)}
 
 /* Contact */
 .contact{background:var(--ink);color:#fff}
 .contact .sec-head h2{color:#fff}
-.contact .sec-head p{color:#9FB2C4}
+.contact .sec-head p{color:#B9C7DA}
 .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:48px}
 .c-info div{margin-bottom:22px}
-.c-info .lbl{font-family:'IBM Plex Mono';font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--volt);margin-bottom:4px}
+.c-info .lbl{font-family:'IBM Plex Mono';font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--steel-light);margin-bottom:4px}
 .c-info a{color:#fff;text-decoration:none}
 .c-info a:hover{text-decoration:underline}
 form{display:grid;gap:14px}
 .f-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 label{font-size:.82rem;font-weight:600;color:#C7D3DE;display:block;margin-bottom:6px}
-input,select,textarea{width:100%;padding:12px 14px;border-radius:var(--radius);border:1px solid #2C4257;background:var(--ink-soft);color:#fff;font-family:'Inter';font-size:.95rem}
-input:focus,select:focus,textarea:focus{outline:2px solid var(--volt);border-color:var(--volt)}
+input,select,textarea{width:100%;padding:12px 14px;border-radius:var(--radius);border:1px solid #3A5680;background:var(--ink-soft);color:#fff;font-family:'Inter';font-size:.95rem}
+input::placeholder,textarea::placeholder{color:#B9C7DA}
+input:focus,select:focus,textarea:focus{outline:2px solid var(--steel-light);border-color:var(--steel-light)}
 form .btn{border:none;cursor:pointer;justify-self:start;font-family:'Inter'}
 
 /* Footer */
-footer{background:var(--ink-deep);color:#8CA0BC;padding:36px 0;font-size:.86rem}
+footer{background:var(--ink-deep);color:#9DB2CC;padding:36px 0;font-size:.86rem}
 .foot{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;align-items:center}
-footer a{color:#B9C8D6;text-decoration:none}
+.foot-logo{height:34px;width:auto;opacity:.95}
+footer a{color:#C7D6E6;text-decoration:none}
 footer a:hover{color:#fff}
 
 /* WhatsApp flottant */
@@ -139,7 +143,7 @@ footer a:hover{color:#fff}
   .why-grid{grid-template-columns:1fr}
   .nav-links{display:none}
   .burger{display:block}
-  .nav-links.open{display:flex;position:absolute;top:68px;left:0;right:0;background:var(--paper);flex-direction:column;padding:20px 24px;border-bottom:1px solid var(--line);gap:16px;align-items:flex-start}
+  .nav-links.open{display:flex;position:absolute;top:68px;left:0;right:0;background:var(--ink);flex-direction:column;padding:20px 24px;border-bottom:1px solid rgba(255,255,255,.12);gap:16px;align-items:flex-start}
 }
 @media (max-width:600px){
   .svc-grid,.proj-grid{grid-template-columns:1fr}
@@ -150,16 +154,18 @@ footer a:hover{color:#fff}
 </head>
 <body>
 
-<header>
+<header id="top">
   <div class="container nav">
-    <a class="logo" href="#"><span class="bolt">⚡</span>ELECTROPACK</a>
+    <a class="logo" href="#top" aria-label="Electropack — retour en haut de page">
+      <img src="assets/logo-electropack.png" alt="Electropack">
+    </a>
     <nav>
       <ul class="nav-links" id="menu">
         <li><a href="#services">Services</a></li>
         <li><a href="#projets">Réalisations</a></li>
         <li><a href="#pourquoi">Pourquoi nous</a></li>
         <li><a href="#contact">Contact</a></li>
-        <li><a class="btn btn-volt" href="#contact">Demander un devis</a></li>
+        <li><a class="btn btn-invert" href="#contact">Demander un devis</a></li>
       </ul>
       <button class="burger" aria-label="Ouvrir le menu" onclick="document.getElementById('menu').classList.toggle('open')">☰</button>
     </nav>
@@ -176,20 +182,20 @@ footer a:hover{color:#fff}
         <h1>L'électricité de vos bâtiments, <span class="hl">sans mauvaise surprise.</span></h1>
         <p class="lede">Installations électriques, courants faibles, contrôle d'accès et vidéosurveillance pour hôtels, banques et entreprises au Maroc. 19 ans d'expérience, des chantiers livrés dans les délais.</p>
         <div class="hero-ctas">
-          <a class="btn btn-volt" href="#contact">Demander un devis gratuit</a>
+          <a class="btn btn-solid" href="#contact">Demander un devis gratuit</a>
           <a class="btn btn-ghost" href="#projets">Voir nos réalisations</a>
         </div>
       </div>
       <div class="hero-visual" role="img" aria-label="Photo de chantier Electropack (à remplacer)">
         <span class="ph-label">[ PHOTO CHANTIER RÉEL À INSÉRER ICI ]</span>
         <svg viewBox="0 0 400 300" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-          <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#F28C00" stroke-width="2"/>
-          <circle cx="90" cy="220" r="5" fill="#F28C00"/>
-          <circle cx="180" cy="140" r="5" fill="#F28C00"/>
-          <circle cx="260" cy="220" r="5" fill="#F28C00"/>
-          <circle cx="340" cy="90" r="5" fill="#F28C00"/>
-          <path d="M0 260 H400" stroke="#22384E" stroke-width="1"/>
-          <path d="M0 190 H400" stroke="#16283A" stroke-width="1"/>
+          <path d="M0 220 H90 V140 H180 V220 H260 V90 H340 V220 H400" fill="none" stroke="#8FB4E0" stroke-width="2"/>
+          <circle cx="90" cy="220" r="5" fill="#8FB4E0"/>
+          <circle cx="180" cy="140" r="5" fill="#8FB4E0"/>
+          <circle cx="260" cy="220" r="5" fill="#8FB4E0"/>
+          <circle cx="340" cy="90" r="5" fill="#8FB4E0"/>
+          <path d="M0 260 H400" stroke="#2E4A6B" stroke-width="1"/>
+          <path d="M0 190 H400" stroke="#24405F" stroke-width="1"/>
         </svg>
       </div>
     </div>
@@ -333,7 +339,7 @@ footer a:hover{color:#fff}
           </select>
         </div>
         <div><label for="msg">Décrivez votre besoin</label><textarea id="msg" rows="4"></textarea></div>
-        <button class="btn btn-volt" type="submit">Envoyer ma demande</button>
+        <button class="btn btn-invert" type="submit">Envoyer ma demande</button>
       </form>
     </div>
   </div>
@@ -342,6 +348,7 @@ footer a:hover{color:#fff}
 
 <footer>
   <div class="container foot">
+    <img class="foot-logo" src="assets/logo-electropack.png" alt="Electropack">
     <span>© 2026 Electropack — Électricité générale, Casablanca</span>
     <span class="mono">RC [ N° ] · ICE [ N° ]</span>
     <a href="#contact">Demander un devis</a>
