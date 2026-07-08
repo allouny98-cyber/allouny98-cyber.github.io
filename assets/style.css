@@ -42,17 +42,13 @@ header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px 
 
 /* ---------- Hero ---------- */
 .hero{position:relative;padding:88px 0 72px;overflow:hidden}
-.hero-grid{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center}
 .eyebrow{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.12em;text-transform:uppercase;color:var(--steel);display:flex;align-items:center;gap:10px;margin-bottom:18px}
 .eyebrow::before{content:"";width:34px;height:2px;background:var(--cta)}
 .hero h1{font-size:clamp(2.2rem,5vw,3.6rem);font-weight:900;letter-spacing:-.025em;margin-bottom:20px}
 .hero h1 .hl{background:linear-gradient(transparent 62%, var(--steel-light) 62%)}
 .hero p.lede{font-size:1.12rem;color:var(--grey);max-width:32rem;margin-bottom:32px}
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
-.hero-visual{position:relative;min-height:340px;background:var(--ink);border-radius:10px;display:flex;align-items:flex-end;overflow:hidden}
-.hero-visual .ph-label{position:absolute;top:14px;left:14px;font-family:'IBM Plex Mono';font-size:.72rem;color:#8FA3B8;border:1px dashed #35506B;padding:4px 8px;border-radius:4px}
-.hero-visual svg{width:100%;opacity:.9}
-.trust{margin-top:56px;padding-top:28px;border-top:1px solid var(--line)}
+.trust{margin-top:0;padding-top:0;border-top:0}
 .trust p{font-family:'IBM Plex Mono';font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px}
 .trust-logos{display:flex;gap:36px;flex-wrap:wrap;font-family:'Archivo';font-weight:700;font-size:1.05rem;color:#8B99A8}
 
@@ -141,7 +137,7 @@ footer a:hover{color:#fff}
 
 /* Responsive */
 @media (max-width:900px){
-  .hero-grid,.contact-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
   .svc-grid,.proj-grid{grid-template-columns:1fr 1fr}
   .stats-grid{grid-template-columns:repeat(2,1fr);gap:24px}
   .why-grid{grid-template-columns:1fr}
@@ -177,20 +173,11 @@ html.js .sec-head.reveal h2::after{transform:scaleX(0)}
 html.js .sec-head.reveal.in h2::after{transform:scaleX(1);transition:transform .6s ease .2s}
 
 /* --- 2. Hero premium (accueil uniquement) --- */
-.hero-home{background:radial-gradient(120% 130% at 82% 0%,#284674 0%,var(--ink) 46%,var(--ink-deep) 100%);color:#fff}
+.hero-home{background:var(--ink-deep);color:#fff}
 .hero-home .container{position:relative;z-index:1}
-.hero-schematic{position:absolute;inset:0;width:100%;height:100%;opacity:.06;z-index:0;pointer-events:none}
-.hero-schematic path{stroke-dasharray:1600;stroke-dashoffset:1600;animation:trace 15s linear infinite alternate}
-.hero-schematic path:nth-child(2){animation-duration:18s;animation-delay:-4s}
-.hero-schematic path:nth-child(3){animation-duration:13s;animation-delay:-7s}
-.hero-schematic path:nth-child(4){animation-duration:20s;animation-delay:-2s}
-@keyframes trace{to{stroke-dashoffset:0}}
 .hero-home .eyebrow{color:var(--steel-light)}
 .hero-home h1{color:#fff}
 .hero-home p.lede{color:#C7D3DE}
-.hero-home .hero-visual{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.14)}
-.hero-home .trust{border-top-color:rgba(255,255,255,.14)}
-.hero-home .trust p{color:#8FA3B8}
 
 /* Titre mot par mot */
 html.js .hero-home h1 .word{display:inline-block;opacity:0;transform:translateY(14px)}
@@ -354,89 +341,74 @@ html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scale
 }
 
 /* ============================================================
-   HERO — TABLEAU DE BORD ÉLECTRIQUE ANIMÉ (SVG/CSS/vanilla, 60fps)
-   transforms/opacity · pause onglet caché · reduced-motion = statique
+   HERO — SLIDER PLEIN ÉCRAN (crossfade + effet Ken Burns)
+   fondu enchaîné 1s · zoom lent 1.0→1.08 · voile marine · 60fps
+   transforms/opacity uniquement · reduced-motion = image fixe
    ============================================================ */
-.hero-home .hero-visual.dash-wrap{align-items:stretch;padding:0;overflow:hidden}
-.dash{display:flex;height:100%;min-height:360px;padding:18px;border-radius:9px;
-  background:linear-gradient(180deg,#0E2038 0%,#0A1830 100%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.05),inset 0 0 60px rgba(0,0,0,.35)}
-.dash-inner{display:flex;flex-direction:column;gap:14px;flex:1;min-width:0;will-change:transform;transition:transform .18s ease-out}
-.dash .gauge,.dash .scope{opacity:1}
+.hero-slider{position:relative;min-height:90vh;display:flex;align-items:center;
+  padding:0;overflow:hidden;background:var(--ink-deep)}
+.hero-slides{position:absolute;inset:0;z-index:0}
+.hero-slide{position:absolute;inset:0;opacity:0;
+  background-image:var(--img,none),var(--fallback);
+  background-size:cover,cover;background-position:center,center;background-repeat:no-repeat;
+  transition:opacity 1s ease-in-out;will-change:opacity}
+.hero-slide.is-active{opacity:1;z-index:1}
+/* Dégradés marine temporaires (visibles tant qu'aucune image n'est déposée dans assets/hero/) */
+.hero-slide:nth-child(1){--fallback:linear-gradient(125deg,#0a1730 0%,#1b3a6b 60%,#2b4f86 100%)}
+.hero-slide:nth-child(2){--fallback:linear-gradient(125deg,#0c1a32 0%,#284674 55%,#1b3a6b 100%)}
+.hero-slide:nth-child(3){--fallback:linear-gradient(125deg,#0a1830 0%,#12294d 50%,#2b4f86 100%)}
+.hero-slide:nth-child(4){--fallback:linear-gradient(125deg,#0e2038 0%,#1b3a6b 55%,#3E6FB0 100%)}
 
-/* En-tête : titre + voyants LED */
-.dash-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.dash-title{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.16em;color:var(--steel-light)}
-.dash-leds{display:flex;gap:13px}
-.led{display:flex;align-items:center;gap:6px;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.05em;text-transform:uppercase;color:#8FA3B8}
-.led i{width:9px;height:9px;border-radius:50%;background:#34D399;box-shadow:0 0 7px #34D399,0 0 2px #34D399;transition:background .3s ease,box-shadow .3s ease,opacity .3s ease}
-.led-amber i{background:var(--cta);box-shadow:0 0 7px var(--cta),0 0 2px var(--cta)}
-/* état éteint pendant la séquence d'allumage */
-.dash.anim .led:not(.lit) i{background:#263a58;box-shadow:none;opacity:.55}
-.dash.anim .led-amber.lit i{animation:ledblink 2.4s ease-in-out infinite}
-@keyframes ledblink{0%,100%{opacity:1}50%{opacity:.32}}
+/* Effet Ken Burns : zoom + léger déplacement pendant toute la durée du slide */
+@keyframes kenburns{from{transform:scale(1.001) translate3d(0,0,0)}to{transform:scale(1.08) translate3d(-1.6%,-1.2%,0)}}
+html.js .hero-slide.is-active{animation:kenburns 6s ease-out both}
 
-/* Corps : cadran + lectures numériques */
-.dash-main{display:flex;gap:14px;align-items:center;flex:1}
-.gauge-wrap{flex:0 0 auto;width:53%;position:relative;padding-bottom:10px}
-.gauge{width:100%;height:auto;display:block;overflow:visible}
-.gauge-track{fill:none;stroke:rgba(255,255,255,.16);stroke-width:3;stroke-linecap:round}
-.gauge-zone{fill:none;stroke:#34D399;stroke-width:3;stroke-linecap:round;opacity:.55}
-.gauge-tick{stroke:rgba(255,255,255,.35);stroke-width:1.6;stroke-linecap:round}
-.gauge-tick.maj{stroke:var(--cta);stroke-width:2.4}
-.gauge-needle{stroke:var(--cta);stroke-width:2.6;stroke-linecap:round;transform:rotate(0deg);transform-origin:100px 100px;transform-box:view-box}
-.gauge-hub{fill:#dfe8f2}
-.gauge-read{position:absolute;left:0;right:0;bottom:-6px;text-align:center;line-height:1}
-.gauge-read b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:1.35rem;color:#fff}
-.gauge-read span{font-family:'IBM Plex Mono',monospace;font-size:.72rem;color:var(--steel-light);margin-left:3px}
-.gauge-read em{display:block;font-family:'IBM Plex Mono',monospace;font-size:.58rem;letter-spacing:.14em;text-transform:uppercase;color:#7E93A8;font-style:normal;margin-top:3px}
+/* Voile marine : opaque à gauche → semi-transparent à droite + léger scrim bas */
+.hero-veil{position:absolute;inset:0;z-index:2;pointer-events:none;
+  background:
+    linear-gradient(90deg,rgba(9,18,36,.95) 0%,rgba(11,24,46,.82) 36%,rgba(14,30,58,.52) 72%,rgba(16,34,66,.34) 100%),
+    linear-gradient(180deg,rgba(9,18,36,0) 58%,rgba(9,18,36,.5) 100%)}
 
-.dash-reads{flex:1;min-width:0;display:flex;flex-direction:column;gap:11px}
-.read{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08);border-radius:6px;padding:9px 12px}
-.read b{font-family:'IBM Plex Mono',monospace;font-weight:500;font-size:1.45rem;color:#fff;letter-spacing:.01em}
-.read b span{font-size:.8rem;color:var(--steel-light);margin-left:4px;font-weight:400}
-.read em{display:block;font-family:'IBM Plex Mono',monospace;font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:#7E93A8;font-style:normal;margin-top:2px}
+/* Contenu texte par-dessus */
+.hero-slider .container{position:relative;z-index:3;width:100%}
+.hero-slider-content{max-width:640px;padding:104px 0}
+.hero-slider .eyebrow{color:var(--steel-light)}
+.hero-slider h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
+.hero-slider p.lede{color:#DCE6F1;text-shadow:0 1px 12px rgba(0,0,0,.35)}
 
-/* Oscilloscope : sinusoïde du courant alternatif qui défile */
-.scope-wrap{height:76px;border:1px solid rgba(255,255,255,.08);border-radius:6px;overflow:hidden;background:rgba(0,0,0,.22);position:relative}
-.scope{position:absolute;inset:0;width:100%;height:100%;display:block}
-.scope-grid{stroke:rgba(255,255,255,.07);stroke-width:1}
-.scope-mid{stroke:rgba(255,255,255,.12);stroke-width:1;stroke-dasharray:3 4}
-.scope-wave{fill:none;stroke:var(--cta);stroke-width:1.6;stroke-linejoin:round;stroke-linecap:round}
-.dash.anim.scope-on .scope-wave{animation:scope 2s linear infinite}
-.dash.paused .scope-wave{animation-play-state:paused}
-.dash.paused .led-amber.lit i{animation-play-state:paused}
-@keyframes scope{to{transform:translateX(-100px)}}
+/* Points de navigation discrets */
+.hero-dots{position:absolute;left:0;right:0;bottom:24px;z-index:4;
+  display:flex;justify-content:center;gap:11px}
+.hero-dots button{width:9px;height:9px;padding:0;border:0;border-radius:50%;cursor:pointer;
+  background:rgba(255,255,255,.42);box-shadow:0 1px 4px rgba(0,0,0,.4);
+  transition:background .3s ease,transform .3s ease}
+.hero-dots button:hover{background:rgba(255,255,255,.7)}
+.hero-dots button.active{background:var(--cta);transform:scale(1.3)}
+.hero-dots button:focus-visible{outline:2px solid var(--steel-light);outline-offset:3px}
 
-/* Pied : rangée de disjoncteurs + fréquence */
-.dash-foot{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.breakers{display:flex;gap:6px}
-.brk{width:13px;height:26px;border-radius:3px;background:#1B2E49;border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden}
-.brk::after{content:"";position:absolute;left:2px;right:2px;top:3px;height:9px;border-radius:2px;background:var(--steel-light);transition:top .3s cubic-bezier(.5,0,.4,1.3),background .3s ease}
-.brk.on::after{top:12px;background:var(--cta)}
-.dash-foot .freq{font-family:'IBM Plex Mono',monospace;font-size:.72rem;letter-spacing:.08em;color:var(--steel-light)}
+/* Bandeau clients défilant, juste sous le hero */
+.trust-band{background:var(--ink);border-bottom:1px solid rgba(255,255,255,.1)}
+.trust-band .trust{padding:22px 0}
+.trust-band .trust p{color:#8FA3B8}
 
-/* Entrée en scène au chargement (fondu du panneau) */
-html.js .hero-home .dash-wrap{opacity:0;transform:translateY(14px)}
-html.js .hero-home .dash-wrap.dash-in{opacity:1;transform:none;transition:opacity .6s ease,transform .6s ease}
-
-/* Mobile : version simplifiée (cadran + courbe + voyants) */
+/* Mobile : slider plus court, Ken Burns conservé, texte lisible */
+@media (max-width:700px){
+  .hero-veil{background:
+    linear-gradient(90deg,rgba(9,18,36,.92) 0%,rgba(11,24,46,.82) 55%,rgba(13,28,54,.66) 100%),
+    linear-gradient(180deg,rgba(9,18,36,0) 55%,rgba(9,18,36,.5) 100%)}
+}
 @media (max-width:600px){
-  .dash{min-height:0;padding:16px}
-  .dash-reads,.breakers{display:none}
-  .dash-main{flex-direction:column}
-  .gauge-wrap{width:100%;max-width:210px;margin:0 auto}
-  .dash-foot{justify-content:center}
+  .hero-slider{min-height:70vh}
+  .hero-slider-content{padding:72px 0}
 }
 
-/* --- Respect de prefers-reduced-motion (sécurité anti-contenu masqué) --- */
+/* --- Respect de prefers-reduced-motion : image fixe, pas de zoom ni de slider --- */
 @media (prefers-reduced-motion: reduce){
-  html.js .hero-home .dash-wrap{opacity:1!important;transform:none!important}
-  .gauge-needle{transform:rotate(0deg)}
+  html.js .hero-slide.is-active{animation:none;transform:none}
+  .hero-slide{transition:none}
   html.js .reveal,html.js .reveal.stagger>*{opacity:1!important;transform:none!important}
   html.js .sec-head.reveal h2::after{transform:scaleX(1)!important}
   html.js .hero-home h1 .word{opacity:1!important;transform:none!important}
-  .hero-schematic path{stroke-dashoffset:0}
   .timeline.in .step .dot{background:var(--cta);border-color:var(--cta);color:#fff}
   .timeline.in::after{width:75%}
   .tslide{transition:none}

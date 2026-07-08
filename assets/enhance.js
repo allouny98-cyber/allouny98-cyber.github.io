@@ -95,13 +95,10 @@
 
   // --- 7. Header compact au scroll + bouton retour en haut ---
   var header = D.querySelector('header'), toTop = D.querySelector('.to-top');
-  var heroSchem = D.querySelector('.hero-schematic');
   function onScroll(){
     var y = window.pageYOffset || D.documentElement.scrollTop || 0;
     if (header) header.classList.toggle('scrolled', y > 20);
     if (toTop) toTop.classList.toggle('show', y > window.innerHeight * 0.9);
-    // Parallaxe très discrète du schéma de fond du hero (max 30px, transform only)
-    if (heroSchem && !reduce) heroSchem.style.transform = 'translate3d(0,' + Math.min(30, y * 0.06).toFixed(1) + 'px,0)';
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
@@ -189,93 +186,41 @@
     });
   }
 
-  // --- Tableau de bord électrique du hero (SVG/CSS, 60fps, pause si onglet caché / hors-écran) ---
-  var dash = D.getElementById('dash');
-  if (dash) {
-    var dwrap = dash.parentNode;                 // .hero-visual.dash-wrap
-    var inner = dash.querySelector('.dash-inner');
-    var needle = dash.querySelector('.gauge-needle');
-    var wave = dash.querySelector('.scope-wave');
-    var vOut = D.getElementById('dV'), hzOut = D.getElementById('dHz'), kwhOut = D.getElementById('dKwh');
-    var leds = [].slice.call(dash.querySelectorAll('.led'));
-    var brks = [].slice.call(dash.querySelectorAll('.brk'));
+  // --- Hero slider plein écran (crossfade + Ken Burns, auto 5s, pause au survol) ---
+  var hslider = D.getElementById('heroSlider');
+  if (hslider) {
+    var hslides = [].slice.call(hslider.querySelectorAll('.hero-slide'));
+    var hdotsWrap = hslider.querySelector('.hero-dots');
+    // reduced-motion ou une seule image : on laisse la 1re image fixe, sans slider ni points
+    if (hslides.length > 1 && !reduce) {
+      var hcur = 0, hdots = [], htimer = null;
 
-    // Sinusoïde (courant alternatif) : forme générée une seule fois, période 100
-    if (wave) {
-      var lam = 100, amp = 24, midY = 45, tot = 520, dd = 'M0 ' + midY;
-      for (var wx = 4; wx <= tot; wx += 4) {
-        dd += ' L' + wx + ' ' + (midY - amp * Math.sin(2 * Math.PI * wx / lam)).toFixed(2);
-      }
-      wave.setAttribute('d', dd);
-    }
-    function fmt(n){ return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ' '); }
-    function setHz(v){ if (hzOut) hzOut.innerHTML = v.toFixed(1) + '<span>Hz</span>'; }
-    function setKwh(v){ if (kwhOut) kwhOut.innerHTML = fmt(v) + '<span>kWh</span>'; }
-    var kwh = 1240;
+      var hshow = function(i){
+        hcur = (i + hslides.length) % hslides.length;
+        hslides.forEach(function(s, j){ s.classList.toggle('is-active', j === hcur); });
+        hdots.forEach(function(d, j){ d.classList.toggle('active', j === hcur); });
+      };
+      var hstop = function(){ if (htimer) { clearInterval(htimer); htimer = null; } };
+      var hplay = function(){ hstop(); htimer = setInterval(function(){ hshow(hcur + 1); }, 5000); };
+      var hrestart = function(){ hstop(); hplay(); };
 
-    if (reduce) {
-      // Version statique : panneau visible, aiguille à 230 V, voyants allumés (CSS par défaut)
-      dwrap.classList.add('dash-in');
-      if (needle) needle.style.transform = 'rotate(0deg)';
-    } else {
-      dash.classList.add('anim');
-      requestAnimationFrame(function(){ dwrap.classList.add('dash-in'); });
-      if (needle) needle.style.transform = 'rotate(-90deg)';          // départ : 0 V
-      // Séquence d'allumage (~1,5 s) : voyants un par un, puis la courbe
-      setTimeout(function(){ leds[0] && leds[0].classList.add('lit'); }, 350);
-      setTimeout(function(){ leds[1] && leds[1].classList.add('lit'); }, 700);
-      setTimeout(function(){ leds[2] && leds[2].classList.add('lit'); }, 1050);
-      setTimeout(function(){ dash.classList.add('scope-on'); }, 600);
-
-      var bootStart = performance.now(), BOOT = 1250, angle = -90;
-      var running = false, visible = !D.hidden, inView = true;
-      var lastNum = 0, brkTimer = null, rafId = 0;
-
-      function frame(now){
-        if (!running) return;
-        var bp = Math.min(1, (now - bootStart) / BOOT);
-        var base = -90 + (1 - Math.pow(1 - bp, 3)) * 90;            // 0 V -> 230 V (ease-out)
-        var wob = bp >= 1 ? Math.sin(now / 680) * 3.2 + (Math.random() - 0.5) * 1.1 : 0;
-        angle += ((base + wob) - angle) * 0.09;                     // lissage : jamais de à-coups
-        if (needle) needle.style.transform = 'rotate(' + angle.toFixed(2) + 'deg)';
-        if (vOut) vOut.textContent = Math.round(230 + angle * (28 / 90));
-        if (bp >= 1 && now - lastNum > 520) {
-          lastNum = now;
-          setHz(50 + (Math.random() - 0.5) * 0.2);                  // 50,0 Hz ± 0,1
-          kwh += 0.3 + Math.random() * 0.5; setKwh(kwh);            // kWh qui monte lentement
-        }
-        rafId = requestAnimationFrame(frame);
-      }
-      function toggleBrk(){ if (brks.length) brks[(Math.random() * brks.length) | 0].classList.toggle('on'); }
-      function sync(){
-        if (visible && inView) {
-          if (!running) { running = true; rafId = requestAnimationFrame(frame); }
-          dash.classList.remove('paused');
-          if (!brkTimer) brkTimer = setInterval(toggleBrk, 8000);
-        } else {
-          running = false; if (rafId) { cancelAnimationFrame(rafId); rafId = 0; }
-          dash.classList.add('paused');
-          if (brkTimer) { clearInterval(brkTimer); brkTimer = null; }
-        }
-      }
-      D.addEventListener('visibilitychange', function(){ visible = !D.hidden; sync(); });
-      if (hasIO) {
-        var vio = new IntersectionObserver(function(es){ inView = es[0].isIntersecting; sync(); }, { threshold: 0 });
-        vio.observe(dash);
-      }
-      sync();
-
-      // Parallaxe très subtile à la souris (desktop uniquement, translate max 6px)
-      if (inner && window.matchMedia('(min-width:901px) and (pointer:fine)').matches) {
-        var section = dash.closest('.hero') || dash;
-        section.addEventListener('mousemove', function(e){
-          var r = section.getBoundingClientRect();
-          var px = ((e.clientX - r.left) / r.width - 0.5) * 12;
-          var py = ((e.clientY - r.top) / r.height - 0.5) * 12;
-          inner.style.transform = 'translate3d(' + px.toFixed(1) + 'px,' + py.toFixed(1) + 'px,0)';
+      if (hdotsWrap) {
+        hslides.forEach(function(s, i){
+          var b = D.createElement('button'); b.type = 'button';
+          b.setAttribute('role', 'tab');
+          b.setAttribute('aria-label', 'Image ' + (i + 1) + ' sur ' + hslides.length);
+          b.addEventListener('click', function(){ hshow(i); hrestart(); });
+          hdotsWrap.appendChild(b); hdots.push(b);
         });
-        section.addEventListener('mouseleave', function(){ inner.style.transform = 'translate3d(0,0,0)'; });
       }
+
+      hshow(0);
+      hplay();
+
+      // Pause au survol, et quand l'onglet passe en arrière-plan
+      hslider.addEventListener('mouseenter', hstop);
+      hslider.addEventListener('mouseleave', hplay);
+      D.addEventListener('visibilitychange', function(){ if (D.hidden) hstop(); else hplay(); });
     }
   }
 })();
