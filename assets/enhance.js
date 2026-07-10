@@ -69,13 +69,6 @@
     }, 2500);
   }
 
-  // --- 4. Pop des compteurs (appelé par le script inline de la page) ---
-  window.__popCounter = function(el){
-    if (reduce) return;
-    el.classList.add('pop');
-    setTimeout(function(){ el.classList.remove('pop'); }, 440);
-  };
-
   // --- 4bis. Scrollspy : lien de menu actif selon la section visible ---
   var navlinks = [].slice.call(D.querySelectorAll('.nav-links a[href^="#"]'));
   var map = {};
@@ -189,6 +182,8 @@
   // --- Hero slider plein écran (crossfade + Ken Burns, auto 5s, pause au survol) ---
   var hslider = D.getElementById('heroSlider');
   if (hslider) {
+    // Pause des animations de scènes quand l'onglet est masqué (économie CPU)
+    D.addEventListener('visibilitychange', function(){ hslider.classList.toggle('tab-hidden', D.hidden); });
     var hslides = [].slice.call(hslider.querySelectorAll('.hero-slide'));
     var hdotsWrap = hslider.querySelector('.hero-dots');
     // reduced-motion ou une seule image : on laisse la 1re image fixe, sans slider ni points
