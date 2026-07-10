@@ -96,6 +96,10 @@
   </svg>
     </div>
   </div>
+  <!-- Vidéo de fond du hero (tableau électrique réel). Le JS l'active dès que
+       /assets/hero/hero-loop.mp4 existe ; sinon les scènes SVG ci-dessus restent
+       affichées (repli automatique). Voir assets/hero/README-video.md -->
+  <video class="hero-video" data-src="/assets/hero/hero-loop.mp4" data-poster="/assets/hero/poster.jpg" muted loop playsinline preload="none" aria-hidden="true"></video>
   <div class="hero-veil" aria-hidden="true"></div>
   <div class="container">
     <div class="hero-slider-content">

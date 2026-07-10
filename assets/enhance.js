@@ -184,6 +184,39 @@
   if (hslider) {
     // Pause des animations de scènes quand l'onglet est masqué (économie CPU)
     D.addEventListener('visibilitychange', function(){ hslider.classList.toggle('tab-hidden', D.hidden); });
+
+    // --- Vidéo de fond du hero : activée seulement si le fichier existe ---
+    // Repli automatique sur les scènes SVG si absent. Chargement différé,
+    // pause hors écran / onglet caché. reduced-motion => pas de vidéo.
+    var hvid = hslider.querySelector('.hero-video');
+    if (hvid && !reduce && window.fetch) {
+      var vsrc = hvid.getAttribute('data-src');
+      fetch(vsrc, { method: 'HEAD' }).then(function(res){
+        if (!res.ok) throw 0;
+        var vInView = true, vVisible = !D.hidden;
+        var playVid = function(){
+          if (vInView && vVisible) { var p = hvid.play(); if (p && p.catch) p.catch(function(){}); }
+          else { hvid.pause(); }
+        };
+        hvid.addEventListener('loadeddata', function(){
+          hslider.classList.add('video-on');   // masque les scènes, coupe leurs animations
+          playVid();
+        });
+        if (hasIO) {
+          new IntersectionObserver(function(es){ vInView = es[0].isIntersecting; playVid(); }, { threshold: 0 }).observe(hslider);
+        }
+        D.addEventListener('visibilitychange', function(){ vVisible = !D.hidden; playVid(); });
+        var vposter = hvid.getAttribute('data-poster'); if (vposter) hvid.poster = vposter;
+        hvid.src = vsrc;      // déclenche le chargement uniquement maintenant
+        hvid.load();
+      }).catch(function(){
+        if (hvid.parentNode) hvid.parentNode.removeChild(hvid); // absent -> on garde les scènes
+      });
+    } else if (hvid) {
+      // reduced-motion / pas de fetch : on retire la couche vidéo, scènes statiques
+      if (hvid.parentNode) hvid.parentNode.removeChild(hvid);
+    }
+
     var hslides = [].slice.call(hslider.querySelectorAll('.hero-slide'));
     var hdotsWrap = hslider.querySelector('.hero-dots');
     // reduced-motion ou une seule image : on laisse la 1re image fixe, sans slider ni points

@@ -429,6 +429,15 @@ html.js .hero-slide.is-active{animation:kenburns 6s ease-out both}
    marine + orange, traits fins ; seule la scène active anime (perf) ;
    pause si onglet caché ; reduced-motion = scènes statiques
    ============================================================ */
+/* Vidéo de fond du hero — activée par JS uniquement si le fichier existe ;
+   sinon, repli automatique sur les scènes SVG. Voile marine par-dessus. */
+.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
+  opacity:0;transition:opacity .8s ease;pointer-events:none;background:var(--ink-deep)}
+.hero-slider.video-on .hero-video{opacity:1}
+.hero-slider.video-on .hero-slides{opacity:0;transition:opacity .8s ease}
+.hero-slider.video-on .hero-dots{display:none}
+.hero-slider.video-on .scene *{animation-play-state:paused!important}
+
 .scene-slide .scene{position:absolute;inset:0;width:100%;height:100%;display:block}
 .scene .sc-ground{stroke:rgba(143,180,224,.20);stroke-width:1.4}
 .scene .sc-edge{fill:none;stroke:#6f9fd4;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.72}
