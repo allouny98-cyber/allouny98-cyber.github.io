@@ -7,6 +7,7 @@
 <meta name="description" content="Electropack réalise vos installations électriques, courants faibles, contrôle d'accès et vidéosurveillance au Maroc. Références : Sofitel, SGMB, Teleperformance. Devis gratuit.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;700;900&family=Caveat:wght@600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="assets/style.css">
 <script>document.documentElement.className += ' js';</script>
 </head>
@@ -19,6 +20,7 @@
     </a>
     <nav>
       <ul class="nav-links" id="menu">
+        <li><a href="#apropos">À propos</a></li>
         <li><a href="#services">Services</a></li>
         <li><a href="#methode">Méthode</a></li>
         <li><a href="#projets">Réalisations</a></li>
@@ -501,10 +503,12 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
 });
 
 // Compteurs animés (déclenchés au scroll) + petit "pop" en fin de comptage
+const prefersReduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 const io = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(!e.isIntersecting) return;
     const el=e.target, target=+el.dataset.count, suf=el.dataset.suffix||'', pre=el.dataset.prefix||'';
+    if(prefersReduced){ el.textContent=pre+target+suf; io.unobserve(el); return; }
     let cur=0; const step=Math.max(1,Math.round(target/40));
     const t=setInterval(()=>{
       cur+=step;
