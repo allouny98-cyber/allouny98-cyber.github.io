@@ -51,7 +51,6 @@ header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px 
 .hero-ctas{display:flex;gap:14px;flex-wrap:wrap}
 .trust{margin-top:0;padding-top:0;border-top:0}
 .trust p{font-family:'IBM Plex Mono';font-size:.75rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:14px}
-.trust-logos{display:flex;gap:36px;flex-wrap:wrap;font-family:'Archivo';font-weight:700;font-size:1.05rem;color:#8B99A8}
 
 /* ---------- Chiffres ---------- */
 .stats{background:var(--ink);color:#fff;padding:56px 0}
@@ -80,13 +79,8 @@ section{padding:80px 0}
 .projects{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
 .proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
 .proj{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
-.proj .thumb{height:170px;background:linear-gradient(135deg,#2B4F86,#12294D);position:relative}
-.proj .thumb span{position:absolute;top:12px;left:12px;font-family:'IBM Plex Mono';font-size:.7rem;color:#8FA3B8;border:1px dashed #35506B;padding:3px 7px;border-radius:4px}
 .proj .body{padding:20px}
 .proj h3{font-size:1rem;margin-bottom:6px}
-.proj .meta{display:flex;justify-content:space-between;align-items:center;margin-top:14px;font-family:'IBM Plex Mono';font-size:.78rem}
-.proj .meta .amount{color:var(--steel);font-weight:500}
-.proj .meta .year{color:var(--grey)}
 .proj p{font-size:.88rem;color:var(--grey)}
 
 /* Pourquoi nous */
@@ -304,15 +298,6 @@ html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scale
 .tst-dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(255,255,255,.3);cursor:pointer;padding:0;transition:background .2s ease,transform .2s ease}
 .tst-dots button.active{background:var(--cta);transform:scale(1.3)}
 
-/* Galerie d'attestations : documents en grand, effet papier */
-.att-title{font-family:'Archivo';font-weight:900;font-size:clamp(1.3rem,2.6vw,1.7rem);letter-spacing:-.01em;margin-bottom:34px;text-align:center}
-.doc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:30px}
-.doc{display:flex;flex-direction:column;gap:12px}
-.doc-btn{padding:0;border:none;cursor:pointer;background:#fff;border-radius:4px;overflow:hidden;aspect-ratio:1/1.414;box-shadow:0 6px 20px rgba(20,41,77,.13),0 1px 3px rgba(20,41,77,.08);transition:transform .25s ease,box-shadow .25s ease;display:block}
-.doc-btn img{width:100%;height:100%;object-fit:cover;object-position:top center;display:block}
-.doc-btn:hover{transform:translateY(-6px) scale(1.02);box-shadow:0 20px 44px rgba(20,41,77,.22)}
-.doc figcaption{text-align:center;font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.02em;color:var(--grey)}
-
 /* Lightbox améliorée : navigation + compteur */
 .lb{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;visibility:hidden;transition:opacity .25s ease}
 .lb.open{opacity:1;visibility:visible}
@@ -328,14 +313,8 @@ html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scale
 .lb-prev{left:18px}
 .lb-next{right:18px}
 
-@media (max-width:900px){
-  .doc-grid{grid-template-columns:repeat(2,1fr);gap:24px}
-}
 @media (max-width:600px){
   .tst-band{padding:60px 0;margin-bottom:52px}
-  .doc-grid{display:flex;grid-template-columns:none;overflow-x:auto;gap:16px;scroll-snap-type:x mandatory;padding-bottom:10px;-ms-overflow-style:none;scrollbar-width:none;-webkit-overflow-scrolling:touch}
-  .doc-grid::-webkit-scrollbar{display:none}
-  .doc{flex:0 0 74%;scroll-snap-align:center}
   .lb-nav{width:44px;height:44px;font-size:1.6rem}
   .lb-prev{left:8px}.lb-next{right:8px}
   .lb-fig img{max-height:80vh}
