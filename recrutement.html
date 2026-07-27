@@ -81,10 +81,22 @@
           </select>
         </div>
         <div><label for="msg">Message (facultatif)</label><textarea id="msg" name="Message" rows="4" placeholder="Expérience, disponibilité, permis…"></textarea></div>
-        <div>
-          <label for="cv">Votre CV <span class="req">*</span></label>
-          <input id="cv" name="attachment" type="file" accept=".pdf,.doc,.docx" required>
-          <p class="form-note">Formats acceptés : PDF, DOC ou DOCX. Obligatoire.</p>
+        <div class="cv-field" id="cvField">
+          <span class="cv-title">Votre CV <span class="req">*</span></span>
+          <!-- input natif masqué visuellement mais focusable/fonctionnel (pas de display:none) -->
+          <input class="cv-input" id="cv" name="attachment" type="file" accept=".pdf,.doc,.docx" required aria-label="Votre CV (PDF, DOC ou DOCX, 5 Mo maximum)">
+          <label for="cv" class="cv-drop" id="cvDrop">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/><path d="M12 18v-6"/><path d="M9.5 14.5 12 12l2.5 2.5"/></svg>
+            <span class="cv-main">Choisir un fichier</span>
+            <span class="cv-sub">PDF, DOC ou DOCX — 5 Mo maximum</span>
+          </label>
+          <div class="cv-selected" id="cvSelected" hidden>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8z"/><path d="M14 3v5h5"/></svg>
+            <span class="cv-name" id="cvName"></span>
+            <button type="button" class="cv-remove" id="cvRemove" aria-label="Retirer le fichier">×</button>
+          </div>
+          <p class="cv-error" id="cvError" role="alert" hidden></p>
+          <p class="form-note">Formats acceptés : PDF, DOC ou DOCX — 5 Mo maximum. Obligatoire.</p>
         </div>
         <button class="btn btn-cta" type="submit">Envoyer ma candidature</button>
       </form>
@@ -119,6 +131,72 @@ document.querySelectorAll('a[href^="#"]').forEach(a=>{
     const m=document.getElementById('menu'); if(m) m.classList.remove('open');
   });
 });
+
+// --- Champ CV personnalisé (français) : sélection, glisser-déposer, validation ---
+(function(){
+  var field=document.getElementById('cvField'), input=document.getElementById('cv'),
+      drop=document.getElementById('cvDrop'), sel=document.getElementById('cvSelected'),
+      nameEl=document.getElementById('cvName'), removeBtn=document.getElementById('cvRemove'),
+      errEl=document.getElementById('cvError');
+  if(!field||!input) return;
+  var MAX=5*1024*1024, RE=/\.(pdf|doc|docx)$/i;
+
+  // État initial : obligatoire et vide -> message natif en français (si l'utilisateur force l'envoi)
+  input.setCustomValidity('Merci de joindre votre CV.');
+
+  function showError(msg){ errEl.textContent=msg; errEl.hidden=false; }
+  function clearError(){ errEl.hidden=true; errEl.textContent=''; }
+
+  function reset(){
+    try{ input.value=''; }catch(e){}
+    input.setCustomValidity('Merci de joindre votre CV.');
+    sel.hidden=true; drop.hidden=false; nameEl.textContent='';
+  }
+  function accept(file){
+    nameEl.textContent='Fichier sélectionné : '+file.name;
+    drop.hidden=true; sel.hidden=false;
+    input.setCustomValidity(''); clearError();
+  }
+  function validate(file){
+    if(!RE.test(file.name)) return 'Format non accepté. Choisissez un fichier PDF, DOC ou DOCX.';
+    if(file.size>MAX) return 'Fichier trop volumineux : 5 Mo maximum.';
+    return null;
+  }
+  function handle(file){
+    if(!file){ reset(); return; }
+    var err=validate(file);
+    if(err){ showError(err); reset(); return; }
+    accept(file);
+  }
+
+  input.addEventListener('change', function(){ handle(input.files && input.files[0]); });
+
+  removeBtn.addEventListener('click', function(){ reset(); input.focus(); });
+
+  // Glisser-déposer avec retour visuel orange
+  ['dragenter','dragover'].forEach(function(ev){
+    drop.addEventListener(ev, function(e){ e.preventDefault(); field.classList.add('dragover'); });
+  });
+  ['dragleave','dragend'].forEach(function(ev){
+    drop.addEventListener(ev, function(e){ e.preventDefault(); field.classList.remove('dragover'); });
+  });
+  drop.addEventListener('drop', function(e){
+    e.preventDefault(); field.classList.remove('dragover');
+    var files=e.dataTransfer && e.dataTransfer.files;
+    if(!files||!files.length) return;
+    var f=files[0], err=validate(f);
+    if(err){ showError(err); reset(); return; }
+    try{ var dt=new DataTransfer(); dt.items.add(f); input.files=dt.files; }catch(e2){}
+    accept(f);
+  });
+
+  // Erreur de validation (ex : envoi sans CV) -> message français inline, pas de bulle native mal placée
+  input.addEventListener('invalid', function(e){
+    e.preventDefault();
+    showError(input.validationMessage || 'Merci de joindre votre CV.');
+    input.focus();
+  });
+})();
 </script>
 <script src="assets/enhance.js"></script>
 </body>
