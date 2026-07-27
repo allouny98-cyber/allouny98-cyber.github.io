@@ -52,16 +52,10 @@
     </div>
 
     <div class="form-wrap">
-      <!--
-        ┌─────────────────────────────────────────────────────────────────────┐
-        │  ⚠️  EMAIL DE RÉCEPTION DES CANDIDATURES                              │
-        │  Remplacez « candidature@electro-pack.ma » ci-dessous (action=...)   │
-        │  par l'adresse email réelle qui doit recevoir les candidatures.      │
-        │  À la 1re candidature, FormSubmit enverra un email de confirmation   │
-        │  à cette adresse : il faut cliquer le lien pour activer le formulaire.│
-        └─────────────────────────────────────────────────────────────────────┘
-      -->
-      <form action="https://formsubmit.co/candidature@electro-pack.ma" method="POST" enctype="multipart/form-data">
+      <!-- Les candidatures sont envoyées à electropack.installation@gmail.com via FormSubmit.
+           Activation FormSubmit : à la 1re candidature, un email de confirmation est envoyé
+           à cette adresse ; il faut cliquer le lien une seule fois pour activer le formulaire. -->
+      <form action="https://formsubmit.co/electropack.installation@gmail.com" method="POST" enctype="multipart/form-data">
         <!-- Paramètres FormSubmit -->
         <input type="hidden" name="_subject" value="Nouvelle candidature Electropack">
         <input type="hidden" name="_captcha" value="false">

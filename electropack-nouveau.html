@@ -476,27 +476,46 @@
     <div class="contact-grid">
       <div class="c-info">
         <div><div class="lbl">Téléphone</div><a href="tel:+212522369714">05 22 36 97 14</a> · <a href="tel:+212522369715">05 22 36 97 15</a></div>
-        <div><div class="lbl">Email</div><a href="mailto:contact@electro-pack.ma">contact@electro-pack.ma</a></div>
+        <div><div class="lbl">Email</div><a href="mailto:electropack.installation@gmail.com">electropack.installation@gmail.com</a></div>
         <div><div class="lbl">Adresse</div>Casablanca, Maroc</div>
         <div><div class="lbl">Horaires</div>Lundi – Vendredi, 8h30 – 18h00</div>
         <div><div class="lbl">💬 Discutez directement avec notre équipe</div><a href="https://wa.me/212611137488" target="_blank" rel="noopener">+212 611 137 488</a> <span class="wa-hint">— sur WhatsApp, 7j/7</span></div>
         <div><div class="lbl">Recrutement</div><a href="recrutement.html">Voir nos offres et postuler →</a></div>
       </div>
-      <form onsubmit="sendWA(event)">
+      <form id="devis-form" action="https://formsubmit.co/electropack.installation@gmail.com" method="POST">
+        <!-- Paramètres FormSubmit -->
+        <input type="hidden" name="_subject" value="🔌 Nouvelle demande de devis — site Electropack">
+        <input type="hidden" name="_template" value="table">
+        <input type="hidden" name="_captcha" value="false">
+        <input type="hidden" name="_next" value="https://allouny98-cyber.github.io/merci.html">
+        <!-- Accusé de réception automatique envoyé au client -->
+        <input type="hidden" name="_autoresponse" value="Bonjour,
+
+Nous vous remercions pour votre demande.
+
+Votre message est bien arrivé chez Electropack et notre équipe fera le nécessaire pour vous recontacter dans les 24 heures.
+
+À très bientôt,
+
+L'équipe Electropack
+Électricité générale, courants faibles, contrôle d'accès — Casablanca depuis 2007
+Tél : 05 22 36 97 14 / 15
+WhatsApp : +212 611 137 488
+electropack.installation@gmail.com">
+        <!-- Anti-spam (doit rester vide) -->
+        <input type="text" name="_honey" style="display:none" tabindex="-1" autocomplete="off" aria-hidden="true">
+
         <div class="f-row">
-          <div><label for="nom">Nom</label><input id="nom" required></div>
-          <div><label for="tel">Téléphone</label><input id="tel" type="tel" required></div>
+          <div><label for="f-entreprise">Nom de l'entreprise <span class="req">*</span></label><input id="f-entreprise" name="Entreprise" required></div>
+          <div><label for="f-contact">Prénom et nom <span class="req">*</span></label><input id="f-contact" name="Nom du contact" required></div>
         </div>
-        <div><label for="type">Type de projet</label>
-          <select id="type">
-            <option>Électricité générale</option>
-            <option>Courants faibles</option>
-            <option>Contrôle d'accès / vidéosurveillance</option>
-            <option>Autre</option>
-          </select>
+        <div class="f-row">
+          <div><label for="f-poste">Poste / fonction <span class="req">*</span></label><input id="f-poste" name="Poste" required></div>
+          <div><label for="f-email">Adresse email <span class="req">*</span></label><input id="f-email" name="Email" type="email" required></div>
         </div>
-        <div><label for="msg">Votre besoin</label><textarea id="msg" rows="4" placeholder="Décrivez votre besoin en deux mots — on s'occupe du reste"></textarea></div>
-        <button class="btn btn-cta" type="submit">Envoyer — on vous recontacte vite</button>
+        <div><label for="f-tel">Numéro de téléphone <span class="req">*</span></label><input id="f-tel" name="Téléphone" type="tel" required></div>
+        <div><label for="f-msg">Votre message / votre besoin <span class="req">*</span></label><textarea id="f-msg" name="Message" rows="4" required placeholder="Décrivez votre projet : type de travaux, lieu, échéance…"></textarea></div>
+        <button class="btn btn-cta" type="submit">Envoyer ma demande de devis</button>
       </form>
     </div>
   </div>
@@ -531,7 +550,7 @@
       <div class="foot-col">
         <h4>Contact</h4>
         <a href="tel:+212522369714">05 22 36 97 14</a>
-        <a href="mailto:contact@electro-pack.ma">contact@electro-pack.ma</a>
+        <a href="mailto:electropack.installation@gmail.com">electropack.installation@gmail.com</a>
         <p>Casablanca, Maroc</p>
         <a href="recrutement.html">Recrutement</a>
       </div>
@@ -616,14 +635,20 @@ document.querySelectorAll('.num[data-count]').forEach(el=>{
   ob.observe(el);
 });
 
-// Formulaire → ouvre WhatsApp avec le message pré-rempli (à brancher plus tard sur un vrai envoi email)
-function sendWA(ev){
-  ev.preventDefault();
-  const n=document.getElementById('nom').value, t=document.getElementById('tel').value,
-        ty=document.getElementById('type').value, m=document.getElementById('msg').value;
-  const txt=encodeURIComponent(`Bonjour Electropack,\nNom : ${n}\nTél : ${t}\nProjet : ${ty}\n${m}`);
-  window.open(`https://wa.me/212611137488?text=${txt}`,'_blank');
-}
+// Formulaire de devis : messages de validation HTML5 en français (indépendants de la langue du navigateur)
+(function(){
+  var form=document.getElementById('devis-form');
+  if(!form) return;
+  var champs=form.querySelectorAll('[required]');
+  champs.forEach(function(f){
+    f.addEventListener('invalid',function(){
+      if(f.validity.valueMissing) f.setCustomValidity('Merci de remplir ce champ.');
+      else if(f.validity.typeMismatch && f.type==='email') f.setCustomValidity('Merci de saisir une adresse email valide.');
+      else f.setCustomValidity('');
+    });
+    f.addEventListener('input',function(){ f.setCustomValidity(''); });
+  });
+})();
 </script>
 <script src="assets/enhance.js"></script>
 </body>
