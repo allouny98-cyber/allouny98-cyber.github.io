@@ -40,11 +40,13 @@
   <div class="container"><a href="../index.html">Accueil</a> <span class="sep">›</span> <span aria-current="page">Réalisations</span></div>
 </nav>
 <main>
-<section class="hero hero-page tech-grid">
+<section class="hero hero-photo hero-photo--sub" aria-label="Nos réalisations à Casablanca">
+  <div class="hero-bg" aria-hidden="true"></div>
   <div class="container">
     <p class="eyebrow">Réalisations · Casablanca</p>
     <h1>Nos réalisations à Casablanca</h1>
     <p class="lede">Des chantiers livrés pour des donneurs d’ordre exigeants — hôtellerie, banque, tertiaire — en électricité, courants faibles et sécurité.</p>
+    <div class="hero-ctas"><a class="btn btn-cta" href="../index.html#contact">Demander un devis gratuit</a></div>
   </div>
 </section>
 
@@ -55,21 +57,18 @@
       <button type="button" data-filter="fort">Courant fort</button>
       <button type="button" data-filter="faible">Courants faibles</button>
     </div>
-    <div class="proj-grid reveal stagger" id="projGrid">
-      <a class="proj" href="hotel-sofitel/" data-metiers="fort faible" data-secteur="Hôtellerie">
-        <span class="proj-badge">Hôtellerie</span>
-        <h3>Hôtel Sofitel</h3>
-        <p>Électricité générale & courants faibles</p>
+    <div class="rgrid reveal stagger" id="projGrid">
+      <a class="rcard" href="hotel-sofitel/" data-metiers="fort faible">
+        <div class="rmedia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="rmedia-label">Photo de chantier — à fournir</span></div>
+        <div class="rbody"><span class="rbadge">Hôtellerie</span><h3>Hôtel Sofitel</h3><p>Électricité générale & courants faibles</p></div>
       </a>
-      <a class="proj" href="societe-generale-maroc/" data-metiers="fort" data-secteur="Banque">
-        <span class="proj-badge">Banque</span>
-        <h3>Société Générale Maroc</h3>
-        <p>Installation électrique d’agences bancaires</p>
+      <a class="rcard" href="societe-generale-maroc/" data-metiers="fort">
+        <div class="rmedia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="rmedia-label">Photo de chantier — à fournir</span></div>
+        <div class="rbody"><span class="rbadge">Banque</span><h3>Société Générale Maroc</h3><p>Installation électrique d’agences bancaires</p></div>
       </a>
-      <a class="proj" href="teleperformance/" data-metiers="fort faible" data-secteur="Centre d’appels">
-        <span class="proj-badge">Centre d’appels</span>
-        <h3>Teleperformance</h3>
-        <p>Électricité & câblage de plateaux</p>
+      <a class="rcard" href="teleperformance/" data-metiers="fort faible">
+        <div class="rmedia"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 8h3l1.5-2h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></svg><span class="rmedia-label">Photo de chantier — à fournir</span></div>
+        <div class="rbody"><span class="rbadge">Centre d’appels</span><h3>Teleperformance</h3><p>Électricité & câblage de plateaux</p></div>
       </a>
     </div>
     <p class="todo" style="margin-top:24px;background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;border-radius:6px;padding:14px 16px;font-size:.92rem">
@@ -140,7 +139,7 @@
 // Filtre simple des réalisations par métier
 (function(){
   var bar=document.querySelector('.filterbar'); if(!bar) return;
-  var cards=[].slice.call(document.querySelectorAll('#projGrid .proj'));
+  var cards=[].slice.call(document.querySelectorAll('#projGrid .rcard'));
   bar.addEventListener('click',function(e){
     var b=e.target.closest('button[data-filter]'); if(!b) return;
     bar.querySelectorAll('button').forEach(function(x){x.classList.remove('on');});

@@ -728,3 +728,71 @@ a.proj:hover{transform:translateY(-3px)}
 .next-links a{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;font-weight:600}
 .next-links a:hover{border-color:var(--steel);color:var(--steel)}
 .next-links a small{display:block;font-weight:400;color:var(--grey);margin-top:4px}
+
+/* ============================================================
+   REDESIGN ACCUEIL (passe de design) — classes nouvelles,
+   sans effet sur les pages existantes. Motion faible, 3G-friendly.
+   ============================================================ */
+
+/* Hero photo statique (une seule image, aucune animation) */
+.hero-photo{padding:0;min-height:clamp(440px,66vh,600px);display:flex;align-items:center;color:#fff;position:relative;isolation:isolate;overflow:hidden}
+.hero-photo .hero-bg{position:absolute;inset:0;z-index:-2;background-size:cover;background-position:center;background-color:var(--ink-deep)}
+.hero-photo::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,rgba(18,41,77,.97) 0%,rgba(18,41,77,.93) 48%,rgba(18,41,77,.74) 100%)}
+@media (max-width:720px){.hero-photo::after{background:linear-gradient(180deg,rgba(18,41,77,.80) 0%,rgba(18,41,77,.93) 100%)}}
+.hero-photo .eyebrow{color:var(--steel-light)}
+.hero-photo .eyebrow::before{background:var(--cta)}
+.hero-photo h1{font-size:clamp(2rem,4.6vw,3.35rem);font-weight:900;letter-spacing:-.025em;max-width:17ch;margin-bottom:16px;color:#fff}
+.hero-photo .lede{color:#E6EDF6;max-width:42ch;font-size:1.1rem;margin-bottom:24px}
+.hero-photo .hero-meta{margin-top:8px;display:flex;gap:8px 24px;flex-wrap:wrap;font-size:.9rem;color:#C6D4E6}
+.hero-photo .hero-meta strong{color:#fff;font-weight:700}
+.hero-photo .hero-meta span{display:inline-flex;align-items:center;gap:7px}
+.hero-photo .hero-meta .dotsep::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--cta);display:inline-block}
+.ph-tag{position:absolute;right:14px;bottom:12px;z-index:1;font-family:'IBM Plex Mono';font-size:.68rem;letter-spacing:.04em;color:#fff;background:rgba(18,41,77,.62);border:1px solid rgba(255,255,255,.28);border-radius:4px;padding:5px 9px;backdrop-filter:blur(2px)}
+
+/* Bandeau logos statique (remplace le marquee animé) */
+.logo-grid{display:flex;flex-wrap:wrap;gap:10px 12px;align-items:center}
+.logo-grid span{font-family:'IBM Plex Mono';font-size:.8rem;letter-spacing:.05em;color:var(--grey);border:1px solid var(--line);border-radius:4px;padding:8px 13px;background:#fff;white-space:nowrap}
+
+/* Emplacement photo fondateur (remplace le monogramme JA) */
+.founder-ph{aspect-ratio:4/5;border:2px dashed var(--steel-light);border-radius:var(--radius);background:linear-gradient(160deg,#EEF3FA,#D9E4F2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;color:var(--ink-soft);text-align:center;padding:22px}
+.founder-ph svg{width:52px;height:52px;opacity:.65}
+.founder-ph .fph-label{font-weight:700;font-size:.95rem;color:var(--ink)}
+.founder-ph .fph-sub{font-size:.8rem;color:var(--grey);max-width:22ch}
+
+/* Cartes réalisations avec emplacement photo (accueil) */
+.rgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.rcard{display:block;text-decoration:none;color:inherit;background:#fff;border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;transition:transform .15s ease,box-shadow .15s ease}
+.rcard:hover{transform:translateY(-3px);box-shadow:0 12px 28px rgba(18,41,77,.14)}
+.rmedia{position:relative;aspect-ratio:16/10;background:repeating-linear-gradient(135deg,#1c3c67,#1c3c67 12px,#1a3860 12px,#1a3860 24px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;color:#DCE6F3;text-align:center;padding:14px}
+.rmedia svg{width:34px;height:34px;opacity:.75}
+.rmedia .rmedia-label{font-family:'IBM Plex Mono';font-size:.72rem;letter-spacing:.03em;color:#B9C9DE}
+.rbody{padding:15px 18px 18px}
+.rbadge{display:inline-block;font-family:'IBM Plex Mono';font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--cta);margin-bottom:8px}
+.rbody h3{font-size:1.12rem;margin-bottom:5px}
+.rbody p{font-size:.92rem;color:var(--grey)}
+
+/* Mur de témoignages statique (remplace le carrousel) */
+.tst-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.tcard{background:#fff;border:1px solid var(--line);border-left:3px solid var(--cta);border-radius:var(--radius);padding:20px 22px;display:flex;flex-direction:column;gap:14px}
+.tcard blockquote{font-size:.98rem;color:var(--ink);line-height:1.55}
+.tcard blockquote::before{content:"“";font-family:'Archivo';font-size:2rem;line-height:0;color:var(--steel-light);margin-right:2px;vertical-align:-.35em}
+.tcard .tmeta{margin-top:auto}
+.tcard .tname{font-weight:700;display:block}
+.tcard .tco{font-size:.82rem;color:var(--grey);font-family:'IBM Plex Mono'}
+.tcard .tlink{display:inline-block;margin-top:10px;font-size:.83rem;color:var(--steel);text-decoration:none;font-weight:600}
+.tcard .tlink:hover{color:var(--ink)}
+.att-strip{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:center;background:var(--warm);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px}
+.att-strip .att-count{font-weight:700;color:var(--ink)}
+
+@media (max-width:860px){
+  .rgrid,.tst-wall{grid-template-columns:1fr}
+}
+
+/* Hero photo — variante sous-pages + fond marine quand pas d'image */
+.hero-photo--sub{min-height:clamp(300px,40vh,410px)}
+.hero-photo .hero-bg{background:linear-gradient(155deg,#22406b 0%,#12294d 70%)}
+.rcard.hide{display:none}
+/* Emplacement photo dans une fiche chantier */
+.fiche-photo{aspect-ratio:16/7;margin-bottom:18px;border:2px dashed var(--steel-light);border-radius:var(--radius);background:repeating-linear-gradient(135deg,#EEF3FA,#EEF3FA 12px,#E7EEF7 12px,#E7EEF7 24px);display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink-soft)}
+.fiche-photo svg{width:30px;height:30px;opacity:.6}
+.fiche-photo span{font-family:'IBM Plex Mono';font-size:.78rem;letter-spacing:.03em;color:var(--grey)}
