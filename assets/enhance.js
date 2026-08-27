@@ -1,10 +1,11 @@
 /* Electropack — enrichissements UI (vanilla, sans dépendance)
-   Révélations scroll, hero mot-à-mot, rotation de mots, scrollspy,
-   header compact, back-to-top, pop des compteurs. 60fps, reduced-motion. */
+   Révélations au scroll, timeline, scrollspy, header compact, retour en haut,
+   lightbox des attestations. Mouvement discret, reduced-motion respecté. */
 (function(){
   "use strict";
   var D = document, root = D.documentElement;
   root.classList.add('js');
+  root.classList.add('enh');   // n'active les animations que si ce script s'exécute
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   var hasIO = 'IntersectionObserver' in window;
 
@@ -21,7 +22,7 @@
     reveals.forEach(function(el){ el.classList.add('in'); });
   }
 
-  // --- Timeline "Notre méthode" (remplissage + allumage en cascade) ---
+  // --- 2. Timeline "Notre méthode" (remplissage en cascade) ---
   var tl = D.querySelector('.timeline');
   if (tl) {
     if (hasIO && !reduce) {
@@ -32,44 +33,7 @@
     } else { tl.classList.add('in'); }
   }
 
-  // --- 2. Titre du hero mot par mot ---
-  var h1 = D.getElementById('heroTitle');
-  if (h1 && !reduce) {
-    var i = 0, nodes = [].slice.call(h1.childNodes);
-    nodes.forEach(function(n){
-      if (n.nodeType === 3) { // texte
-        var frag = D.createDocumentFragment();
-        n.textContent.split(/(\s+)/).forEach(function(tok){
-          if (tok.trim() === '') { frag.appendChild(D.createTextNode(tok)); }
-          else {
-            var s = D.createElement('span');
-            s.className = 'word'; s.textContent = tok;
-            s.style.transitionDelay = (i * 0.08) + 's'; i++;
-            frag.appendChild(s);
-          }
-        });
-        h1.replaceChild(frag, n);
-      } else if (n.nodeType === 1) { // élément (ex : le rotateur)
-        n.classList.add('word');
-        n.style.transitionDelay = (i * 0.08) + 's'; i++;
-      }
-    });
-    requestAnimationFrame(function(){ h1.classList.add('animate'); });
-  }
-
-  // --- 2bis. Rotation de mots-clés ---
-  var rot = D.querySelector('.rotator .rot-word');
-  if (rot) {
-    var words = ['hôtels', 'banques', 'bureaux', 'industries'], idx = 0;
-    setInterval(function(){
-      idx = (idx + 1) % words.length;
-      if (reduce) { rot.textContent = words[idx]; return; }
-      rot.classList.add('out');
-      setTimeout(function(){ rot.textContent = words[idx]; rot.classList.remove('out'); }, 300);
-    }, 2500);
-  }
-
-  // --- 4bis. Scrollspy : lien de menu actif selon la section visible ---
+  // --- 3. Scrollspy : lien de menu actif selon la section visible ---
   var navlinks = [].slice.call(D.querySelectorAll('.nav-links a[href^="#"]'));
   var map = {};
   navlinks.forEach(function(a){ var id = a.getAttribute('href').slice(1); if (id) map[id] = a; });
@@ -86,7 +50,7 @@
     secs.forEach(function(s){ spy.observe(s); });
   }
 
-  // --- 7. Header compact au scroll + bouton retour en haut ---
+  // --- 4. Header compact au scroll + bouton retour en haut ---
   var header = D.querySelector('header'), toTop = D.querySelector('.to-top');
   function onScroll(){
     var y = window.pageYOffset || D.documentElement.scrollTop || 0;
@@ -100,10 +64,18 @@
     window.scrollTo({ top: 0, behavior: reduce ? 'auto' : 'smooth' });
   });
 
-  // --- Lightbox galerie d'attestations (navigation + compteur) ---
+  // --- 5. Lightbox galerie d'attestations (navigation + compteur) ---
+  // La galerie se construit à partir des liens présents dans la page :
+  // chaque référence (.tlink) et chaque vignette (.doc-btn) porte data-full.
   var lb = D.getElementById('lightbox');
-  var docBtns = [].slice.call(D.querySelectorAll('.doc-btn'));
-  var gallery = docBtns.map(function(b){ return { src: b.getAttribute('data-full'), label: b.getAttribute('data-label') || '' }; });
+  var sources = [].slice.call(D.querySelectorAll('.doc-btn[data-full], .tlink[data-full]'));
+  var gallery = [], seen = {};
+  sources.forEach(function(el){
+    var src = el.getAttribute('data-full');
+    if (!src || seen[src]) return;
+    seen[src] = true;
+    gallery.push({ src: src, label: el.getAttribute('data-label') || '' });
+  });
   var lbIndex = 0;
   function indexOfSrc(src){
     for (var k = 0; k < gallery.length; k++){ if (gallery[k].src === src) return k; }
@@ -119,14 +91,18 @@
     var cnt = lb.querySelector('.lb-count'); if (cnt) cnt.textContent = (lbIndex + 1) + ' / ' + gallery.length;
     lb.classList.add('open'); D.body.style.overflow = 'hidden';
   }
-  function openSrc(src){ var i = indexOfSrc(src); openAt(i < 0 ? 0 : i); }
   function closeLb(){
     if (!lb) return;
     lb.classList.remove('open'); D.body.style.overflow = '';
     setTimeout(function(){ var img = lb.querySelector('img'); if (img) img.src = ''; }, 250);
   }
-  if (lb) {
-    docBtns.forEach(function(b, i){ b.addEventListener('click', function(){ openAt(i); }); });
+  if (lb && gallery.length) {
+    sources.forEach(function(el){
+      el.addEventListener('click', function(ev){
+        ev.preventDefault();
+        openAt(indexOfSrc(el.getAttribute('data-full')));
+      });
+    });
     var attOpen = D.querySelector('.att-open');
     if (attOpen) attOpen.addEventListener('click', function(){ openAt(0); });
     var lbClose = lb.querySelector('.lb-close');
@@ -141,114 +117,5 @@
       else if (e.key === 'ArrowLeft') openAt(lbIndex - 1);
       else if (e.key === 'ArrowRight') openAt(lbIndex + 1);
     });
-  }
-
-  // --- Carrousel témoignages (un seul à la fois, fondu, flèches + points, 6s) ---
-  var stage = D.querySelector('.tst-stage');
-  if (stage) {
-    var slides = [].slice.call(stage.querySelectorAll('.tslide'));
-    var dotsWrap = D.querySelector('.tst-dots');
-    var prevBtn = D.querySelector('.tst-arrow.prev'), nextBtn = D.querySelector('.tst-arrow.next');
-    var cur = 0, tdots = [];
-    if (dotsWrap) {
-      slides.forEach(function(s, i){
-        var b = D.createElement('button'); b.type = 'button';
-        b.setAttribute('aria-label', 'Aller au témoignage ' + (i + 1));
-        b.addEventListener('click', function(){ show(i); restart(); });
-        dotsWrap.appendChild(b); tdots.push(b);
-      });
-    }
-    function show(i){
-      cur = (i + slides.length) % slides.length;
-      slides.forEach(function(s, j){ s.classList.toggle('is-active', j === cur); });
-      tdots.forEach(function(d, j){ d.classList.toggle('active', j === cur); });
-    }
-    show(0);
-    if (prevBtn) prevBtn.addEventListener('click', function(){ show(cur - 1); restart(); });
-    if (nextBtn) nextBtn.addEventListener('click', function(){ show(cur + 1); restart(); });
-    var tt = null;
-    function play(){ if (reduce) return; stop(); tt = setInterval(function(){ show(cur + 1); }, 6000); }
-    function stop(){ if (tt) { clearInterval(tt); tt = null; } }
-    function restart(){ stop(); play(); }
-    var carousel = D.querySelector('.tst-carousel');
-    if (carousel) { carousel.addEventListener('mouseenter', stop); carousel.addEventListener('mouseleave', play); }
-    play();
-    // Liens "Voir l'attestation originale" -> ouvre la lightbox sur le bon document
-    [].slice.call(D.querySelectorAll('.tst-att-link')).forEach(function(a){
-      a.addEventListener('click', function(e){ e.preventDefault(); openSrc(a.getAttribute('data-full')); });
-    });
-  }
-
-  // --- Hero slider plein écran (crossfade + Ken Burns, auto 5s, pause au survol) ---
-  var hslider = D.getElementById('heroSlider');
-  if (hslider) {
-    // Pause des animations de scènes quand l'onglet est masqué (économie CPU)
-    D.addEventListener('visibilitychange', function(){ hslider.classList.toggle('tab-hidden', D.hidden); });
-
-    // --- Vidéo de fond du hero : activée seulement si le fichier existe ---
-    // Repli automatique sur les scènes SVG si absent. Chargement différé,
-    // pause hors écran / onglet caché. reduced-motion => pas de vidéo.
-    var hvid = hslider.querySelector('.hero-video');
-    if (hvid && !reduce && window.fetch) {
-      var vsrc = hvid.getAttribute('data-src');
-      fetch(vsrc, { method: 'HEAD' }).then(function(res){
-        if (!res.ok) throw 0;
-        var vInView = true, vVisible = !D.hidden;
-        var playVid = function(){
-          if (vInView && vVisible) { var p = hvid.play(); if (p && p.catch) p.catch(function(){}); }
-          else { hvid.pause(); }
-        };
-        hvid.addEventListener('loadeddata', function(){
-          hslider.classList.add('video-on');   // masque les scènes, coupe leurs animations
-          playVid();
-        });
-        if (hasIO) {
-          new IntersectionObserver(function(es){ vInView = es[0].isIntersecting; playVid(); }, { threshold: 0 }).observe(hslider);
-        }
-        D.addEventListener('visibilitychange', function(){ vVisible = !D.hidden; playVid(); });
-        var vposter = hvid.getAttribute('data-poster'); if (vposter) hvid.poster = vposter;
-        hvid.src = vsrc;      // déclenche le chargement uniquement maintenant
-        hvid.load();
-      }).catch(function(){
-        if (hvid.parentNode) hvid.parentNode.removeChild(hvid); // absent -> on garde les scènes
-      });
-    } else if (hvid) {
-      // reduced-motion / pas de fetch : on retire la couche vidéo, scènes statiques
-      if (hvid.parentNode) hvid.parentNode.removeChild(hvid);
-    }
-
-    var hslides = [].slice.call(hslider.querySelectorAll('.hero-slide'));
-    var hdotsWrap = hslider.querySelector('.hero-dots');
-    // reduced-motion ou une seule image : on laisse la 1re image fixe, sans slider ni points
-    if (hslides.length > 1 && !reduce) {
-      var hcur = 0, hdots = [], htimer = null;
-
-      var hshow = function(i){
-        hcur = (i + hslides.length) % hslides.length;
-        hslides.forEach(function(s, j){ s.classList.toggle('is-active', j === hcur); });
-        hdots.forEach(function(d, j){ d.classList.toggle('active', j === hcur); });
-      };
-      var hstop = function(){ if (htimer) { clearInterval(htimer); htimer = null; } };
-      var hplay = function(){ hstop(); htimer = setInterval(function(){ hshow(hcur + 1); }, 5000); };
-      var hrestart = function(){ hstop(); hplay(); };
-
-      if (hdotsWrap) {
-        hslides.forEach(function(s, i){
-          var b = D.createElement('button'); b.type = 'button';
-          b.setAttribute('role', 'tab');
-          b.setAttribute('aria-label', 'Image ' + (i + 1) + ' sur ' + hslides.length);
-          b.addEventListener('click', function(){ hshow(i); hrestart(); });
-          hdotsWrap.appendChild(b); hdots.push(b);
-        });
-      }
-
-      hshow(0);
-      hplay();
-
-      // Pause au survol, et quand l'onglet passe en arrière-plan
-      hslider.addEventListener('mouseenter', hstop);
-      hslider.addEventListener('mouseleave', hplay);
-      D.addEventListener('visibilitychange', function(){ if (D.hidden) hstop(); else hplay(); });
-    }
   }
 })();

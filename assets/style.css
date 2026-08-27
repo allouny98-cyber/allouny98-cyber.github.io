@@ -58,12 +58,7 @@ header{position:sticky;top:0;z-index:50;background:var(--ink);border-bottom:1px 
 .stat{text-align:center}
 .stat-ico{width:44px;height:44px;margin:0 auto 12px;color:var(--steel-light)}
 .stat-ico svg{width:100%;height:100%;display:block;overflow:visible}
-html.js .stat-ico{animation:ic-breathe 4.2s ease-in-out infinite}
-.stat:nth-child(2) .stat-ico{animation-delay:.4s}
-.stat:nth-child(3) .stat-ico{animation:ic-flick 3.6s ease-in-out infinite}
-.stat:nth-child(4) .stat-ico{animation-delay:.8s}
-@keyframes ic-breathe{0%,100%{opacity:.82;transform:translateY(0)}50%{opacity:1;transform:translateY(-3px)}}
-@keyframes ic-flick{0%,100%{opacity:1}46%{opacity:.5}50%{opacity:1}}
+
 .stat .num{font-family:'IBM Plex Mono';font-size:clamp(2.6rem,4.5vw,3.4rem);font-weight:600;color:#fff;line-height:1}
 .stat .lbl{font-size:.9rem;color:#B9C7DA;margin-top:8px}
 /* Mécanique de l'odomètre : chaque chiffre est une bobine 0-9 qui roule */
@@ -94,25 +89,19 @@ section{padding:80px 0}
 .si-accent-f{fill:#F97316}
 /* Carte 1 — disjoncteurs qui s'enclenchent */
 .si-brk{transform-box:fill-box;transform-origin:center}
-html.js .si-brk{animation:si-brk 3.4s ease-in-out infinite}
-.si-brk.b2{animation-delay:.3s}.si-brk.b3{animation-delay:.6s}.si-brk.b4{animation-delay:.9s}.si-brk.b5{animation-delay:1.2s}
-@keyframes si-brk{0%,44%,100%{transform:translateY(3px)}54%,94%{transform:translateY(-2px)}}
-html.js .svc:hover .si-brk{animation-duration:.9s}
+
 /* Carte 2 — ondes qui émanent */
-.si-wave{fill:none;stroke:#F97316;stroke-width:1.8;stroke-linecap:round;opacity:0;transform-box:fill-box;transform-origin:center bottom}
-html.js .si-wave{animation:si-wave 2.6s ease-out infinite}
-.si-wave.w2{animation-delay:.5s}.si-wave.w3{animation-delay:1s}
-@keyframes si-wave{0%{opacity:0;transform:translateY(4px) scale(.9)}30%{opacity:.9}100%{opacity:0;transform:translateY(-2px) scale(1.06)}}
-html.js .svc:hover .si-wave{animation-duration:1.4s}
+.si-wave{fill:none;stroke:#F97316;stroke-width:1.8;stroke-linecap:round;opacity:.85;transform-box:fill-box;transform-origin:center bottom;transition:opacity .3s ease}
+.si-wave.w2{opacity:.55}.si-wave.w3{opacity:.3}
+.svc:hover .si-wave{opacity:1}
+
 /* Carte 3 — badge + lecteur, LED verte */
 .si-led2{fill:#F97316;opacity:.6;transform-box:fill-box;transform-origin:center}
-html.js .si-led2{animation:si-led2 2.8s ease-in-out infinite}
-@keyframes si-led2{0%,100%{opacity:.5}50%{opacity:1}}
+
 .si-badge2{transform-box:fill-box;transform-origin:center}
-html.js .si-badge2{animation:si-badge2 3.2s ease-in-out infinite}
-@keyframes si-badge2{0%,100%{transform:translateX(0)}45%,60%{transform:translateX(10px)}}
+
 .svc:hover .si-led2{fill:#34D399;opacity:1;animation:none}
-html.js .svc:hover .si-badge2{transform:translateX(14px);animation:none;transition:transform .4s}
+html.enh .svc:hover .si-badge2{transform:translateX(14px);animation:none;transition:transform .4s}
 
 .svc .ico{width:44px;height:44px;border-radius:8px;background:var(--ink);color:var(--steel-light);display:flex;align-items:center;justify-content:center;font-size:1.2rem;margin-bottom:18px}
 .svc h3{font-size:1.08rem;margin-bottom:10px}
@@ -123,11 +112,6 @@ html.js .svc:hover .si-badge2{transform:translateX(14px);animation:none;transiti
 
 /* Projets */
 .projects{background:var(--paper);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
-.proj-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
-.proj{border:1px solid var(--line);border-radius:10px;overflow:hidden;background:var(--paper)}
-.proj .body{padding:20px}
-.proj h3{font-size:1rem;margin-bottom:6px}
-.proj p{font-size:.88rem;color:var(--grey)}
 
 /* Pourquoi nous */
 .why-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px 40px}
@@ -229,50 +213,37 @@ footer a:hover{color:#fff}
    ============================================================ */
 
 /* --- 1. Révélations au scroll (actives seulement si JS présent) --- */
-html.js .reveal{opacity:0;transform:translateY(20px);will-change:opacity,transform}
-html.js .reveal.in{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
-html.js .reveal.stagger>*{opacity:0;transform:translateY(18px)}
-html.js .reveal.stagger.in>*{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
-html.js .reveal.stagger.in>*:nth-child(2){transition-delay:.09s}
-html.js .reveal.stagger.in>*:nth-child(3){transition-delay:.18s}
-html.js .reveal.stagger.in>*:nth-child(4){transition-delay:.27s}
+/* Gardé sur .enh (posé par enhance.js) et non sur .js : si le script ne se
+   charge pas — coupure 3G, cache vide —, le contenu reste visible au lieu
+   d'être masqué en attendant une animation qui ne viendra jamais. */
+html.enh .reveal{opacity:0;transform:translateY(20px);will-change:opacity,transform}
+html.enh .reveal.in{opacity:1;transform:none;transition:opacity .6s cubic-bezier(.22,.61,.36,1),transform .6s cubic-bezier(.22,.61,.36,1)}
+html.enh .reveal.stagger>*{opacity:0;transform:translateY(18px)}
+html.enh .reveal.stagger.in>*{opacity:1;transform:none;transition:opacity .55s ease,transform .55s ease}
+html.enh .reveal.stagger.in>*:nth-child(2){transition-delay:.09s}
+html.enh .reveal.stagger.in>*:nth-child(3){transition-delay:.18s}
+html.enh .reveal.stagger.in>*:nth-child(4){transition-delay:.27s}
 
 /* Trait orange qui s'étire sous les titres de section */
 .sec-head h2{position:relative;padding-bottom:16px}
 .sec-head h2::after{content:"";position:absolute;left:0;bottom:0;height:3px;width:54px;background:var(--cta);border-radius:2px;transform:scaleX(1);transform-origin:left}
-html.js .sec-head.reveal h2::after{transform:scaleX(0)}
-html.js .sec-head.reveal.in h2::after{transform:scaleX(1);transition:transform .6s ease .2s}
+html.enh .sec-head.reveal h2::after{transform:scaleX(0)}
+html.enh .sec-head.reveal.in h2::after{transform:scaleX(1);transition:transform .6s ease .2s}
 
 /* --- 2. Hero premium (accueil uniquement) --- */
-.hero-home{background:var(--ink-deep);color:#fff}
-.hero-home .container{position:relative;z-index:1}
-.hero-home .eyebrow{color:var(--steel-light)}
-.hero-home h1{color:#fff}
-.hero-home p.lede{color:#C7D3DE}
 
 /* Titre mot par mot */
-html.js .hero-home h1 .word{display:inline-block;opacity:0;transform:translateY(14px)}
-html.js .hero-home h1.animate .word{opacity:1;transform:none;transition:opacity .5s ease,transform .5s ease}
 
 /* Rotation de mots-clés */
-.rotator{color:var(--cta);display:inline-block}
-.rotator .rot-word{display:inline-block;transition:opacity .3s ease,transform .3s ease}
-.rotator .rot-word.out{opacity:0;transform:translateY(-8px)}
 
 /* --- 3. Bandeau clients défilant --- */
-.marquee{position:relative;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
-.marquee-track{display:flex;gap:56px;width:max-content;animation:marquee 30s linear infinite}
-.marquee:hover .marquee-track{animation-play-state:paused}
-.marquee-track span{font-family:'Archivo';font-weight:700;font-size:1.05rem;color:#8FA3B8;white-space:nowrap;letter-spacing:.02em}
-@keyframes marquee{to{transform:translateX(-50%)}}
 
 /* --- 4. Micro-interactions --- */
 .svc{transition:border-color .2s ease,transform .2s ease,box-shadow .2s ease}
 .svc:hover{border-color:var(--steel);transform:translateY(-4px);box-shadow:0 14px 30px rgba(27,58,107,.14)}
 .svc .ico{transition:background .2s ease,color .2s ease}
 .svc:hover .ico{background:var(--cta);color:#fff}
-.proj{transition:transform .2s ease,box-shadow .2s ease}
-.proj:hover{transform:translateY(-4px);box-shadow:0 14px 30px rgba(27,58,107,.14)}
+
 /* Brillance qui traverse les boutons orange */
 .btn-cta{position:relative;overflow:hidden}
 .btn-cta::after{content:"";position:absolute;top:0;left:-130%;width:55%;height:100%;background:linear-gradient(120deg,transparent,rgba(255,255,255,.35),transparent);transform:skewX(-20deg);pointer-events:none}
@@ -340,35 +311,8 @@ header.scrolled .logo img{height:34px}
 /* ============================================================
    TÉMOIGNAGES (carrousel plein cadre) + ATTESTATIONS (galerie + lightbox)
    ============================================================ */
-.tst{background:var(--paper);padding:0 0 84px}
 
 /* Bande marine : un seul témoignage à la fois, en grand */
-.tst-band{background:radial-gradient(120% 130% at 50% 0%,#274674 0%,var(--ink) 55%,var(--ink-deep) 100%);color:#fff;padding:78px 0;margin-bottom:66px}
-.tst-band .sec-head{max-width:none;text-align:center;margin:0 auto 8px}
-.tst-band .sec-head h2{color:#fff}
-.tst-band .sec-head h2::after{left:50%;transform:translateX(-50%) scaleX(1);transform-origin:center}
-html.js .tst-band .sec-head.reveal h2::after{transform:translateX(-50%) scaleX(0)}
-html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scaleX(1);transition:transform .6s ease .2s}
-.tst-band .sec-head p{color:#B9C7DA}
-
-.tst-carousel{position:relative;max-width:860px;margin:34px auto 0}
-.tst-stage{display:grid}
-.tslide{grid-area:1/1;opacity:0;visibility:hidden;transition:opacity .6s ease;text-align:center;padding:0 8px}
-.tslide.is-active{opacity:1;visibility:visible}
-.tslide blockquote{font-family:'Archivo';font-weight:700;font-size:clamp(1.3rem,2.7vw,1.8rem);line-height:1.5;letter-spacing:-.01em;color:#fff}
-.tslide figcaption{margin-top:28px}
-.tst-sep{width:42px;height:3px;background:var(--cta);border-radius:2px;margin:0 auto 16px}
-.tst-name{display:block;font-family:'Archivo';font-weight:900;font-size:1.02rem;color:#fff}
-.tslide .tst-co{display:block;font-family:'IBM Plex Mono';font-size:.82rem;color:var(--steel-light);margin-top:3px}
-.tst-att-link{display:inline-block;margin-top:16px;font-size:.82rem;font-weight:600;color:var(--cta);text-decoration:none}
-.tst-att-link:hover{text-decoration:underline}
-
-.tst-controls{display:flex;align-items:center;justify-content:center;gap:18px;margin-top:34px}
-.tst-arrow{width:40px;height:40px;border-radius:50%;border:1px solid rgba(255,255,255,.28);background:transparent;color:#fff;font-size:1.5rem;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:background .2s ease,border-color .2s ease}
-.tst-arrow:hover{background:rgba(255,255,255,.14);border-color:rgba(255,255,255,.55)}
-.tst-dots{display:flex;gap:9px}
-.tst-dots button{width:9px;height:9px;border-radius:50%;border:none;background:rgba(255,255,255,.3);cursor:pointer;padding:0;transition:background .2s ease,transform .2s ease}
-.tst-dots button.active{background:var(--cta);transform:scale(1.3)}
 
 /* Lightbox améliorée : navigation + compteur */
 .lb{position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.85);display:flex;align-items:center;justify-content:center;padding:32px;opacity:0;visibility:hidden;transition:opacity .25s ease}
@@ -386,7 +330,7 @@ html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scale
 .lb-next{right:18px}
 
 @media (max-width:600px){
-  .tst-band{padding:60px 0;margin-bottom:52px}
+  
   .lb-nav{width:44px;height:44px;font-size:1.6rem}
   .lb-prev{left:8px}.lb-next{right:8px}
   .lb-fig img{max-height:80vh}
@@ -397,46 +341,16 @@ html.js .tst-band .sec-head.reveal.in h2::after{transform:translateX(-50%) scale
    fondu enchaîné 1s · zoom lent 1.0→1.08 · voile marine · 60fps
    transforms/opacity uniquement · reduced-motion = image fixe
    ============================================================ */
-.hero-slider{position:relative;min-height:90vh;display:flex;align-items:center;
-  padding:0;overflow:hidden;background:var(--ink-deep)}
-.hero-slides{position:absolute;inset:0;z-index:0}
-.hero-slide{position:absolute;inset:0;opacity:0;
-  background-image:var(--img,none),var(--fallback);
-  background-size:cover,cover;background-position:center,center;background-repeat:no-repeat;
-  transition:opacity 1s ease-in-out;will-change:opacity}
-.hero-slide.is-active{opacity:1;z-index:1}
+
 /* Dégradés marine temporaires (visibles tant qu'aucune image n'est déposée dans assets/hero/) */
-.hero-slide:nth-child(1){--fallback:linear-gradient(125deg,#0a1730 0%,#1b3a6b 60%,#2b4f86 100%)}
-.hero-slide:nth-child(2){--fallback:linear-gradient(125deg,#0c1a32 0%,#284674 55%,#1b3a6b 100%)}
-.hero-slide:nth-child(3){--fallback:linear-gradient(125deg,#0a1830 0%,#12294d 50%,#2b4f86 100%)}
-.hero-slide:nth-child(4){--fallback:linear-gradient(125deg,#0e2038 0%,#1b3a6b 55%,#3E6FB0 100%)}
 
 /* Effet Ken Burns : zoom + léger déplacement pendant toute la durée du slide */
-@keyframes kenburns{from{transform:scale(1.001) translate3d(0,0,0)}to{transform:scale(1.08) translate3d(-1.6%,-1.2%,0)}}
-html.js .hero-slide.is-active{animation:kenburns 6s ease-out both}
 
 /* Voile marine : opaque à gauche → semi-transparent à droite + léger scrim bas */
-.hero-veil{position:absolute;inset:0;z-index:2;pointer-events:none;
-  background:
-    linear-gradient(90deg,rgba(9,18,36,.95) 0%,rgba(11,24,46,.82) 36%,rgba(14,30,58,.52) 72%,rgba(16,34,66,.34) 100%),
-    linear-gradient(180deg,rgba(9,18,36,0) 58%,rgba(9,18,36,.5) 100%)}
 
 /* Contenu texte par-dessus */
-.hero-slider .container{position:relative;z-index:3;width:100%}
-.hero-slider-content{max-width:640px;padding:104px 0}
-.hero-slider .eyebrow{color:var(--steel-light)}
-.hero-slider h1{color:#fff;text-shadow:0 2px 24px rgba(0,0,0,.35)}
-.hero-slider p.lede{color:#DCE6F1;text-shadow:0 1px 12px rgba(0,0,0,.35)}
 
 /* Points de navigation discrets */
-.hero-dots{position:absolute;left:0;right:0;bottom:24px;z-index:4;
-  display:flex;justify-content:center;gap:11px}
-.hero-dots button{width:9px;height:9px;padding:0;border:0;border-radius:50%;cursor:pointer;
-  background:rgba(255,255,255,.42);box-shadow:0 1px 4px rgba(0,0,0,.4);
-  transition:background .3s ease,transform .3s ease}
-.hero-dots button:hover{background:rgba(255,255,255,.7)}
-.hero-dots button.active{background:var(--cta);transform:scale(1.3)}
-.hero-dots button:focus-visible{outline:2px solid var(--steel-light);outline-offset:3px}
 
 /* Bandeau clients défilant, juste sous le hero */
 .trust-band{background:var(--ink);border-bottom:1px solid rgba(255,255,255,.1)}
@@ -444,15 +358,6 @@ html.js .hero-slide.is-active{animation:kenburns 6s ease-out both}
 .trust-band .trust p{color:#8FA3B8}
 
 /* Mobile : slider plus court, Ken Burns conservé, texte lisible */
-@media (max-width:700px){
-  .hero-veil{background:
-    linear-gradient(90deg,rgba(9,18,36,.92) 0%,rgba(11,24,46,.82) 55%,rgba(13,28,54,.66) 100%),
-    linear-gradient(180deg,rgba(9,18,36,0) 55%,rgba(9,18,36,.5) 100%)}
-}
-@media (max-width:600px){
-  .hero-slider{min-height:70vh}
-  .hero-slider-content{padding:72px 0}
-}
 
 /* ============================================================
    SCÈNES SVG ANIMÉES DU HERO (illustrations sur mesure du métier)
@@ -461,90 +366,50 @@ html.js .hero-slide.is-active{animation:kenburns 6s ease-out both}
    ============================================================ */
 /* Vidéo de fond du hero — activée par JS uniquement si le fichier existe ;
    sinon, repli automatique sur les scènes SVG. Voile marine par-dessus. */
-.hero-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:1;
-  opacity:0;transition:opacity .8s ease;pointer-events:none;background:var(--ink-deep)}
-.hero-slider.video-on .hero-video{opacity:1}
-.hero-slider.video-on .hero-slides{opacity:0;transition:opacity .8s ease}
-.hero-slider.video-on .hero-dots{display:none}
-.hero-slider.video-on .scene *{animation-play-state:paused!important}
 
-.scene-slide .scene{position:absolute;inset:0;width:100%;height:100%;display:block}
-.scene .sc-ground{stroke:rgba(143,180,224,.20);stroke-width:1.4}
-.scene .sc-edge{fill:none;stroke:#6f9fd4;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round;opacity:.72}
-.scene .sc-face{stroke:#3E6FB0;stroke-width:1.4}
-.scene .sc-face.front{fill:rgba(20,41,77,.55)}
-.scene .sc-face.side{fill:rgba(9,20,40,.62)}
-.scene .sc-face.top{fill:rgba(43,79,134,.42)}
-.scene .sc-beacon{fill:#F97316}
-html.js .scene-slide.is-active .sc-beacon{animation:sc-beacon 1.9s ease-in-out infinite}
 @keyframes sc-beacon{0%,100%{opacity:.35}50%{opacity:1}}
 
 /* Scène A — le bâtiment qui s'éclaire */
-.scene-a .sc-win{fill:#8FB4E0;opacity:.07}
-html.js .scene-a.is-active .sc-row .sc-win{animation:sc-winOn .7s ease forwards;animation-delay:calc(var(--r)*.42s + .5s)}
+
 @keyframes sc-winOn{from{opacity:.07}to{opacity:.8}}
-html.js .scene-a.is-active .sc-win.flick{animation:sc-winOn .7s ease forwards,sc-flick 3.4s ease-in-out infinite;animation-delay:calc(var(--r)*.42s + .5s),calc(var(--r)*.42s + 3s)}
+
 @keyframes sc-flick{0%,100%{opacity:.8}44%{opacity:.3}48%{opacity:.9}}
-.scene-a .sc-coil{fill:none;stroke:#8FB4E0;stroke-width:2;opacity:.7}
-.scene .sc-energy{fill:none;stroke:#F97316;stroke-width:2.6;stroke-linecap:round;stroke-dasharray:.035 .028;opacity:.92}
-html.js .scene-a.is-active .sc-energy{animation:sc-flow 1.4s linear infinite}
-html.js .scene-a.is-active .sc-energy.up{animation-duration:1.8s}
+
 @keyframes sc-flow{to{stroke-dashoffset:-.063}}
 
 /* Scène B — le réseau qui se dessine */
-.scene-b .sc-draw{fill:none;stroke:#7ba6da;stroke-width:1.7;stroke-linecap:round;stroke-dasharray:1;stroke-dashoffset:1;opacity:.82}
-.scene-b .sc-draw.bus{stroke-width:2;opacity:.95}
-html.js .scene-b.is-active .sc-draw{animation:sc-draw 1.1s ease forwards;animation-delay:calc(var(--o,0)*1s)}
+
 @keyframes sc-draw{to{stroke-dashoffset:0}}
-.scene-b .sc-node{fill:#8FB4E0;opacity:.32;transform-box:fill-box;transform-origin:center}
-.scene-b .sc-node.small{opacity:.24}
-html.js .scene-b.is-active .sc-node{animation:sc-node 2.4s ease-in-out infinite;animation-delay:calc(var(--n)*.22s + 1s)}
+
 @keyframes sc-node{0%,100%{opacity:.22;transform:scale(1)}50%{opacity:.95;transform:scale(1.3)}}
-.scene-b .sc-pulse{fill:none;stroke:#F97316;stroke-width:2.8;stroke-linecap:round;stroke-dasharray:.05 .95;stroke-dashoffset:1;opacity:.95}
-html.js .scene-b.is-active .sc-pulse{animation:sc-travel 2.8s linear infinite}
-html.js .scene-b.is-active .sc-pulse.alt{animation-duration:3.4s;animation-direction:reverse}
+
 @keyframes sc-travel{from{stroke-dashoffset:1}to{stroke-dashoffset:0}}
 
 /* Scène C — la sécurité */
-.scene-c .sc-fwin{fill:#8FB4E0;opacity:.10}
-html.js .scene-c.is-active .sc-fwin{animation:sc-winOn .8s ease forwards .6s}
-.scene-c .sc-reader{fill:rgba(143,180,224,.22);stroke:#6f9fd4;stroke-width:1.4}
-.scene-c .sc-led{fill:#F97316;opacity:.5;transform-box:fill-box;transform-origin:center}
-html.js .scene-c.is-active .sc-led{animation:sc-led 3.6s ease-in-out infinite}
+
 @keyframes sc-led{0%,38%{fill:#F97316;opacity:.5}52%,88%{fill:#34D399;opacity:1}100%{fill:#F97316;opacity:.5}}
-.scene-c .sc-badge{fill:rgba(143,180,224,.16);stroke:#8FB4E0;stroke-width:1.4}
-.scene-c .sc-badge-line{stroke:#8FB4E0;stroke-width:2.4;opacity:.6;stroke-linecap:round}
-.scene-c .sc-badge,.scene-c .sc-badge-line{transform-box:view-box}
-html.js .scene-c.is-active .sc-badge,html.js .scene-c.is-active .sc-badge-line{animation:sc-badge 3.6s ease-in-out infinite}
+
 @keyframes sc-badge{0%{transform:translateX(0)}42%{transform:translateX(92px)}54%{transform:translateX(92px)}100%{transform:translateX(0)}}
-.scene-c .sc-fov{fill:#F97316;opacity:.09;stroke:none}
-.scene-c .sc-fov-rot{transform-box:view-box;transform-origin:210px 196px}
-html.js .scene-c.is-active .sc-fov-rot{animation:sc-sweep 6.5s ease-in-out infinite}
+
 @keyframes sc-sweep{0%,100%{transform:rotate(-15deg)}50%{transform:rotate(15deg)}}
-.scene-c .sc-secpt{fill:#F97316;opacity:.28;transform-box:fill-box;transform-origin:center}
-html.js .scene-c.is-active .sc-secpt{animation:sc-node 2.6s ease-in-out infinite;animation-delay:calc(var(--n)*.3s + .8s)}
-.scene-c .sec-link{stroke:#F97316;stroke-width:1.4;fill:none;opacity:.45;stroke-dasharray:1;stroke-dashoffset:1}
-html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 
 /* Performance : seule la scène active anime ; pause quand l'onglet est caché */
-.hero-slide:not(.is-active) .scene *{animation-play-state:paused!important}
-.hero-slider.tab-hidden .scene *,.hero-slider.tab-hidden .hero-slide.is-active{animation-play-state:paused!important}
 
 /* --- Respect de prefers-reduced-motion : image fixe, pas de zoom ni de slider --- */
 @media (prefers-reduced-motion: reduce){
-  html.js .hero-slide.is-active{animation:none;transform:none}
-  .hero-slide{transition:none}
-  .scene *{animation:none!important}
-  .scene-a .sc-win,.scene-c .sc-fwin{opacity:.5}
-  .scene-b .sc-draw,.scene-c .sec-link{stroke-dashoffset:0!important}
-  .scene-b .sc-node,.scene-c .sc-secpt{opacity:.7}
-  .scene-c .sc-led{fill:#34D399!important;opacity:1}
-  html.js .reveal,html.js .reveal.stagger>*{opacity:1!important;transform:none!important}
-  html.js .sec-head.reveal h2::after{transform:scaleX(1)!important}
-  html.js .hero-home h1 .word{opacity:1!important;transform:none!important}
+  
+  
+  
+  
+  
+  
+  
+  html.enh .reveal,html.enh .reveal.stagger>*{opacity:1!important;transform:none!important}
+  html.enh .sec-head.reveal h2::after{transform:scaleX(1)!important}
+  
   .timeline.in .step .dot{background:var(--cta);border-color:var(--cta);color:#fff}
   .timeline.in::after{width:75%}
-  .tslide{transition:none}
+  
   .doc-btn{transition:none}
 }
 
@@ -554,7 +419,6 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
    ============================================================ */
 
 /* Icônes de services en SVG trait (suivent la couleur au survol) */
-.svc .ico svg.ico-svg{width:24px;height:24px;display:block}
 
 /* Filigrane technique très discret sur les sections claires */
 .tech-grid{position:relative}
@@ -579,18 +443,6 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 .alt-grey{background:#EFEBE4}
 
 /* Réalisations : cartes typographiques marine + filigrane circuit */
-.proj{position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);border-radius:12px;
-  background:linear-gradient(160deg,#24436F 0%,#12294D 100%);padding:26px 24px;min-height:210px;
-  display:flex;flex-direction:column;justify-content:flex-end}
-.proj::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.14;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150' viewBox='0 0 150 150'%3E%3Cg fill='none' stroke='%238FB4E0' stroke-width='1.3'%3E%3Cpath d='M0 40 H50 V95 H110 V25 H150'/%3E%3Cpath d='M30 150 V110 H85 V60 H150'/%3E%3C/g%3E%3Cg fill='%238FB4E0'%3E%3Ccircle cx='50' cy='95' r='3.2'/%3E%3Ccircle cx='110' cy='25' r='3.2'/%3E%3Ccircle cx='85' cy='60' r='3.2'/%3E%3C/g%3E%3C/svg%3E");
-  background-size:150px 150px}
-.proj-badge{position:relative;align-self:flex-start;margin-bottom:auto;font-family:'IBM Plex Mono';
-  font-size:.64rem;letter-spacing:.12em;text-transform:uppercase;color:var(--cta);
-  border:1px solid rgba(249,115,22,.45);border-radius:999px;padding:4px 11px}
-.proj h3{position:relative;color:#fff;font-size:clamp(1.15rem,2vw,1.4rem);margin:20px 0 6px;letter-spacing:-.01em}
-.proj p{position:relative;color:#C7D3DE;font-size:.92rem}
-.proj:hover{transform:translateY(-5px);box-shadow:0 20px 42px rgba(9,20,40,.30);border-color:rgba(249,115,22,.35)}
 
 /* Contact : passage en fond clair (page d'accueil uniquement) */
 .contact-light{background:var(--paper);color:var(--ink)}
@@ -615,25 +467,6 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 /* Bandeau final : étincelles orange qui montent lentement */
 .cta-band{position:relative;overflow:hidden}
 .cta-band .container{position:relative;z-index:1}
-.sparks{position:absolute;inset:0;z-index:0;pointer-events:none}
-.sparks i{position:absolute;bottom:-10px;width:4px;height:4px;border-radius:50%;background:var(--cta);opacity:0;
-  box-shadow:0 0 6px rgba(249,115,22,.6);animation:spark 8s linear infinite}
-.sparks i:nth-child(1){left:7%;animation-delay:0s;animation-duration:8.5s}
-.sparks i:nth-child(2){left:16%;animation-delay:2.4s;animation-duration:9.5s}
-.sparks i:nth-child(3){left:27%;animation-delay:5.1s;animation-duration:7.8s}
-.sparks i:nth-child(4){left:38%;animation-delay:1.2s;animation-duration:10s}
-.sparks i:nth-child(5){left:47%;animation-delay:3.8s;animation-duration:8.2s}
-.sparks i:nth-child(6){left:58%;animation-delay:6.2s;animation-duration:9s}
-.sparks i:nth-child(7){left:68%;animation-delay:.6s;animation-duration:8.8s}
-.sparks i:nth-child(8){left:79%;animation-delay:4.3s;animation-duration:7.6s}
-.sparks i:nth-child(9){left:88%;animation-delay:2.9s;animation-duration:9.8s}
-.sparks i:nth-child(10){left:95%;animation-delay:5.6s;animation-duration:8.4s}
-@keyframes spark{
-  0%{transform:translateY(0) scale(.5);opacity:0}
-  12%{opacity:.55}
-  80%{opacity:.35}
-  100%{transform:translateY(-170px) scale(1);opacity:0}
-}
 
 /* ============================================================
    PASSE DE CHALEUR — section « Qui sommes-nous », signature,
@@ -660,19 +493,6 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 
 /* Cadre portrait (placeholder monogramme, remplacé par la photo du fondateur) */
 .about-portrait{display:flex;justify-content:center}
-.portrait-frame{position:relative;width:100%;max-width:340px;aspect-ratio:4/5;border-radius:16px;
-  overflow:hidden;box-shadow:0 22px 50px rgba(20,41,77,.20),0 3px 10px rgba(20,41,77,.10)}
-.portrait-frame::after{content:"";position:absolute;left:0;right:0;bottom:0;height:5px;
-  background:linear-gradient(90deg,var(--cta),var(--cta-dark));z-index:2}
-.portrait-ph{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(120% 120% at 30% 20%,#28477312 0,#28477300 60%),
-             linear-gradient(150deg,#24436F 0%,#12294D 100%)}
-.portrait-ph::before{content:"";position:absolute;width:184px;height:184px;border-radius:50%;
-  border:1px solid rgba(143,180,224,.28)}
-.portrait-ph::after{content:"";position:absolute;width:132px;height:132px;border-radius:50%;
-  border:1px solid rgba(143,180,224,.18)}
-.portrait-mono{position:relative;font-family:'Archivo',sans-serif;font-weight:900;font-size:4.4rem;
-  letter-spacing:.05em;color:#EAF1F9;text-shadow:0 2px 20px rgba(0,0,0,.25)}
 
 /* Indice WhatsApp (micro-copy réchauffée) */
 .wa-hint{color:var(--grey);font-size:.86rem}
@@ -681,7 +501,7 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 @media (max-width:820px){
   .about-grid{grid-template-columns:1fr;gap:36px}
   .about-portrait{order:-1}
-  .portrait-frame{max-width:280px}
+  
 }
 
 /* ============================================================
@@ -699,9 +519,6 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 .crumbs [aria-current="page"]{color:var(--ink);font-weight:600}
 
 /* Hero interne compact (réutilise .hero mais sans le plein écran) */
-.hero-page{padding:64px 0 40px}
-.hero-page h1{font-size:clamp(1.9rem,4vw,2.9rem)}
-.hero-page p.lede{margin-bottom:24px}
 
 /* Carte service de l'accueil devenue lien (« En savoir plus ») */
 .svc-more{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:600;color:var(--steel);text-decoration:none}
@@ -716,12 +533,10 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
 .refs .todo{background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;border-radius:var(--radius);padding:14px 16px;font-size:.92rem}
 
 /* Cartes réalisations cliquables + filtre */
-a.proj{text-decoration:none;color:inherit;display:block}
-a.proj:hover{transform:translateY(-3px)}
+
 .filterbar{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 28px}
 .filterbar button{font:inherit;font-size:.9rem;cursor:pointer;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
 .filterbar button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
-.proj.hide{display:none}
 
 /* Blocs « prochaines étapes » / cross-links en bas de page */
 .next-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
@@ -771,21 +586,11 @@ a.proj:hover{transform:translateY(-3px)}
 .rbody h3{font-size:1.12rem;margin-bottom:5px}
 .rbody p{font-size:.92rem;color:var(--grey)}
 
-/* Mur de témoignages statique (remplace le carrousel) */
-.tst-wall{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
-.tcard{background:#fff;border:1px solid var(--line);border-left:3px solid var(--cta);border-radius:var(--radius);padding:20px 22px;display:flex;flex-direction:column;gap:14px}
-.tcard blockquote{font-size:.98rem;color:var(--ink);line-height:1.55}
-.tcard blockquote::before{content:"“";font-family:'Archivo';font-size:2rem;line-height:0;color:var(--steel-light);margin-right:2px;vertical-align:-.35em}
-.tcard .tmeta{margin-top:auto}
-.tcard .tname{font-weight:700;display:block}
-.tcard .tco{font-size:.82rem;color:var(--grey);font-family:'IBM Plex Mono'}
-.tcard .tlink{display:inline-block;margin-top:10px;font-size:.83rem;color:var(--steel);text-decoration:none;font-weight:600}
-.tcard .tlink:hover{color:var(--ink)}
 .att-strip{margin-top:22px;display:flex;flex-wrap:wrap;align-items:center;gap:10px 16px;justify-content:center;background:var(--warm);border:1px solid var(--line);border-radius:var(--radius);padding:16px 20px}
 .att-strip .att-count{font-weight:700;color:var(--ink)}
 
 @media (max-width:860px){
-  .rgrid,.tst-wall{grid-template-columns:1fr}
+  .rgrid{grid-template-columns:1fr}
 }
 
 /* Hero photo — variante sous-pages + fond marine quand pas d'image */
@@ -796,3 +601,83 @@ a.proj:hover{transform:translateY(-3px)}
 .fiche-photo{aspect-ratio:16/7;margin-bottom:18px;border:2px dashed var(--steel-light);border-radius:var(--radius);background:repeating-linear-gradient(135deg,#EEF3FA,#EEF3FA 12px,#E7EEF7 12px,#E7EEF7 24px);display:flex;align-items:center;justify-content:center;gap:10px;color:var(--ink-soft)}
 .fiche-photo svg{width:30px;height:30px;opacity:.6}
 .fiche-photo span{font-family:'IBM Plex Mono';font-size:.78rem;letter-spacing:.03em;color:var(--grey)}
+
+/* ============================================================
+   PASSE DE DESIGN — ACCUEIL
+   Registre des références, hiérarchie de section, sobriété du
+   mouvement. Aucune librairie, aucune image supplémentaire.
+   ============================================================ */
+
+/* Lien d'évitement (clavier / lecteurs d'écran) */
+.skip-link{position:absolute;left:-9999px;top:0;z-index:120;background:var(--cta);color:#fff;font-weight:700;padding:12px 20px;text-decoration:none;border-radius:0 0 var(--radius) 0}
+.skip-link:focus{left:0}
+
+/* Typographie : titres équilibrés, chiffres alignés */
+h1,h2,h3{text-wrap:balance}
+.lede,.sec-head p,.ref blockquote{text-wrap:pretty}
+.mono,.eyebrow,.kicker,.ref-head,.ref-scope,.refs-meta,.stat .num,.step .dot{font-variant-numeric:tabular-nums}
+
+/* Respiration verticale : bas légèrement plus généreux que le haut */
+section{padding:82px 0 94px}
+
+/* Kicker de section : le site se lit comme un dossier numéroté */
+.kicker{font-family:'IBM Plex Mono';font-size:.72rem;font-weight:500;letter-spacing:.16em;text-transform:uppercase;color:var(--steel);margin-bottom:12px;display:flex;align-items:center;gap:10px}
+.kicker::before{content:"";width:20px;height:1px;background:var(--cta);flex:0 0 auto}
+
+/* ---------- Section « Références » : les 14 attestations, sans interaction ---------- */
+.refs{background:var(--paper);border-top:1px solid var(--line)}
+.refs-meta{display:flex;flex-wrap:wrap;gap:6px 34px;margin:-22px 0 30px;padding-bottom:20px;border-bottom:1px solid var(--line);font-family:'IBM Plex Mono';font-size:.82rem;color:var(--grey)}
+.refs-meta strong{color:var(--ink);font-weight:500}
+
+.refs-wall{columns:3;column-gap:32px}
+.ref{break-inside:avoid;-webkit-column-break-inside:avoid;page-break-inside:avoid;padding:16px 0 24px;border-top:1px solid var(--line)}
+.ref-head{font-family:'IBM Plex Mono';font-size:.72rem;letter-spacing:.1em;text-transform:uppercase;color:var(--grey);margin-bottom:12px}
+.ref-year{color:var(--cta);font-weight:500;margin-right:6px}
+.ref blockquote{font-size:.97rem;line-height:1.55;color:var(--ink);margin-bottom:14px}
+.ref blockquote::before{content:"«\00a0";color:var(--steel-light)}
+.ref blockquote::after{content:"\00a0»";color:var(--steel-light)}
+.ref-who{margin-bottom:8px}
+.ref-name{display:block;font-weight:600;font-size:.93rem;color:var(--ink)}
+.ref-role{display:block;font-size:.82rem;line-height:1.45;color:var(--grey)}
+.ref-scope{font-family:'IBM Plex Mono';font-size:.74rem;line-height:1.55;color:var(--grey);margin-bottom:12px}
+.ref .tlink{display:inline-block;font-size:.8rem;font-weight:600;color:var(--steel);text-decoration:none;border-bottom:1px solid rgba(62,111,176,.4);padding-bottom:2px;transition:color .2s ease,border-color .2s ease}
+.ref .tlink:hover{color:var(--ink);border-color:var(--ink)}
+.ref .tlink:focus-visible{outline:3px solid var(--steel-light);outline-offset:3px;border-radius:2px}
+.refs .att-strip{margin-top:30px}
+
+@media (max-width:1000px){.refs-wall{columns:2}}
+@media (max-width:640px){
+  .refs-wall{columns:1}
+  .refs-meta{gap:4px 0;flex-direction:column}
+}
+
+/* ---------- Emplacements photo : le nom de fichier attendu est affiché ---------- */
+.rmedia-file{margin-top:2px;font-family:'IBM Plex Mono';font-size:.65rem;letter-spacing:.02em;color:#9DB6D4;border:1px dashed rgba(255,255,255,.22);border-radius:3px;padding:3px 7px}
+.founder-ph .fph-file{margin-top:2px;font-family:'IBM Plex Mono';font-size:.66rem;letter-spacing:.02em;color:var(--grey);border:1px dashed var(--steel-light);border-radius:3px;padding:3px 8px}
+.founder-ph{gap:9px}
+
+/* ---------- Hero : hiérarchie resserrée ---------- */
+.hero-photo .eyebrow{margin-bottom:16px}
+.hero-photo .hero-meta{margin-top:22px;padding-top:18px;border-top:1px solid rgba(255,255,255,.16)}
+
+/* --- Corrections de contraste et d'alignement relevées au rendu --- */
+/* Le lede du hero héritait du gris des sections claires : illisible sur le voile marine. */
+.hero-photo p.lede{color:#E6EDF6}
+/* Voile un peu plus dense à droite : la photo de tableau reste lisible sans concurrencer le texte. */
+.hero-photo::after{background:linear-gradient(90deg,rgba(18,41,77,.97) 0%,rgba(18,41,77,.93) 48%,rgba(18,41,77,.82) 100%)}
+/* Portrait du fondateur : occupe sa colonne au lieu de flotter au centre. */
+.founder-ph{width:100%;max-width:340px}
+/* Cartes services : listes alignées et lien toujours en bas de carte. */
+.svc{display:flex;flex-direction:column}
+.svc h3{min-height:2.2em}
+.svc ul{margin-bottom:18px}
+.svc-more{margin-top:auto}
+/* Sur mobile, les 14 références sont une longue colonne : on resserre. */
+@media (max-width:640px){
+  .ref{padding:14px 0 18px}
+  .ref blockquote{font-size:.94rem;margin-bottom:12px}
+  .ref-scope{font-size:.72rem;margin-bottom:10px}
+}
+/* Bandeau clients : intégré au bleu marine plutôt qu'une rangée d'étiquettes blanches. */
+.trust-band .logo-grid span{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.14);color:#CBD8E8}
+.ref-place{color:var(--grey)}
