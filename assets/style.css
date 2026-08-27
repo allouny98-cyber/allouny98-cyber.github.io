@@ -683,3 +683,48 @@ html.js .scene-c.is-active .sec-link{animation:sc-draw 1.5s ease forwards .5s}
   .about-portrait{order:-1}
   .portrait-frame{max-width:280px}
 }
+
+/* ============================================================
+   PAGES INTERNES (services, réalisations, fiches) — multi-pages SEO
+   Ajouté lors du passage mono-page → multi-pages. Réutilise au maximum
+   les composants existants (.hero, .why-grid, .att, .proj-grid).
+   ============================================================ */
+
+/* Fil d'Ariane */
+.crumbs{background:var(--warm);border-bottom:1px solid var(--line)}
+.crumbs .container{display:flex;flex-wrap:wrap;gap:8px;align-items:center;padding-top:12px;padding-bottom:12px;font-size:.85rem;color:var(--grey)}
+.crumbs a{color:var(--steel);text-decoration:none}
+.crumbs a:hover{text-decoration:underline}
+.crumbs .sep{opacity:.5}
+.crumbs [aria-current="page"]{color:var(--ink);font-weight:600}
+
+/* Hero interne compact (réutilise .hero mais sans le plein écran) */
+.hero-page{padding:64px 0 40px}
+.hero-page h1{font-size:clamp(1.9rem,4vw,2.9rem)}
+.hero-page p.lede{margin-bottom:24px}
+
+/* Carte service de l'accueil devenue lien (« En savoir plus ») */
+.svc-more{display:inline-flex;align-items:center;gap:6px;margin-top:14px;font-weight:600;color:var(--steel);text-decoration:none}
+.svc-more:hover{color:var(--ink)}
+.svc-more::after{content:"→";transition:transform .15s ease}
+.svc-more:hover::after{transform:translateX(3px)}
+
+/* Bloc « Références » (réutilise .att pour la lightbox) */
+.refs{padding:16px 0 4px}
+.refs .ref-names{display:flex;flex-wrap:wrap;gap:8px 10px;margin:10px 0 18px;list-style:none}
+.refs .ref-names li{font-size:.9rem;color:var(--ink);background:var(--warm);border:1px solid var(--line);border-radius:999px;padding:6px 14px}
+.refs .todo{background:#FFF7ED;border:1px solid #FED7AA;color:#9A3412;border-radius:var(--radius);padding:14px 16px;font-size:.92rem}
+
+/* Cartes réalisations cliquables + filtre */
+a.proj{text-decoration:none;color:inherit;display:block}
+a.proj:hover{transform:translateY(-3px)}
+.filterbar{display:flex;flex-wrap:wrap;gap:10px;margin:8px 0 28px}
+.filterbar button{font:inherit;font-size:.9rem;cursor:pointer;padding:8px 16px;border-radius:999px;border:1.5px solid var(--line);background:#fff;color:var(--ink)}
+.filterbar button.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.proj.hide{display:none}
+
+/* Blocs « prochaines étapes » / cross-links en bas de page */
+.next-links{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:8px}
+.next-links a{display:block;text-decoration:none;color:var(--ink);background:#fff;border:1px solid var(--line);border-radius:var(--radius);padding:18px 20px;font-weight:600}
+.next-links a:hover{border-color:var(--steel);color:var(--steel)}
+.next-links a small{display:block;font-weight:400;color:var(--grey);margin-top:4px}
