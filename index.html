@@ -43,7 +43,6 @@
 <section class="hero hero-photo" aria-label="Electropack — installations électriques à Casablanca">
   <!-- Emplacement photo d'accueil : remplacer assets/hero/hero-1.jpg par le visuel définitif -->
   <div class="hero-bg" style="background-image:url('assets/hero/hero-1.jpg')"></div>
-  <span class="ph-tag">Photo de chantier — visuel provisoire</span>
   <div class="container">
     <p class="eyebrow">Casablanca · Depuis 2007</p>
     <h1>L'électricité qui fait tourner vos bâtiments.</h1>
@@ -58,6 +57,8 @@
       <span class="dotsep">Lots CFO &amp; CFA jusqu'à 10 M Dh</span>
     </div>
   </div>
+  <!-- Emplacement photo d'accueil : remplacer assets/hero/hero-1.jpg par le visuel définitif -->
+  <span class="ph-tag">Photo de chantier — visuel provisoire</span>
 </section>
 
 <!-- BANDEAU CLIENTS DÉFILANT (suit le hero) -->
@@ -65,8 +66,39 @@
   <div class="container">
     <div class="trust">
       <p>Ils nous font confiance</p>
-      <div class="logo-grid">
-        <span>SOFITEL</span><span>SOCIÉTÉ GÉNÉRALE</span><span>TELEPERFORMANCE</span><span>GTR</span><span>A2S INDUSTRIES</span><span>ASTING INVEST</span><span>XEROX</span><span>FIAT</span><span>AUTO DISTRIBUTION</span><span>LIA TECH MAROC</span><span>GTC</span>
+      <!-- Bandeau défilant : chaque .mq-item accepte soit une plaque texte
+           (.mq-plate, actuel), soit un logo (<img class="mq-logo" ...>) sans
+           changer le balisage. Le 2e groupe (aria-hidden) duplique le 1er pour
+           une boucle continue ; il est masqué en prefers-reduced-motion. -->
+      <div class="marquee">
+        <div class="marquee-track">
+          <ul class="marquee-group">
+            <li class="mq-item"><span class="mq-plate">SOFITEL</span></li>
+            <li class="mq-item"><span class="mq-plate">SOCIÉTÉ GÉNÉRALE</span></li>
+            <li class="mq-item"><span class="mq-plate">TELEPERFORMANCE</span></li>
+            <li class="mq-item"><span class="mq-plate">GTR</span></li>
+            <li class="mq-item"><span class="mq-plate">A2S INDUSTRIES</span></li>
+            <li class="mq-item"><span class="mq-plate">ASTING INVEST</span></li>
+            <li class="mq-item"><span class="mq-plate">XEROX</span></li>
+            <li class="mq-item"><span class="mq-plate">FIAT</span></li>
+            <li class="mq-item"><span class="mq-plate">AUTO DISTRIBUTION</span></li>
+            <li class="mq-item"><span class="mq-plate">LIA TECH MAROC</span></li>
+            <li class="mq-item"><span class="mq-plate">GTC</span></li>
+          </ul>
+          <ul class="marquee-group" aria-hidden="true">
+            <li class="mq-item"><span class="mq-plate">SOFITEL</span></li>
+            <li class="mq-item"><span class="mq-plate">SOCIÉTÉ GÉNÉRALE</span></li>
+            <li class="mq-item"><span class="mq-plate">TELEPERFORMANCE</span></li>
+            <li class="mq-item"><span class="mq-plate">GTR</span></li>
+            <li class="mq-item"><span class="mq-plate">A2S INDUSTRIES</span></li>
+            <li class="mq-item"><span class="mq-plate">ASTING INVEST</span></li>
+            <li class="mq-item"><span class="mq-plate">XEROX</span></li>
+            <li class="mq-item"><span class="mq-plate">FIAT</span></li>
+            <li class="mq-item"><span class="mq-plate">AUTO DISTRIBUTION</span></li>
+            <li class="mq-item"><span class="mq-plate">LIA TECH MAROC</span></li>
+            <li class="mq-item"><span class="mq-plate">GTC</span></li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
