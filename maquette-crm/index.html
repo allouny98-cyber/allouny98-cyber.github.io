@@ -651,6 +651,64 @@ label.btn { cursor: pointer; }
 
 .champ-cmd { margin-top: 12px; }
 
+/* Bons de livraison des fournisseurs */
+.blf-lignes { display: grid; gap: 10px; }
+.blf-l { display: grid; grid-template-columns: minmax(180px, 3fr) 1fr 1.2fr 0.8fr minmax(150px, 2fr) auto; gap: 8px; align-items: end; padding-bottom: 10px; border-bottom: 1px solid var(--line); }
+.blf-l .champ { margin: 0; min-width: 0; }
+.blf-l .btn-x { margin-bottom: 4px; }
+.blf-total { margin-top: 10px; padding: 10px 12px; border-radius: var(--r-sm, 8px); background: var(--surface-2, rgba(0, 0, 0, 0.04)); font-variant-numeric: tabular-nums; }
+.table-blf td small { display: block; color: var(--muted); font-size: 0.86em; margin-top: 2px; }
+.table-blf td small.rouge, .liste-simple small .rouge { color: var(--bad); font-weight: 600; }
+.liste-coche { list-style: none; margin: 10px 0; padding: 0; display: grid; gap: 6px; }
+.liste-coche label { display: grid; grid-template-columns: auto 1fr auto; gap: 10px; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r-sm, 8px); cursor: pointer; font-variant-numeric: tabular-nums; }
+.liste-coche label small { display: block; color: var(--muted); }
+.liste-coche input { width: 20px; height: 20px; }
+.regroup-ctrl { margin: 10px 0; padding: 10px 12px; border-radius: var(--r-sm, 8px); background: var(--surface-2, rgba(0, 0, 0, 0.04)); }
+.regroup-ctrl.ok { box-shadow: inset 3px 0 0 var(--ok); }
+.regroup-ctrl.alerte { box-shadow: inset 3px 0 0 var(--bad); }
+/* Attestation de régularité fiscale et ordres de virement */
+.alerte-att { display: flex; gap: 10px; align-items: flex-start; margin: 12px 0; padding: 10px 12px; border-radius: var(--r-sm, 8px); background: var(--surface-2, rgba(0, 0, 0, 0.04)); line-height: 1.45; }
+.alerte-att .ico { flex: none; margin-top: 2px; }
+.alerte-att.att-bad { box-shadow: inset 3px 0 0 var(--bad); }
+.alerte-att.att-warn { box-shadow: inset 3px 0 0 var(--warn); }
+.alerte-att.att-ok { box-shadow: inset 3px 0 0 var(--ok); }
+.ordres { list-style: none; margin: 8px 0 12px; padding: 0; display: grid; gap: 8px; }
+.ordre { display: flex; flex-wrap: wrap; gap: 8px 12px; align-items: center; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--r-sm, 8px); }
+.ordre > span:first-child { flex: 1 1 160px; }
+.ordre small { display: block; color: var(--muted); }
+.ordre-btns { display: flex; flex-wrap: wrap; gap: 6px; }
+.doc.lettre { max-width: 720px; margin: 0 auto; line-height: 1.55; }
+.lettre-tete { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 22px; }
+.lettre-tete .doc-logo-img { margin: 0; }
+.lettre-titre { text-align: center; text-transform: uppercase; letter-spacing: 0.06em; font: 800 18px var(--font-display); margin: 18px 0 14px; color: #161a26; }
+.lettre-dl { margin: 14px 0; display: grid; gap: 8px; }
+.lettre-dl div { display: grid; grid-template-columns: minmax(130px, 34%) 1fr; gap: 12px; }
+.lettre-dl dt { color: #5c6474; }
+.lettre-dl dd { margin: 0; font-weight: 700; overflow-wrap: anywhere; }
+.lettre-bas { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 24px; }
+.lettre-bas div { border: 1.2px solid #2c303a; border-radius: 8px; min-height: 96px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; }
+.lettre-bas span { color: #5c6474; }
+/* Pointage par chantier */
+.jours-chantiers { border: 1px solid var(--line); border-radius: var(--r-sm, 8px); padding: 10px 12px; margin: 0 0 12px; display: grid; gap: 8px; }
+.jours-chantiers legend { padding: 0 6px; font-weight: 600; }
+.jours-ch { display: grid; grid-template-columns: 1fr 96px; gap: 12px; align-items: center; margin: 0; }
+.jours-ch span small { display: block; color: var(--muted); font-weight: 400; }
+.jours-ch input { text-align: right; }
+.mois-choix b small { display: block; font-weight: 400; color: var(--muted); font-size: 0.82em; }
+.photo-pointage { margin-bottom: 14px; }
+.infos select { min-height: 40px; max-width: 100%; }
+@media (max-width: 719px) {
+  .blf-l { grid-template-columns: 1fr 1fr; }
+  .blf-l .blf-des, .blf-l .blf-ch { grid-column: 1 / -1; }
+  .blf-l .btn-x { justify-self: end; }
+  .lettre-bas { grid-template-columns: 1fr; }
+  .lettre-dl div { grid-template-columns: 1fr; gap: 0; }
+}
+/* Dans un formulaire en colonne, un champ garde sa hauteur naturelle (la base de 140 px ne vaut que pour les champs côte à côte). */
+.form > .champ, .form-paie > .champ { flex: 0 0 auto; }
+.photo-boutons .btn { white-space: normal; text-align: left; }
+.liste-simple small.rouge { color: var(--bad); font-weight: 600; }
+
 </style>
 </head>
 <body>
@@ -707,7 +765,7 @@ function coutTotal(lignes) {
 const DEFAULT_AUTO = {
   relanceDevis: { actif: true, j1: 7, j2: 15, resp: 'papa' },
   acompteAuto: { actif: true, pct: 30, resp: 'maman' },
-  relanceFacture: { actif: true, j1: 3, j2: 15, j3: 30, resp: 'maman' },
+  relanceFacture: { actif: true, j1: 3, j2: 15, j3: 30, resp: 'papa' },
   bonCommandeAuto: { actif: true, resp: 'papa' },
   planifierChantier: { actif: true, resp: 'papa' },
   factureSolde: { actif: true, resp: 'maman' },
@@ -715,15 +773,19 @@ const DEFAULT_AUTO = {
   clientDormant: { actif: true, j: 180, resp: 'papa' },
   payerFournisseur: { actif: true, j: 7, resp: 'maman' },
   budgetChantier: { actif: true, pct: 90, resp: 'papa' },
-  paieMois: { actif: true, j: 20, resp: 'maman' },
+  paieQuinzaine: { actif: true, j: 7, resp: 'maman' },
+  attestation: { actif: true, resp: 'maman' },
+  prixHausse: { actif: true, pct: 10, resp: 'maman' },
+  regrouperBL: { actif: true, j: 3, resp: 'maman' },
+  remiseCheques: { actif: true, resp: 'maman' },
   resumeLundi: { actif: true }
 };
 // Logo d'Electropack (version marine, pour fond clair et documents), 194 × 120 px
 const DEFAULT_LOGO = { data: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIAAAB4CAYAAACgsC0iAAAZp0lEQVR42u2deZRedXnHP3c2ZiaTfSELWSAECCAkgEGCRBFBFASOUrCpSquIKAcsrbQqWo4btKhtEWuJiHUXq2AJixZEixL2SCAQIDEhkIUkhOyZTDLzvm//eL73zC839777OvN7zrnn3e57l9999jWYNPcKPHgY7NDkl8CDB08IHjx4QvDgwROCBw+eEDx42B9a/BIA0Ay0ARlgqN4DjAWmAGmt1XygD0hp38OA0do342zRNQ5ynD+tY+LsG2j7M7BN19gCPAHcCaxKOFaHXvfquB48ISTCCGAIMEGIPgw4Wr8drs8B0KX3GUnPgMpJ5iTpfETk83TgmQRCOBL4qK7zeWAHsA5YK0J7A+j1aD94CWGqOP0RwBxx8kni/O1CnNYGuI8+4FPAYzG/TQOuB47V5/dIIvQCe/TfZcBu4Ici7qWeBAYmITRLNRgFTAQOBeYCbxYhhJw3LeTvBbodjr9WCJNx9n0C6HFUlSAiGaJSwlWPwvftkjid+px2JNPIiDo13PmvKyV2AAuAh2PuexLwZYcI3GfbJukHMF6v5+h1KfA4sAlYrPvcLMLp9YTQWDBUiD8DOErqwaHAGCFeC7BRD7sbeA7YKSTbLB08IyJ60UHKEMHfKBOBDtWri/SjgXEOwQQi3JS2KcBMIeUPgPtijn0U8BXgTUU4SY4HjtP7zZIWrwC3Ak96QmgcPf9i4GypOi3itJuBFeJw92rflcDWCJcOYgzbSkFKBm8UtuhaXXg08jlwDOootAGXFUgEJBx/rLa2LIb4gIWggXKNOsUtO4FTZDRuFUffAdwvxN5ZJi7eKIzsYKldx8gG6tLaDM/TY+XCc8DVwKsxv80ErhFTeUBr/JqkrJcIVYQ2bQFwtxD+FT2IvkFq4/XJK7QOeFBMohU4RCrPKGCW1MYxUs2SYJdUojUxv50A3CCDfC5wnqTZS8D/AE8D271E8FDvMFbS4kzZBZNlwDfLXtgD/CXwQoIN8u+yu+IgA7wsQrxfdtY+Twge6h2GYfGTY6RSTRdXvytm36NliB+Tx3Ezks6/l222UtIl7QnBQyOom0Ok1rgI2wqcJCI4pIjj7sJc0XcBD4kovI3goW5hX4IaMw74e/rTRwqFLqlUhwPnApdj7uu6heZhk+d4dPAQhb3S+x/HYhhDpFIVSmR3AN8CVnuJ0KBOBOnFcUl0mSKOlZG6sCbLfkNkxAYJ+ncu/TzIM5/p+TyOt4/+NI4HsMj1fHH3EXnaCwuBr2PePWJcsbnWw9sIVYRWx6MyCrgIc0mmnWS3VixtI1MAYgYxyLkJOD3Lf04FbsK8OfkgWqHEGGCBvWfEABcB64GnsCBkd57MYT7mkp2awEh7MQ/S57BIdXS9zwf+CUvneAzLj9pcaxd4yyCuwzgMeLeQc6oQsJLrMTzH74eJ4Foq/LznOOkVGSwW8xTmOfpTDuJ7DviSbIhzMHfs0Q7Bh+rQjQmEdR7wd8BB2s7CPFj3Ar+qZSxisNoI8zDf+NuwyGxbFYqU9gHfyfL7NBFlSxWZQZMk4THAGVikfnkOidMnhF0s5F2DJft1AY8AX0gggvcDX9R+rpQ5GMsUOBH4Y60i1YONEJqBK4DrxKGrWaHXi2WPJsHBWN5Ua41sog7gZCH5cqdQiBw5VC8A9+h//+nkdLlS6H1SlTqyEOVE3X8gQ32vL9Ws3MOeC3yghshWTr2/EtAF/APw9gL/t1lEviHmt/OlDnXlcZyJwN9iKeWTPCFUBg4CPiHjmDokhGl1UhzUiSXeTS3xOEOwgNxXKSwe0QG8C/gZMLuCVYGDlhAuwZLHKDB9OiW9uNQtnUeUNyjgmtwCn7TzfdxWKEyWVCgFCUdq21Pk/w+WYf4hMTHvNaI8xTsfyOPBbsVy8cN16REiBTHF9iS4VOMq2TLkjqy2Z7m+DJby/Lp055SQIyUpso9+92MQeW1yXLIhwczKkYnaimWvNhVJSGCu2euA04DP56kaEVOvfQ0Wu1hQSbthsBDCHOmfuYjgGnkuagG5bIS7gX8t07nOBq7EUiCS4GQRW7FenLBIaqGI4GqnZJQC86E+ihU2/aQEwvSqEbkruNZjuTV/pLbGfLWe1W+Aq7CaArJUAM6lPNV5Pwe+KYlWDLSLkD5SKTVpsBDC+Byc6y4OLJGsN4lQbq/SSuCXOdSjQylfDOVHmPfo9RKM+KuASyvhVBgshJArQLS6DvLmgxqc87kc911ONSSFdQS5Fsszokg16WOYS9YTAsW5TrPZBitpjDhIuWFRtQNXkrzfKIEYOoBPYi16PCFQeHJdNonQ0+BSrVLHDSqUanI7lmxXrGt1ElZD3eUJwUMjq2tp4HclOicmSTK0ekIo38MOqH+OHwywdd+K5SalS8DdCziwN6wnBM99G0I1cmEZ8B8l/H80VgbqCYH8+/8MVhug3mEBFngrFt5ZDsO5aRDV4Da6RMjU4LzVIM405lYtBYevIL/KPh9HyPFbpgGuv6dCbuW2Gt9bCmv5UkrM4gisDhqfa0RJxTpDxBnHRWqNM3nqybn22xdTsFLryDLYDIWWOmCUq7CI83iKL4M9Ems96QmhBIPrGuBZ6ZrpArtD5LPfDqwV4tfrzFg+N8c9tVSxv1KqRIZ+LOZK7fWEQNHBtpO0VRJOyEEI1YbJOdSJHuLbQFYCtlN8pBmnfqHFEwID3rXaVsbajNnAhTlSTzaUkCBXKLyG1WscWcIx2kuRqp4QaKjOG2OcAGA6osNnEnorRb+biHWtyJWesKRSuf8VsoFmlVI/4QmhMdyjgdSYGSUiTHOez3wvlv5QLUJoL0OqRKuXCAyapmTVcnW+TPZmX+WGQ/KoICSPDtxpH0fwQBn7L90mvZ0qzmzoLPEYT5cSOPUSoX/QX28VXIT1Dpswz9bCKquMZ8j+KQV2lCIRPCFY3e5XsB6g0UBaJqGxb77xhaAGEzwpIRv0G1jXOqoc0DyjxDhKBuvyvc8TQmmceiUHjnllkKSe9GBNgG/EWj1WGy6i9NrobXm2u/eEMECQNlUGNSTskbRTDOAubCDIvhoF9a4qkzT7Mz7XaEAU5uQigrVYjfHiGHdsJst30aZfTcCTsom2U3y5JGWY33YF1g2vVHiIEmdre0JoHLiP8jX4qge4AJtPQRmM5AX4egQPDQgTsLYs7ZReZ7Igj8xeTwge6g6OBH4ATCnDsRYDd+JLNT00GByKzT8oBxHsxCb2bME3AWawVNENBHizjOO3lMk58QPg1/hu2B7JGghmydAfWyYiWAh8mzImBbYMooS1bL+1eGKmUqOozpMkGFOmYy7BBkGmGmE+Qic1mo5I4S0fR2LTLF+qcv79QG7wFWAF9ZcD76B071AIG7FRVOsapQnwFOBiLIekqw4e4iKyd3KYj+X6D7RucrViOp8Cvo81B2gvE5NYh6VjPEsDTcx5UQtwMfBBLBj0CBbar0X79RXi9knjksYA38PmAC+lfH2Q3GS7Xiz4M1ChA3gr8BdYNV05mcrvgG8RP7Wz7m2EJRJl78dm7K7Eprs/jM0jqCa8gE3FmUz2bhZfFrH2RdISeujPxQkSOlhkIsjfJGnTJ1VxI/DxAUgALVhjgvnYvLTOMhJBRobxDZQhaFZLY/k1UfLjQrJrsdyWH4vKl+tzpgotH/8FuCnHEL3h2qiQD50BlJ/VIRX4r7G2i0Mpf2eLn2Deod6BMlXzKWxs0OXAmcBl2JTLR7Ha2EWi+ErOKfg/SakTfRPgkvT/EVKBTpckGFPma98LrMFqI56sVt/alip6RJZJRXpUhDARGyx9OtY25EkZWC9WUCrcgTWCOgjvHi0UjpPxO0/ProPK1IZ8D3gAqy+oqn5XTdiFTVR/ABskfS6WgHUINvjhdKlLt+t1rThEukyIdi9wGPBhqt/zM6jw75TZm9ghbj8HOFWSvFL40iNGuRSLEdTE0KkFbAb+DfMmvRs4Swg6Qgs/S6rSE/L4PCiPy6YyLPjNWJ7Kh2UgN4pqVA1CGI4V0r8LG8l7nBhVUEEp+DKWOHdPNWyBeo0sv4RVFn0H67x2uZCzDWvhd66kwWVYOd4CqU7PlkgMt4r7fFCivqUOVJ+mPNqnU6Hg5zTg7eL6h+i7lipNzLkDS714jRq7vqiDLhLdwA+lMl0s5Jws7tSMBeW6gC8JIV6STbEeS8XdIATfk6dxlZKBvghrf/geLBI6Qd6PcraKDyvgcrn/dmNVVkGCi3ZLmXz9bVgq9BFYF/ALpPO3VSEbuVsIv1US4GeOylxbcTxp7hX16D0ZL9F8vtSkMQkcNq1FfQVzty3GZgevFuLsK8Ab0ilC6Irhvpki1QM3FrEbi2eQJY4xNct5VhdRjtiMtbo/yFE/D8a65g3V70GVpOE2xxDeLjVoZ90gXR0SAjHVTNdgrrqDs3CtXiH+BhnYSyXxvquHvjQyGCQYIFmpQeT1JN3XxVqvGVVG+qg695CcFEskgV6sy0VsAELAGSd6MnA0MFef22NUnjCq2yuC2C7Os0rG+BOYuzYU021SsfY4YnpfHSL7UEmujLj8KEmvY4VwsyRVDnWQvhaxiR1YXtAqMZ//aghu0kCEgNP9YKJUp7fKyzQh0pwrLaJoEVGErVACIfluEUeTkGmTiCaQ+rJS9kmLkGqFVK4gCyd2jcDNjiE6MaYpWLTrhGuTdAKn6PxpR02bKeQHy5gd5lx/rQNyGScx7mtaq226pl2eEKoDo+TxeCvW7ny8QwB7ZCAGBSJLylHBAoew4ozgkLh69X6TJE0gJJ2WYPy2OIG9TMQWaa7zSHNKa7ILeExOh+WOLbO94fTLAUAIOO7HUVKfxoqrTtX7Dv3u06yL5/hpLHFwBRb1bZbnZzkDJHNwoEBaKsm9QvpfiSNPxwJDc/V+uCeIgjj/Run9t8rgDZuCNTdIY+NBJxHyMTgnAcfLAzUFCx4Nl9Hd2YCVYOXi9n1iHltlPz2CuaJXYC7b4ZTYUtFLhPprm7hWUmOItikyPucIGWbqcxcWv8g4rRIHgtQMgFfpr9wLVZ4xWMT+T5gXzYXXBzpyDOZ2Lru1bXLStMG8Ui1CjClSAd4p708T/RFZ6tSodT1ka2W4NwN/EFcPsLR46K8rTzvetb7BiAy+rxH7BeTc1+2YGxXgt856TXByod4iJMpg8Y0xzuc0FrcYXgZpEjjBwpRDfE2Yv36d4216AUtBCWQzbSvAHhi04AmBgmsa1uj9SunSOOOPWiPR6rH0Z7hmSkjXCMtF10Y4duin3+sfjSeEeoEdCdN4PNDYja88ePCE4MGDJwQPHjwhePDgCcGDB08IHjx4QvDgwROCBw+eEDx48ITgl8CDh8ZMsTieA2uHAyzfJt9+mYdgeUCZSJH7DvbPux+J9Vdqiul4EUTSm1exf33uZCzPKBNzHvf/b9CfFp0PtANH0Z8k10R/eWg+MDtLs7BmrN64kIKbIVibmIz+Swklt1Od+u5uLHkwHxidpdXNSCyLOGz9s7ZQQgh0gLOAs7GEsuYsmYu/wNp4u4t8CvAZnedRbKBcdxHEOg94n5BrRkwxfIBlja7EZhBsjDnOdOBSrOvDWPZv/x44aclrsIEhf8KGYl9C7iS5DHAjNukxhPlYy/RMTKJdEMlReg7r/vxCQouZZqxLxSex4qIpTm1BgGXKbsLSq7/vJAZG4TJsvGu2Z/6qmMrDwC9F4GSZNnQtNicNbP7F9Xk+44Owtptn6v7G0j9sMCNiDO/jVQ4cGfUOrMN6mGV7Scw5zgA+rfXKALdhrUYLIoQRWPfqeXmqUPOw9n3dkWFy00VEOyl8tloT1ofzc+QeRtcmImlN6OR8A3B4HtztKHHNNVixTr5Sc2aWBgDkWOe5WFr3JxKQ+L1CYLevU3OEm47COtgdJ+RcnjAZqDnH9Uyjf57D24ArsxDDXOAcZ83fjdV1/Jb8Jm1+EGu2EEeQ7XqeIR5En+sJzu+9CZLgKkkrxCQfKMZGeJMWosnJr0+LUvdqC9/3YNVNe/No+VEIjBQXH+OoIOHWG7mGfbqOTEybwysdIgjvpU//2yWO6m69WNHOCue77pj76cby/bfFzHbIRNK3e0QcYSOyFP3dIJr0UC9KeEZfweogmpyOGikdN+30cwpECJfkGKDoFvC4a9jrrG+b1uyvskjESyK9pbrE5fOBf3aIILyXHc56bnW2nTlU0ziC/7mYWkgov8imumXjdmc7J1sD/Lejh292cvBDotiSo7gjU2SD2ul6vw34KVY22CQ1YnPMOaJq0VghUQj3AE9LV1ztIBGRqe7d2JSfm7UOcySem53RWNdp34D+BmFx8Liufbyub7u4d1oPKySAc6UiEVEvWx2C+o7WoFnHGq97eI+4ZJMk2rgc0yefkSrzSEQaTMaKjC7QOWZr/dbHSI7DnbkGvZKoJ+kYa7Kce7KuL/zvjWIUqxOuOVVASvsQ4POyN9BzuY3+PqsFE8I85/0rOli6ypNg3BnIG7BGwVuLOEaTg0i3O6WK5NG0NpQEv8IG5Z3oXM9Led53T4y68IRez3MIoSPHc1hC8iilHhECsiO6ctzbqhjkeMUhvvNECC0J6tTb6W849ksR5dXa98IkXVxwqvNcQwZXrgq5j0mTCeHbWLe93mLdp0Oc938ooS15qf1Fm50a460ldKPGUe2KhWeLdD0Hedxf0n7TnPcrszzQ5x2undTuMcjzmvZEfs/E4MbJuvY9kni3ODgyP4dNl4lw+1SJeBUyzJnYaIGwI8lj2DDC3lLiCOlIG0P8jLGKzCjoK+D3PTmQt6dM6xm154IYQpjpeHQep39WXvj7aVVcxxGSUDc71/q8VNcNpcYR3IW4iP0L1YOY/p2LgPsrONBiCjYfIeN0rYs+oE1Y9+vdznfjZCdQ4yF80xxdP5AxerQ8QmSZE5ApgGjKxVhGO5IqrkPg6Y6h+6DDKG932uKcUOEpOE2RST+flUoYqlvXFjLGOF/X4Bxt5OhW/ccIEpaTk4/BWp2ToxPDHZFrSNVB+/dZ8locFHH3RtfmzipeU6eYS5wa+TcOoq2JcNUWzKUdXvtD7D/YfY2M4eOzGOxBmScQtWNB0pCZfDHHLIqKRpb3VlAalAJvyLs0rIYq1tA85wo/TGldwlsL2P9UbHCHi1ihcTzO+e6piF11vIzp0Lu2xPltnUMIh+p1HdUdxdVUzGy8lgI6NDwfo6O6/XXuSdBRM2Uymvdo0XdH2qm7XalfT+gmQY3HxUYjy32OpNqCuTLvJd7PHRTgVGimMInQmUOPfxTz1LlwsSMt7uXApmm/wwJtbdgs7ceoTk+qbqlIncBHpaZvLDchPANcUaP+OSn6ZxR8vEF7+KzTdU93COFrkgC7YuIhxRBCocZy2DAscHz0Kae9/UoskNcXsbeOdj4/F0lVIaKWnpkjD6gUCe3+bxs2lvZqqdATsLjXR5wmbUUTgnuiRSUgYFCil6ZXhNBX5DVkKqSyFTIO9jfA77E8oFbZCueIW24u4DiZPN3E+az5TzH/f5PT29T1FsUNZgyDZSF8GgsCRg1tF7/eq/uu5HD1FOba/qrsg2Ey5q/U562luE+bs+TR1MLlOcqJFlKgezJVgwn37r2/IF37Jqdl4wlY5HpMHjaO6zlLgmH0x37yGRv1qKTsS5IIW4QwYYrD3himeVokpWIE5k10txmR/32gCnbZViy36j4stSLjZEd8ttR6hNdjkrpGFzix3n0gE+RZGqnjRLeOBB03cLIVx+XQa3MhZJMennve4VUg8tCFeCsWcd3pJI59PQeB/4H9o7nDJVWCCBc+0TFyNxWR5ZuP9jDbkdRbdZ5wez3yucfBneM50J2ME02fUcT1JKXcf4/+KH6ATWY9P5cjIZtqdB8WpQs9Bbc4TWY3xhiAi7DU5aT0holYBujOmGF3GSwq+iwWB3A9URuEKKOBL2ABnBWRZrjhTa8H7o5ws5Qj4luAf4xETncDy/RdeE83laGoKYjcRwg/FjJfqn1OwXzeVyXo+MtFSK3avqn73+VkuJ4mVaDJSZUo9/imtzgEuwMLVr2a5d4vxBL2ujD3setdWiJJN1qS7HPYPIY4B0MgHFgY8V61J5x7C5YKPtuRtp/X8RYWQwgLsXz6dl1sSNXHJux/uBCqJ8IJ9+oYQY406DdhM9C+GzEAV0slCAdlHykjLA62yQB1/d7rxVWPECLFXcPJHBg5vb6MhBBE7uk23dM7xRROkWF3a0wAajU2kvUYnTNUQcjS7v7BhC7Ypago5zr3vBb4X3Kno1ykNZ8reyQMGC6TzfQ+HXOuNrLkRS0GXmb/IFoSrAfeLxwepu1DYtRrC32Yr4n7vJwwTA8nnblPyBc1rh6R5+EpidKUs390S8X40XcDP9L3G/P4/54Ew3iBkG+39s3ESIxw205yYGt4JCEvl6EfHnNGjE77GSw1ISMiv1SqTxx8Qte0yUndjp5nN1YLcJ2QLptLt9AgYzsWRMsImW/J4z+rHG/UCTGI+1O5OPtE/H3OfaWd78PB5LuzGOVx97JB9sFmh9FeX4xE6JYP+de6kUyMfRA+6EBGV1/MMe7EfMtTZCOkstgSz8cg0yK56cYJoVJZOPS2BE64B8tCXCxR7UZ1eyPH3J5lKPbTkiiBjpcN7nHiAssS1vcGeTV6HeMzyV67XoZgWDp6odbn9078ZGmOOMrdTkXXsgIIoUMcfpue50N5/OcVecW2OeNmXVgmleV+Z/1ni3g6sJSU3zjqTtS79ms9q3lJXF6awC1OheUDfoaaBw++i4UHD54QPHjwhODBgycEDx48IXjwkD/8P/5riLZVZFHVAAAAAElFTkSuQmCC', w: 194, h: 120 };
 const DEFAULT_EQUIPE = {
   membres: [
-    { id: 'papa', nom: 'Jacqui', role: 'Visites, devis et chantiers' },
-    { id: 'maman', nom: 'Régine', role: 'Factures, paiements et relances' }
+    { id: 'papa', nom: 'Jacqui', role: 'Visites, devis, chantiers et relances des clients' },
+    { id: 'maman', nom: 'Régine', role: 'Factures, encaissements, achats et paie' }
   ]
 };
 // Coordonnées reprises du site d'Electropack ; adresse, patente, IF, RC, CNSS, ICE et fax repris d'une vraie facture. La banque et le RIB ne sont jamais écrits ici : ils se saisissent dans Réglages.
@@ -968,6 +1030,9 @@ function buildDemo(today) {
     { id: 'fo05', nom: 'Sécurité Vision Import', categorie: "Vidéosurveillance et contrôle d'accès", contact: 'M. Mehdi Ouazzani', tel: '05 00 00 00 25', email: 'contact@securite-vision.example', ice: '002000000000005', delai: 60, creeLe: d(-180) },
     { id: 'fo06', nom: 'Garage et Carburant Sidi Maârouf', categorie: 'Véhicules et carburant', contact: '', tel: '05 00 00 00 26', email: '', ice: '', delai: 0, creeLe: d(-400) }
   ];
+  // Attestation de régularité fiscale (date), banque et RIB : tout est inventé. fo03 n'a jamais donné d'attestation, celle de fo02 est périmée.
+  const ATT = { fo01: -40, fo02: -215, fo04: -95, fo05: -150, fo06: -20 };
+  fournisseurs.forEach((f, i) => { f.attestation = ATT[f.id] == null ? '' : d(ATT[f.id]); f.banque = ['Banque Atlas', 'Crédit du Détroit', 'Banque Atlas', 'Banque du Littoral', 'Crédit du Détroit', ''][i]; f.rib = f.id === 'fo06' ? '' : '000 000 00000000000' + String(i + 1).padStart(3, '0') + '00 00'; });
   const delaiDe = Object.fromEntries(fournisseurs.map(f => [f.id, f.delai]));
   // AC(id, fournisseur, affaire ou '', objet, HT, jour de commande, jour de facture ou null, n° de facture, paiements)
   const AC = (id, fournisseurId, affaireId, libelle, ht, jCmd, jFact, refFacture, paiements) => ({
@@ -987,35 +1052,59 @@ function buildDemo(today) {
     AC('ac09', 'fo06', '', 'Carburant et entretien des véhicules', 6450, -22, -22, 'GC-1182', [[-22, 7740, 'Chèque']]),
     AC('ac10', 'fo01', '', 'Outillage et consommables de l’atelier', 3900, -19, -18, 'F26-10488')
   ];
+  // Bons de livraison des fournisseurs : BL(id, fournisseur, n° du bon, jour, [désignation, quantité, prix unitaire HT, chantier ou ''])
+  const BL = (id, fournisseurId, ref, j, lignes, achatId) => ({ id, fournisseurId, ref, date: d(j), lignes: lignes.map(([designation, qte, pu, affaireId]) => ({ designation, qte, pu, tva: 20, affaireId: affaireId || '' })), achatId: achatId || '', creeLe: d(j), auteur: 'maman' });
+  const blf = [
+    BL('bl01', 'fo01', 'BL-44817', -9, [['Disjoncteur 16 A courbe C', 24, 38, 'a03'], ['Interrupteur différentiel 40 A 30 mA', 4, 410, 'a03'], ['Goulotte 60 × 40, barre de 2 m', 30, 46, 'a02']]),
+    BL('bl02', 'fo01', 'BL-44902', -6, [['Disjoncteur 16 A courbe C', 12, 39.5, 'a02'], ['Coffret 2 rangées', 2, 520, 'a02'], ['Embouts et petites fournitures', 1, 180, '']]),
+    BL('bl03', 'fo01', 'BL-45011', -2, [['Prise 2P+T encastrée', 60, 19.5, 'a03'], ['Disjoncteur 16 A courbe C', 10, 44, 'a03']]),
+    BL('bl06', 'fo03', 'BL-3390', -4, [['Dalle LED 60 × 60, 36 W', 20, 268, 'a02']]),
+    BL('bl04', 'fo02', 'BL-7731', -52, [['Câble U1000 R2V 3G2,5, couronne de 100 m', 8, 610, 'a04'], ['Câble réseau catégorie 6, touret de 305 m', 3, 1150, 'a03']], 'ac11'),
+    BL('bl05', 'fo02', 'BL-7768', -45, [['Chemin de câbles 200 mm, longueur de 3 m', 20, 142, 'a04'], ['Colliers et fixations', 1, 260, '']], 'ac11')
+  ];
+  // Facture du mois qui regroupe bl04 et bl05 : 11 430 HT, 13 716 TTC
+  achats.push(Object.assign(AC('ac11', 'fo02', '', '2 bons de livraison (BL-7731, BL-7768)', 11430, -45, -33, 'FC-8902'), { blIds: ['bl04', 'bl05'], ttc: 13716 }));
   achats.slice().sort((x, y) => x.date.localeCompare(y.date) || x.id.localeCompare(y.id)).forEach((x, i) => { x.numero = 'CF-' + today.slice(0, 4) + '-' + String(i + 1).padStart(4, '0'); });
   // Heures passées par chantier : HR(id, affaire, jour, électriciens, heures chacun). Le taux est le coût horaire du catalogue (MO-01).
   const tauxMO = cat['MO-01'].cout;
   const HR = (id, affaireId, j, personnes, parPersonne) => ({ id, affaireId, date: d(j), personnes, heures: personnes * parPersonne, taux: tauxMO, note: '', auteur: 'papa' });
   const heures = [
-    HR('hr01', 'a03', -6, 6, 8), HR('hr02', 'a03', -5, 6, 8), HR('hr03', 'a03', -4, 6, 8), HR('hr04', 'a03', -3, 6, 8), HR('hr05', 'a03', -2, 3, 8),
     HR('hr06', 'a04', -20, 5, 8), HR('hr07', 'a04', -17, 6, 8), HR('hr08', 'a04', -13, 7, 8), HR('hr09', 'a04', -9, 6, 8), HR('hr10', 'a04', -5, 5, 9)
   ];
   
   // Employés et paie : tous fictifs (noms, taux et jours inventés).
-  const EM = (id, nom, poste, paie, taux, jEntree) => ({ id, nom, poste, paie, taux, tel: '06 00 00 01 ' + id.slice(-2), entree: d(jEntree), actif: true });
+  const EM = (id, nom, poste, paie, taux, jEntree) => ({ id, nom, poste, paie, taux, tel: '06 00 00 01 ' + id.slice(-2), entree: d(jEntree), actif: true,
+    cin: 'XX' + String(100000 + (+id.slice(-2)) * 1117), cnss: String(900000000 + (+id.slice(-2)) * 1234567), rib: +id.slice(-2) % 4 === 0 ? '' : '000 000 0000000000' + id.slice(-2) + '0000 00', banque: +id.slice(-2) % 4 === 0 ? '' : 'Banque Atlas' });
   const employes = [
     EM('em01', 'Hicham Ouardi', 'Chef d’équipe', 'mois', 8500, -2900), EM('em02', 'Saïd Benhaddou', 'Électricien', 'jour', 220, -2100),
     EM('em03', 'Mustapha El Idrissi', 'Électricien', 'jour', 220, -1700), EM('em04', 'Khalid Tazi', 'Électricien', 'jour', 200, -1200),
     EM('em05', 'Youssef Amrani', 'Électricien', 'jour', 200, -900), EM('em06', 'Omar Lahlou', 'Aide électricien', 'jour', 150, -400),
     EM('em07', 'Rachid Bennis', 'Technicien courants faibles', 'mois', 7000, -1500), EM('em08', 'Abdelilah Chraïbi', 'Aide électricien', 'jour', 150, -150)
   ];
-  const moisCourant = today.slice(0, 7), moisAvant = addDaysISO(moisCourant + '-01', -1).slice(0, 7);
-  const PT = (employeId, mois, jours, primes, avances, paye) => ({ id: employeId + '_' + mois, employeId, mois, jours, primes: primes || 0, avances: avances || 0, note: '', paye: paye || null });
-  const payeAvant = { date: moisCourant + '-02', mode: 'Virement' };
-  const pointages = [
-    PT('em01', moisAvant, 26, 500, 0, payeAvant), PT('em02', moisAvant, 24, 0, 500, payeAvant), PT('em03', moisAvant, 25, 0, 0, payeAvant), PT('em04', moisAvant, 22, 200, 0, payeAvant),
-    PT('em05', moisAvant, 24, 0, 300, payeAvant), PT('em06', moisAvant, 23, 0, 0, { date: moisCourant + '-02', mode: 'Espèces' }), PT('em07', moisAvant, 26, 0, 0, payeAvant), PT('em08', moisAvant, 20, 0, 200, { date: moisCourant + '-02', mode: 'Espèces' }),
-    PT('em01', moisCourant, 17, 0, 0), PT('em02', moisCourant, 17, 0, 500), PT('em03', moisCourant, 16, 0, 0), PT('em05', moisCourant, 17, 300, 0), PT('em07', moisCourant, 17, 0, 1000)
-  ];
+  // Quinzaines : AAAA-MM-1 (du 1er au 15) et AAAA-MM-2 (du 16 à la fin du mois)
+  const quinz = iso => iso.slice(0, 7) + '-' + (+iso.slice(8, 10) <= 15 ? 1 : 2);
+  const qAvant = q => q.endsWith('-2') ? q.slice(0, 7) + '-1' : addDaysISO(q.slice(0, 7) + '-01', -1).slice(0, 7) + '-2';
+  const q0 = quinz(today), q1 = qAvant(q0), q2 = qAvant(q1);
+  const finQ = q => q.endsWith('-1') ? q.slice(0, 7) + '-15' : addDaysISO(addDaysISO(q.slice(0, 7) + '-28', 4).slice(0, 7) + '-01', -1);
+  // PT(employé, quinzaine, jours par chantier, primes, déplacements, avances, congés pris, versement)
+  const PT = (employeId, periode, parChantier, primes, deplacements, avances, conges, paye) => ({ id: employeId + '_' + periode, employeId, periode, parChantier, primes: primes || 0, deplacements: deplacements || 0, avances: avances || 0, conges: conges || 0, note: '', paye: paye || null });
+  const verse = (q, mode) => ({ date: addDaysISO(finQ(q), 1), mode: mode || 'Virement' });
+  const pointages = [];
+  [q2, q1].forEach((q, k) => {
+    [['em01', 12], ['em02', 12], ['em03', 11], ['em04', 12], ['em05', 10], ['em06', 12], ['em07', 12], ['em08', 9]].forEach(([e, j], n) => {
+      pointages.push(PT(e, q, { autre: j - (k && n === 4 ? 1 : 0) }, k === 0 && n < 6 ? 300 : 0, n === 1 || n === 2 ? 200 : 0, n === 4 ? 300 : 0, k && n === 4 ? 2 : 0, verse(q, e === 'em04' || e === 'em08' ? 'Espèces' : 'Virement')));
+    });
+  });
+  // Quinzaine en cours : 27 jours sur le chantier a03 (l'équivalent des heures saisies avant), 2 employés pas encore pointés
+  [['em01', { a03: 2, a02: 2, autre: 1 }], ['em02', { a03: 5 }, 0, 100], ['em03', { a03: 5 }, 0, 100], ['em04', { a03: 5 }, 0, 0, 500], ['em05', { a03: 5 }], ['em06', { a03: 5 }]].forEach(([e, pc, pr, dep, av]) => pointages.push(PT(e, q0, pc, pr, dep, av)));
+  // Chèques des clients : le dernier chèque reçu n'est pas encore remis en banque
+  factures.forEach(f => (f.paiements || []).forEach(p => { if (p.mode === 'Chèque') { p.cheque = { numero: String(4400000 + Math.round(p.montant) % 97531).slice(0, 7), banque: 'Banque Atlas' }; p.remis = p.date >= d(-25) ? '' : addDaysISO(p.date, 2); } }));
   // N° de commande donnés par les clients (inventés), repris sur les bons et les factures
   const CMD = { a02: '4500012873', a03: '20261187', a04: '20260942' };
   affaires.forEach(a => { if (CMD[a.id]) a.cmdClient = CMD[a.id]; });
-  return { catalogue, clients, affaires, factures, activites, bons, fournisseurs, achats, heures, employes, pointages, auto: JSON.parse(JSON.stringify(DEFAULT_AUTO)), societe: Object.assign({}, DEFAULT_SOCIETE), equipe: JSON.parse(JSON.stringify(DEFAULT_EQUIPE)) };
+  // Délais de paiement convenus avec quelques clients (jours)
+  clients.forEach(c => { const D = { c02: 60, c03: 90, c04: 60, c07: 120, c08: 90 }; if (D[c.id]) c.delai = D[c.id]; });
+  return { catalogue, clients, affaires, factures, activites, bons, fournisseurs, achats, heures, employes, pointages, blf, auto: JSON.parse(JSON.stringify(DEFAULT_AUTO)), societe: Object.assign({}, DEFAULT_SOCIETE), equipe: JSON.parse(JSON.stringify(DEFAULT_EQUIPE)) };
 }
 
 if (typeof module !== 'undefined') module.exports = { buildDemo, totaux, coutTotal, addDaysISO };
@@ -1076,15 +1165,15 @@ function enLettres(c) {
 }
 
 /* ---------- État ---------- */
-const S = { clients: {}, affaires: {}, factures: {}, bons: {}, catalogue: {}, activites: {}, taches: {}, demandes: {}, fournisseurs: {}, achats: {}, heures: {}, employes: {}, pointages: {}, params: { auto: clone(DEFAULT_AUTO), societe: clone(DEFAULT_SOCIETE), equipe: clone(DEFAULT_EQUIPE), logo: clone(DEFAULT_LOGO) } };
+const S = { clients: {}, affaires: {}, factures: {}, bons: {}, catalogue: {}, activites: {}, taches: {}, demandes: {}, fournisseurs: {}, achats: {}, heures: {}, employes: {}, pointages: {}, blf: {}, params: { auto: clone(DEFAULT_AUTO), societe: clone(DEFAULT_SOCIETE), equipe: clone(DEFAULT_EQUIPE), logo: clone(DEFAULT_LOGO) } };
 /* Version des données d'exemple : quand elle change, le tableau de bord propose de charger les nouveaux exemples. */
-const EXEMPLES_VERSION = 4;
+const EXEMPLES_VERSION = 5;
 const DEFAUTS = { auto: DEFAULT_AUTO, societe: DEFAULT_SOCIETE, equipe: DEFAULT_EQUIPE, logo: DEFAULT_LOGO, exemples: { version: 1 } };
 function fusionParam(id, v) {
   if (id === 'auto') { const out = clone(DEFAULT_AUTO); Object.keys(v || {}).forEach(k => { out[k] = Object.assign({}, out[k] || {}, v[k]); }); return out; }
   return Object.assign(clone(DEFAUTS[id] || {}), v || {});
 }
-const UI = { empMois: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes' };
+const UI = { empPer: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes' };
 let PROFIL = (() => { try { return localStorage.getItem('crm-profil') || 'papa'; } catch (e) { return 'papa'; } })();
 const membres = () => (S.params.equipe && Array.isArray(S.params.equipe.membres) && S.params.equipe.membres.length) ? S.params.equipe.membres : DEFAULT_EQUIPE.membres;
 const membre = id => membres().find(m => m.id === id);
@@ -1101,7 +1190,7 @@ function chargerDemo() {
   const D = buildDemo(TODAY);
   S.clients = byId(D.clients); S.affaires = byId(D.affaires); S.factures = byId(D.factures);
   S.catalogue = byId(D.catalogue); S.activites = byId(D.activites); S.bons = byId(D.bons); S.taches = {};
-  S.fournisseurs = byId(D.fournisseurs); S.achats = byId(D.achats); S.heures = byId(D.heures); S.employes = byId(D.employes); S.pointages = byId(D.pointages);
+  S.fournisseurs = byId(D.fournisseurs); S.achats = byId(D.achats); S.heures = byId(D.heures); S.employes = byId(D.employes); S.pointages = byId(D.pointages); S.blf = byId(D.blf || []);
   S.params = { auto: D.auto, societe: D.societe, equipe: D.equipe, logo: clone(DEFAULT_LOGO), exemples: { version: EXEMPLES_VERSION } };
 }
 
@@ -1235,9 +1324,28 @@ function calculerTaches() {
     if (n < 0) add(Object.assign({ key: 'payer2_' + x.id, niveau: 3, detail: `${money(r)} en retard de ${-n} j` }, base));
     else if (n <= (Number(R.payerFournisseur.j) || 0)) add(Object.assign({ key: 'payer1_' + x.id, niveau: 2, detail: `${money(r)} à payer ${n === 0 ? "aujourd'hui" : 'dans ' + n + ' j'}` }, base));
   });
-  if (actif('paieMois') && +TODAY.slice(8, 10) >= (Number(R.paieMois.j) || 20)) {
-    const m = TODAY.slice(0, 7), manque = paieDuMois(m).filter(x => !x.saisi).length;
-    if (manque) add({ key: 'paie_' + m, regle: 'paieMois', niveau: 2, titre: 'Préparer la paie du mois', detail: `${nb(manque, 'employé')} sans jours saisis pour ${moisLong(m)}`, c: { id: '', nom: 'Employés', tel: '' }, quiHtml: '<a href="#employes">Employés</a>', actions: ['employes', 'fait'] });
+  if (actif('attestation')) fournisseursListe().forEach(fo => {
+    if (!attManque(fo)) return;
+    const du = achatsListe().filter(x => x.fournisseurId === fo.id).reduce((s, x) => s + achReste(x), 0); if (du <= 0) return;
+    add({ key: 'att_' + fo.id + '_' + (fo.attestation || '0'), regle: 'attestation', niveau: 2, titre: 'Demander l’attestation fiscale', detail: `${fo.attestation ? 'Périmée' : 'Jamais reçue'} · ${money(du)} à payer à ce fournisseur`, fo, c: { id: '', nom: fo.nom, tel: fo.tel || '' }, actions: ['fournisseur', 'fait'] });
+  });
+  if (actif('regrouperBL')) {
+    const finMois = new Date(Date.UTC(+TODAY.slice(0, 4), +TODAY.slice(5, 7), 0)).getUTCDate(), proche = finMois - +TODAY.slice(8, 10) <= (Number(R.regrouperBL.j) || 0), parFo = new Map();
+    blARegrouper().forEach(b => { if (proche || b.date.slice(0, 7) < TODAY.slice(0, 7)) parFo.set(b.fournisseurId, (parFo.get(b.fournisseurId) || []).concat([b])); });
+    parFo.forEach((l, foId) => { const fo = S.fournisseurs[foId]; if (fo) add({ key: 'regroup_' + foId + '_' + TODAY.slice(0, 7), regle: 'regrouperBL', niveau: 1, titre: 'Regrouper les bons de livraison', detail: `${nb(l.length, 'bon')} à regrouper en facture (${money(l.reduce((s, b) => s + blHT(b), 0))} HT)`, fo, c: { id: '', nom: fo.nom, tel: fo.tel || '' }, actions: ['regrouper', 'fait'] }); });
+  }
+  if (actif('remiseCheques')) {
+    const cs = chequesARemettre();
+    if (cs.length) add({ key: 'cheques_' + cs[0].p.date + '_' + cs.length, regle: 'remiseCheques', niveau: 2, titre: 'Remettre les chèques en banque', detail: `${nb(cs.length, 'chèque')} reçu${cs.length > 1 ? 's' : ''}, ${money(cs.reduce((t, x) => t + centimes(x.p), 0))}`, c: { id: '', nom: 'Factures', tel: '' }, quiHtml: '<a href="#factures">Factures</a>', actions: ['cheques', 'fait'] });
+  }
+  if (actif('paieQuinzaine')) {
+    const per = quinzaineDe(TODAY), avant = perDecale(per, -1), E = { c: { id: '', nom: 'Employés', tel: '' }, quiHtml: '<a href="#employes">Employés</a>', regle: 'paieQuinzaine' };
+    if (daysBetween(TODAY, perBornes(per)[1]) <= (Number(R.paieQuinzaine.j) || 0)) {
+      const manque = paieDeLaPeriode(per).filter(x => !x.saisi).length;
+      if (manque) add(Object.assign({ key: 'paieq_' + per, niveau: 2, titre: 'Préparer la paie de la quinzaine', detail: `${nb(manque, 'employé')} sans jours saisis pour la ${perLong(per)}`, actions: ['employes', 'fait'] }, E));
+    }
+    const dus = paieDeLaPeriode(avant).filter(x => x.statut === 'payer');
+    if (dus.length) add(Object.assign({ key: 'verser_' + avant, niveau: 3, titre: 'Verser la paie de la quinzaine passée', detail: `${money(dus.reduce((t, x) => t + x.reste, 0))} à verser à ${nb(dus.length, 'employé')}`, actions: ['employes', 'fait'] }, E));
   }
   facturesListe().forEach(f => {
     if (factStatut(f) !== 'retard' || !actif('relanceFacture')) return;
@@ -1285,13 +1393,15 @@ function creerAcompte(a, auto) {
   log(a.clientId, a.id, auto ? 'auto' : 'systeme', `Facture d'acompte ${f.numero} créée${auto ? ' automatiquement' : ''} (${pct} %).`);
   return f;
 }
+/* Échéance d'une facture de solde : le délai convenu avec le client (60, 90 ou 120 jours), sinon 30 jours. La loi 69-21 plafonne à 120 jours. */
+const delaiClient = id => { const c = S.clients[id]; return c && c.delai !== '' && c.delai != null ? Number(c.delai) : 30; };
 function creerSolde(a) {
   const lignes = copieLignes(a.lignes);
   affFacturesValides(a).filter(f => f.type === 'acompte').forEach(f => {
     const net = factTot(f).ht - avoirsDe(f).reduce((s, x) => s + factTot(x).ht, 0);
     if (net > 0) lignes.push({ designation: 'Déduction acompte ' + f.numero, unite: 'forfait', qte: 1, pu: -net / 100, horsRemise: true });
   });
-  const f = { id: uid('f'), numero: nextNumero('FA', 'factures'), affaireId: a.id, clientId: a.clientId, type: 'solde', date: TODAY, echeance: addDaysISO(TODAY, 30), lignes, remise: Number(a.remise) || 0, paiements: [], creeLe: nowISO() };
+  const f = { id: uid('f'), numero: nextNumero('FA', 'factures'), affaireId: a.id, clientId: a.clientId, type: 'solde', date: TODAY, echeance: addDaysISO(TODAY, delaiClient(a.clientId)), lignes, remise: Number(a.remise) || 0, paiements: [], creeLe: nowISO() };
   persist('factures', f);
   log(a.clientId, a.id, 'systeme', `Facture de solde ${f.numero} créée (${money(factTot(f).ttc)} TTC).`);
   return f;
@@ -1357,6 +1467,9 @@ function tacheItem(t) {
   if (t.actions.includes('ouvrir')) btn.push(`<a class="btn btn-primary btn-sm" href="#affaire-${t.a.id}">Fixer les dates</a>`);
   if (t.actions.includes('chantier')) btn.push(`<a class="btn btn-primary btn-sm" href="#affaire-${t.a.id}">${ico('cone')}Voir le suivi</a>`);
   if (t.actions.includes('employes')) btn.push(`<a class="btn btn-primary btn-sm" href="#employes">${ico('personne')}Saisir les jours</a>`);
+  if (t.actions.includes('fournisseur')) btn.push(`<button class="btn btn-primary btn-sm" data-act="fournisseur-ouvrir" data-id="${t.fo.id}">Noter l’attestation</button>`);
+  if (t.actions.includes('regrouper')) btn.push(`<button class="btn btn-primary btn-sm" data-act="blf-regrouper" data-id="${t.fo.id}">Regrouper en facture</button>`);
+  if (t.actions.includes('cheques')) btn.push(`<button class="btn btn-primary btn-sm" data-act="cheques-bordereau">Bordereau de remise</button>`);
   if (t.actions.includes('payer')) btn.push(`<button class="btn btn-primary btn-sm" data-act="achat-ouvrir" data-id="${t.ach.id}">Enregistrer le paiement</button>`);
   if (t.actions.includes('appel')) btn.push(`<a class="btn btn-sm" href="tel:${esc((t.c.tel || '').replace(/\s/g, ''))}">Appeler ${esc(t.c.tel || '')}</a>`);
   if (t.actions.includes('fait')) btn.push(`<button class="btn btn-ghost btn-sm" data-act="tache-fait" data-key="${t.key}">Fait</button>`);
@@ -1428,8 +1541,8 @@ function vueAccueil() {
   const hist = Object.values(S.activites).sort((x, y) => y.date.localeCompare(x.date)).slice(0, 6);
   const aVenir = evenementsPlanning().filter(e => e.date >= TODAY).slice(0, 4);
   const vEx = (S.params.exemples || {}).version;
-  const bandeauExemples = mode !== 'db' || vEx === EXEMPLES_VERSION ? '' : (vEx === 2 || vEx === 3)
-    ? `<section class="carte bandeau-ex"><div><h2>${vEx === 3 ? 'Nouveau : section Employés' : 'Nouveau : achats, chantiers et employés'}</h2><p>${vEx === 3 ? 'L’écran « Employés » est arrivé : jours travaillés, paie et état du mois pour le comptable.' : 'Trois écrans sont arrivés : « Achats », « Chantiers » et « Employés ».'} Pour les essayer, ajoutez les exemples, tous inventés. Vos clients, affaires et factures de test ne changent pas.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-ajouter">Ajouter les exemples</button><button class="btn" data-act="exemples-garder">Ne pas ajouter</button></div></section>`
+  const bandeauExemples = mode !== 'db' || vEx === EXEMPLES_VERSION ? '' : (vEx >= 2 && vEx <= 4)
+    ? `<section class="carte bandeau-ex"><div><h2>Nouveau : bons de livraison, paie par quinzaine, chèques</h2><p>Les achats se saisissent maintenant bon de livraison par bon de livraison, la paie se fait par quinzaine et par chantier, et chaque fournisseur a son attestation fiscale. Pour les essayer, ajoutez les exemples, tous inventés. Vos clients, affaires et factures de test ne changent pas.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-ajouter">Ajouter les exemples</button><button class="btn" data-act="exemples-garder">Ne pas ajouter</button></div></section>`
     : `<section class="carte bandeau-ex"><div><h2>Nouveaux exemples disponibles</h2><p>Les exemples ressemblent maintenant aux chantiers d’Electropack : hôtels, banques, plateaux de bureaux, industrie, avec des achats et un suivi de chantier. Les charger remplace les clients, affaires, bons, factures et achats de test actuels. Vos réglages sont conservés.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-charger">Charger les nouveaux exemples</button><button class="btn" data-act="exemples-garder">Garder les données actuelles</button></div></section>`;
   return bandeauExemples + `
   <section class="page-tete">
@@ -1518,6 +1631,7 @@ function vueClient(id) {
       <section class="carte"><dl class="infos">
         <div><dt>Téléphone</dt><dd>${esc(c.tel || '—')}</dd></div><div><dt>E-mail</dt><dd>${esc(c.email || '—')}</dd></div>
         <div><dt>ICE</dt><dd>${esc(c.ice || '—')}</dd></div><div><dt>Adresse</dt><dd>${esc(c.adresse || '—')}</dd></div>
+        <div><dt>Délai de paiement</dt><dd><select data-champ="delaiClient" aria-label="Délai de paiement convenu avec ce client">${[['', 'Non précisé (30 jours)'], ['0', 'Comptant'], ['30', '30 jours'], ['60', '60 jours'], ['90', '90 jours'], ['120', '120 jours']].map(([v, l]) => `<option value="${v}"${String(c.delai == null ? '' : c.delai) === v ? ' selected' : ''}>${l}</option>`).join('')}</select></dd></div>
         <div><dt>Origine</dt><dd>${esc(c.origine || '—')}</dd></div><div><dt>CA facturé (HT)</dt><dd>${moneyRond(ca)}</dd></div>
         <div><dt>Reste dû</dt><dd class="${du > 0 ? 'rouge' : ''}">${du > 0 ? money(du) : '—'}</dd></div></dl></section>
       <section class="carte"><header class="carte-tete"><h2>Affaires</h2><span class="compteur">${as.length}</span></header>
@@ -1605,7 +1719,7 @@ function vueAffaire(id) {
   <div class="actions-etape">${btn.join('')}</div>
   ${tachesA.length ? `<ul class="taches">${tachesA.map(tacheItem).join('')}</ul>` : ''}
   <div class="deux-col larges">
-    <section class="carte"><header class="carte-tete"><h2>Devis</h2><div class="tete-actions">${a.lignes.length ? '<button class="btn btn-sm" data-act="apercu-devis">Aperçu</button>' + (dl ? `<button class="btn btn-sm" data-act="pdf" data-kind="devis" data-id="${a.id}">PDF</button>` : '') : ''}</div></header>
+    <section class="carte"><header class="carte-tete"><h2>Devis</h2><div class="tete-actions">${a.lignes.length ? '<button class="btn btn-sm" data-act="apercu-devis">Aperçu</button>' + (pdfPossible() ? `<button class="btn btn-sm" data-act="pdf" data-kind="devis" data-id="${a.id}">PDF</button>` : '') : ''}</div></header>
       ${modifiable ? '' : '<p class="carte-note">Devis accepté : les lignes sont figées. Bon de commande, bons de livraison et factures en reprennent les lignes sans ressaisie.</p>'}
       ${editeurLignes(a, modifiable)}
       ${modifiable ? blocIA(a) : ''}
@@ -1658,6 +1772,27 @@ function blocIA(a) {
     <button class="btn btn-sm btn-primary" data-act="ia-devis">Proposer les lignes</button><div id="ia-res" aria-live="polite"></div></details>`;
 }
 
+/* Chèques reçus des clients et pas encore remis en banque. */
+function chequesARemettre() {
+  const r = [];
+  facturesListe().forEach(f => (f.paiements || []).forEach((p, i) => { if (p.mode === 'Chèque' && p.remis === '') r.push({ f, p, i }); }));
+  return r.sort((x, y) => x.p.date.localeCompare(y.p.date));
+}
+function carteCheques() {
+  const cs = chequesARemettre(); if (!cs.length) return '';
+  return `<section class="carte"><header class="carte-tete"><h2>Chèques à remettre en banque</h2><span class="compteur">${cs.length}</span></header>
+    <ul class="liste-simple">${cs.map(({ f, p }) => `<li><button data-act="ouvrir-facture" data-id="${esc(f.id)}">${ligneIco('portefeuille')}<span><b>${esc(nomClient(f.clientId))}</b><small>reçu le ${fdate(p.date)} · ${esc(f.numero)}${p.cheque && p.cheque.numero ? ' · chèque n° ' + esc(p.cheque.numero) : ''}</small></span><span class="droite"><b>${money(centimes(p))}</b></span></button></li>`).join('')}</ul>
+    <div class="carte-boutons"><button class="btn btn-sm btn-primary" data-act="cheques-bordereau">Bordereau de remise</button></div></section>`;
+}
+const lignesBordereau = () => chequesARemettre().map(({ f, p }) => [fdate(p.date), nomClient(f.clientId), f.numero, (p.cheque || {}).numero || '', (p.cheque || {}).banque || '', nbr(centimes(p))]);
+const TETE_BORDEREAU = ['Reçu le', 'Client', 'Facture', 'N° du chèque', 'Banque', 'Montant (DH)'];
+function ouvrirBordereau() {
+  const cs = chequesARemettre(), total = cs.reduce((s, x) => s + centimes(x.p), 0);
+  ouvrirFenetre('Bordereau de remise de chèques', cs.length ? `
+    <p class="detail-resume"><b>${money(total)}</b> à remettre en banque, en ${nb(cs.length, 'chèque')}.</p>
+    <div class="table-scroll"><table class="table etat-paie"><thead><tr>${TETE_BORDEREAU.map((t, i) => `<th${i === 5 ? ' class="num"' : ''}>${t}</th>`).join('')}</tr></thead><tbody>${lignesBordereau().map(r => `<tr>${r.map((v, i) => `<td${i === 5 ? ' class="num"' : ''}>${esc(v)}</td>`).join('')}</tr>`).join('')}<tr class="total"><td>Total</td><td></td><td></td><td></td><td></td><td class="num">${nbr(total)}</td></tr></tbody></table></div>
+    <div class="fen-pied"><button class="btn btn-ghost" data-act="cheques-remis">Noter comme remis en banque</button><button class="btn" data-act="cheques-copier">Copier le tableau</button><button class="btn btn-primary" data-act="cheques-pdf">Télécharger le PDF</button></div>` : vide('Aucun chèque à remettre en banque.'), true);
+}
 function vueFactures() {
   const fs = facturesListe().sort((x, y) => y.date.localeCompare(x.date) || (y.numero || '').localeCompare(x.numero || ''));
   const filtre = { toutes: () => true, encaisser: f => factReste(f) > 0, retard: f => factStatut(f) === 'retard', payees: f => factStatut(f) === 'payee', avoirs: estAvoir }[UI.factFiltre] || (() => true);
@@ -1683,6 +1818,7 @@ function vueFactures() {
     ${kpi('encaisser', 'En retard', moneyRond(ret.reduce((s, f) => s + factReste(f), 0)), `${ret.length} facture${ret.length > 1 ? 's' : ''}`, { alerte: ret.length, v: 'retard' })}
     ${kpi('encaisser', 'Attendu sous 7 jours', moneyRond(sous7.reduce((s, f) => s + factReste(f), 0)), `${sous7.length} échéance${sous7.length > 1 ? 's' : ''}`, { v: 'sous7' })}
     ${kpi('encaisse-mois', 'Encaissé ce mois', moneyRond(enc), `${nbPaie} paiement${nbPaie > 1 ? 's' : ''}`)}</section>
+  ${carteCheques()}
   <div class="barre-outils"><div class="chips">${chip('toutes', 'Toutes')}${chip('encaisser', 'À encaisser')}${chip('retard', 'En retard')}${chip('payees', 'Payées')}${chip('avoirs', 'Avoirs')}</div></div>
   ${rows ? `<ul class="liste-fact">${rows}</ul>` : vide('Aucune facture dans ce filtre.')}`;
 }
@@ -1706,7 +1842,11 @@ const REGLES = [
   ['demandeSansSuite', 'Ne laisser aucune demande sans visite', 'Une demande sans visite prévue depuis {j} jours remonte dans « À faire ».', [['j', 'jours']]],
   ['payerFournisseur', 'Rappeler les factures de fournisseurs à payer', 'Une facture de fournisseur à payer dans {j} jours, ou déjà en retard, remonte dans « À faire ». Le logiciel ne paie rien : vous notez le paiement une fois fait.', [['j', 'jours avant l’échéance']]],
   ['budgetChantier', 'Surveiller le budget des chantiers', 'Quand les achats, les commandes et les heures d’un chantier atteignent {pct} % du coût prévu au devis, il remonte dans « À faire ».', [['pct', '% du budget']]],
-  ['paieMois', 'Rappeler la paie en fin de mois', 'À partir du {j} du mois, s’il manque des jours travaillés, « Préparer la paie du mois » remonte dans « À faire ». Le logiciel ne verse rien.', [['j', 'jour du mois']]],
+  ['paieQuinzaine', 'Rappeler la paie de la quinzaine', '{j} jours avant la fin de la quinzaine, s’il manque des jours travaillés, « Préparer la paie de la quinzaine » remonte dans « À faire ». Le logiciel ne verse rien.', [['j', 'jours avant la fin']]],
+  ['attestation', 'Rappeler l’attestation fiscale des fournisseurs', 'Avant de payer un fournisseur dont l’attestation de régularité fiscale manque ou a plus de 6 mois, « Demander l’attestation fiscale » remonte dans « À faire ».', []],
+  ['prixHausse', 'Signaler les hausses de prix', 'Sur un bon de livraison, un article payé au moins {pct} % plus cher que la dernière fois est signalé en rouge.', [['pct', '% de hausse']]],
+  ['regrouperBL', 'Rappeler le regroupement des bons de livraison', '{j} jours avant la fin du mois, les bons de livraison pas encore regroupés en facture remontent dans « À faire ».', [['j', 'jours avant la fin du mois']]],
+  ['remiseCheques', 'Rappeler les chèques à remettre en banque', 'Un chèque reçu d’un client et pas encore remis en banque remonte dans « À faire ».', []],
   ['clientDormant', "Proposer l'entretien aux anciens clients", 'Un client sans intervention depuis {j} jours reçoit une proposition de visite de contrôle.', [['j', 'jours']]],
   ['resumeLundi', 'Résumé du lundi matin', 'Chaque lundi, le résumé ci-dessous est envoyé par e-mail (dans la vraie version).', []]
 ];
@@ -1845,7 +1985,7 @@ async function ecrireSur(path, data) {
   }
 }
 async function reinitialiserDemo(btn) {
-  const D = buildDemo(TODAY), COLL_DEMO = ['clients', 'affaires', 'factures', 'catalogue', 'activites', 'bons', 'fournisseurs', 'achats', 'heures', 'employes', 'pointages'];
+  const D = buildDemo(TODAY), COLL_DEMO = ['clients', 'affaires', 'factures', 'catalogue', 'activites', 'bons', 'fournisseurs', 'achats', 'heures', 'employes', 'pointages', 'blf'];
   const charger = () => { COLL_DEMO.forEach(k => { S[k] = byId(D[k]); }); S.taches = {}; };
   if (mode !== 'db') { charger(); fermerFenetre(); toast('Données d’exemple remises à neuf.'); rendre(true); return; }
   const ops = [];
@@ -2109,14 +2249,14 @@ function construirePDF(jsPDF, kind, obj) {
 async function telechargerPDF(kind, id, btn) {
   const obj = kind === 'devis' ? S.affaires[id] : kind === 'bon' ? S.bons[id] : S.factures[id];
   if (!obj) return;
-  if (!dl) { toast('Le téléchargement n’est pas disponible ici.'); return; }
+  if (!dl && window.claude) { toast('Le téléchargement n’est pas disponible ici.'); return; }
   const lib = btn ? btn.textContent : '';
   if (btn) { btn.disabled = true; btn.textContent = 'Préparation…'; }
   try {
     const jsPDF = await chargerPdf();
     const doc = construirePDF(jsPDF, kind, obj), titre = infosDoc(kind, obj).titre;
     const nom = `${titre} ${obj.numero} - ${nomClient(obj.clientId)}.pdf`.replace(/[\\/:*?"<>|]/g, '');
-    await dl.save({ filename: nom, data: doc.output('blob') });
+    await enregistrerPDF(doc, nom);
     log(obj.clientId, kind === 'devis' ? obj.id : obj.affaireId, 'systeme', `PDF téléchargé : ${titre.toLowerCase()} ${obj.numero}.`);
     toast('PDF enregistré.');
   } catch (e) {
@@ -2193,7 +2333,7 @@ function ouvrirMessage(type, ctx, apresEnvoi) {
       <a class="btn" id="msg-mail" href="mailto:${esc(c.email || '')}?subject=${encodeURIComponent('Electropack')}&body=${encodeURIComponent(texte)}">E-mail</a>
       <button class="btn" data-act="msg-copier">Copier</button>
       ${ia ? '<button class="btn" data-act="msg-ia">Reformuler avec l’IA</button>' : ''}
-      ${dl && pdfCible ? `<button class="btn" data-act="pdf" data-kind="${pdfCible[0]}" data-id="${pdfCible[1]}">PDF à joindre</button>` : ''}
+      ${pdfPossible() && pdfCible ? `<button class="btn" data-act="pdf" data-kind="${pdfCible[0]}" data-id="${pdfCible[1]}">PDF à joindre</button>` : ''}
     </div>
     <p class="carte-note">${c.email ? 'E-mail du client : ' + esc(c.email) + '. ' : ''}WhatsApp s'ouvre avec le texte prêt : choisissez le contact puis envoyez.${dl && pdfCible ? ' Sur iPhone, le PDF arrive dans le menu de partage : choisissez WhatsApp pour le joindre.' : ''}</p>
     <div class="fen-pied"><button class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" data-act="msg-envoye">J'ai envoyé le message</button></div>`);
@@ -2213,7 +2353,7 @@ function ouvrirFacture(id) {
   ouvrirFenetre(f.numero + ' · ' + nomClient(f.clientId), retour + `
     <div class="fact-entete">${pill(st[0], st[1])}
       ${av ? `<span>Avoir de <b>${money(factTot(f).ttc)}</b>${orig ? ` sur <button class="lien" data-act="ouvrir-facture" data-id="${esc(orig.id)}">${esc(orig.numero)}</button>` : ''}</span>` : `<span>${r < 0 ? 'À rembourser' : 'Reste à payer'} : <b>${money(Math.abs(r))}</b></span>`}
-      ${dl ? `<button class="btn btn-sm btn-primary" data-act="pdf" data-kind="facture" data-id="${esc(f.id)}">Télécharger le PDF</button>` : ''}
+      ${pdfPossible() ? `<button class="btn btn-sm btn-primary" data-act="pdf" data-kind="facture" data-id="${esc(f.id)}">Télécharger le PDF</button>` : ''}
       ${factStatut(f) === 'retard' ? `<button class="btn btn-sm" data-act="relancer-facture" data-id="${esc(f.id)}">Relancer</button>` : ''}
       ${peutAvoir ? `<button class="btn btn-sm" data-act="avoir" data-id="${esc(f.id)}">Créer un avoir</button>` : ''}</div>
     <div class="fact-grille">
@@ -2225,12 +2365,13 @@ function ouvrirFacture(id) {
           <label class="champ">Montant (DH)<input name="montant" type="number" inputmode="decimal" step="0.01" min="0.01" max="${(r / 100).toFixed(2)}" value="${(r / 100).toFixed(2)}" required></label>
           <label class="champ">Date<input name="date" type="date" value="${TODAY}" required></label>
           <label class="champ">Mode<select name="mode"><option>Virement</option><option>Chèque</option><option>Espèces</option><option>Effet de commerce</option></select></label>
+          <div class="ligne-form"><label class="champ">Si c’est un chèque : son numéro<input name="chequeNum" inputmode="numeric" autocomplete="off" maxlength="20"></label><label class="champ">Banque du chèque<input name="chequeBanque" maxlength="40"></label></div>
           <button class="btn btn-primary" type="submit">Enregistrer</button></form>` : ''}`}
       </div></div>`, true);
 }
 function ouvrirBon(id) {
   const b = S.bons[id]; if (!b) return;
-  ouvrirFenetre((b.type === 'commande' ? 'Bon de commande ' : 'Bon de livraison ') + b.numero, (dl ? `<div class="fen-pied fen-pied-haut"><button class="btn btn-primary" data-act="pdf" data-kind="bon" data-id="${esc(b.id)}">Télécharger le PDF</button></div>` : '') + documentHTML('bon', b), true);
+  ouvrirFenetre((b.type === 'commande' ? 'Bon de commande ' : 'Bon de livraison ') + b.numero, (pdfPossible() ? `<div class="fen-pied fen-pied-haut"><button class="btn btn-primary" data-act="pdf" data-kind="bon" data-id="${esc(b.id)}">Télécharger le PDF</button></div>` : '') + documentHTML('bon', b), true);
 }
 
 /* ---------- IA ---------- */
@@ -2314,14 +2455,14 @@ const ICONS = {
 };
 const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 const NAV_ICO = { accueil: 'accueil', affaires: 'affaires', planning: 'calendrier', clients: 'clients', factures: 'facture', catalogue: 'catalogue', automatisations: 'eclair', reglages: 'reglages', chantiers: 'cone', achats: 'panier', employes: 'personne' };
-const TACHE_ICO = { devis1: 'message', devis2: 'telephone', fact1: 'message', fact2: 'telephone', fact3: 'cloche', acompte: 'facture', bc: 'bon', planifier: 'calendrier', solde: 'facture', demande: 'lieu', dormant: 'outil', paie: 'personne', payer1: 'portefeuille', payer2: 'portefeuille', budget1: 'cone', budget2: 'cone' };
+const TACHE_ICO = { devis1: 'message', devis2: 'telephone', fact1: 'message', fact2: 'telephone', fact3: 'cloche', acompte: 'facture', bc: 'bon', planifier: 'calendrier', solde: 'facture', demande: 'lieu', dormant: 'outil', paie: 'personne', payer1: 'portefeuille', payer2: 'portefeuille', budget1: 'cone', budget2: 'cone', att: 'cloche', regroup: 'bon', cheques: 'portefeuille', paieq: 'personne', verser: 'personne' };
 /* Titres de cartes, indicateurs, boutons et journal : l'icône est choisie d'après le libellé ou l'action. */
 const TITRE_ICO = [[/^Chantiers en cours|^Suivi du chantier|budget des chantiers/, 'cone'], [/^Fournisseurs|fournisseurs à payer/, 'camion'], [/^Nouveau : /, 'panier'], [/^À faire/, 'coche'], [/^À venir/, 'calendrier'], [/^Facturé HT/, 'barres'], [/^Affaires en cours/, 'affaires'], [/^Activité récente|^Journal|^Historique/, 'horloge'], [/^Devis et messages/, 'message'],
   [/^Devis/, 'facture'], [/^Pièces/, 'dossier'], [/^Planning/, 'calendrier'], [/^Notes/, 'note'], [/^Apparence/, 'soleil'], [/^Société/, 'immeuble'], [/^Équipe/, 'clients'], [/^Demandes pour Yoni/, 'boite'],
   [/^Données d'exemple/, 'recharger'], [/^Coordonnées|^Contact/, 'personne'], [/^Factures/, 'facture'], [/^Affaires/, 'affaires'], [/^Relancer les devis/, 'message'], [/bon de commande/i, 'bon'], [/facture d'acompte/i, 'facture'],
   [/^Planifier/, 'calendrier'], [/^Relancer les factures/, 'cloche'], [/^Facturer le solde/, 'facture'], [/aucune demande sans visite/i, 'lieu'], [/entretien/i, 'outil'], [/^Résumé|^Aperçu du résumé/, 'courriel'],
   [/^Rien ne se fait/, 'coche'], [/^Nouveaux exemples/, 'recharger'], [/vraie version/, 'eclair'], [/^Aujourd|^Cette semaine|^Plus tard|^Semaine/, 'calendrier']];
-const KPI_ICO = [[/^Employés/, 'personne', 'accent'], [/^Jours travaillés/, 'calendrier', 'info'], [/^Paie du mois/, 'portefeuille', 'accent'], [/^Reste à verser/, 'sablier', 'warn'], [/^À payer aux/, 'portefeuille', 'warn'], [/^Fournisseurs en retard/, 'cloche', 'bad'], [/^À payer sous/, 'calendrier', 'info'], [/^Payé ce mois/, 'fait', 'ok'], [/^Chantiers en cours/, 'cone', 'accent'], [/^Reste à facturer/, 'facture', 'info'], [/^Dépensé/, 'panier', 'warn'], [/^Budgets à surveiller/, 'cloche', 'ok'], [/^Facturé/, 'hausse', 'accent'], [/^Reste à encaisser/, 'portefeuille', 'warn'], [/^Devis en attente/, 'sablier', 'info'], [/^Taux de signature/, 'stylo', 'ok'], [/^En retard/, 'cloche', 'bad'], [/^Attendu/, 'calendrier', 'info'], [/^Encaissé/, 'fait', 'ok']];
+const KPI_ICO = [[/^Employés/, 'personne', 'accent'], [/^Jours travaillés/, 'calendrier', 'info'], [/^Paie de la quinzaine/, 'portefeuille', 'accent'], [/^Reste à verser/, 'sablier', 'warn'], [/^À payer aux/, 'portefeuille', 'warn'], [/^Fournisseurs en retard/, 'cloche', 'bad'], [/^À payer sous/, 'calendrier', 'info'], [/^Payé ce mois/, 'fait', 'ok'], [/^Chantiers en cours/, 'cone', 'accent'], [/^Reste à facturer/, 'facture', 'info'], [/^Dépensé/, 'panier', 'warn'], [/^Budgets à surveiller/, 'cloche', 'ok'], [/^Facturé/, 'hausse', 'accent'], [/^Reste à encaisser/, 'portefeuille', 'warn'], [/^Devis en attente/, 'sablier', 'info'], [/^Taux de signature/, 'stylo', 'ok'], [/^En retard/, 'cloche', 'bad'], [/^Attendu/, 'calendrier', 'info'], [/^Encaissé/, 'fait', 'ok']];
 const BTN_ICO = { 'tache-message': 'message', 'tache-visite': 'lieu', 'tache-bc': 'bon', 'tache-acompte': 'facture', 'tache-solde': 'facture', 'tache-fait': 'fait', pdf: 'telecharger', 'apercu-devis': 'oeil', 'envoyer-devis': 'envoyer',
   'relancer-devis': 'message', 'relancer-facture': 'message', 'creer-solde': 'facture', 'creer-acompte': 'facture', 'creer-bc': 'bon', 'nouveau-bl': 'camion', avoir: 'retour', 'msg-copier': 'copier', 'msg-envoye': 'fait',
   'demande-ouvrir': 'boite', 'demandes-copier': 'copier', 'reset-demander': 'recharger', 'exemples-charger': 'recharger', 'exemples-ajouter': 'recharger', 'aide-aller': 'oeil', 'achat-nouveau': 'panier', 'employe-nouveau': 'personne', 'etat-paie': 'facture', 'etat-paie-copier': 'copier', 'etat-paie-csv': 'telecharger', 'photo-exemple': 'oeil', 'fournisseur-nouveau': 'camion', 'heures-ouvrir': 'horloge', 'achat-ouvrir': 'portefeuille' };
@@ -2362,7 +2503,7 @@ function majNav() {
 }
 
 /* ---------- Aide : assistant, guide pas à pas et demandes pour Yoni ---------- */
-const APP_VERSION = '3.9';
+const APP_VERSION = '4.0';
 const ECRANS = { employes: 'Employés', chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
 const TYPES_DEMANDE = { anomalie: ['Problème', 'bad'], changement: ['Changement', 'warn'], ajout: ['Ajout', 'info'] };
 const STATUTS_DEMANDE = { nouvelle: 'Nouvelle', vue: 'Vue par Yoni', faite: 'Faite' };
@@ -2436,16 +2577,35 @@ const GUIDE = [
     'Pour aller plus vite, cliquez sur « Remplir avec une photo » : photographiez la facture ou le bon, les cases se remplissent, vous vérifiez puis vous enregistrez.',
     'Pour noter un paiement, ouvrez l’achat et remplissez « Enregistrer un paiement ». Le logiciel ne paie rien lui-même.',
     'Une facture de fournisseur à payer bientôt, ou en retard, remonte toute seule dans « À faire ».'] },
+  { q: 'Encaisser un chèque et le remettre en banque', ecran: 'factures', etapes: [
+    'Ouvrez la facture, puis « Enregistrer un paiement » : choisissez « Chèque » et notez son numéro et sa banque.',
+    'Le chèque attend dans la carte « Chèques à remettre en banque », en haut de « Factures ».',
+    'Cliquez sur « Bordereau de remise » : la liste des chèques et leur total sont prêts. « Télécharger le PDF » pour la banque.',
+    'Une fois les chèques déposés, cliquez sur « Noter comme remis en banque ».',
+    'Le délai de paiement de chaque client (60, 90 ou 120 jours) se règle sur sa fiche : il fixe l’échéance des factures de solde.'] },
+  { q: 'Saisir un bon de livraison de fournisseur', ecran: 'achats', etapes: [
+    'Ouvrez « Achats », puis cliquez sur « + Bon de livraison ».',
+    'Le plus rapide : « Remplir avec une photo ». Photographiez le bon, les lignes et les prix se remplissent.',
+    'Vérifiez chaque ligne et choisissez son chantier. Deux lignes du même bon peuvent aller sur deux chantiers différents.',
+    'Cliquez sur « Enregistrer le bon ». Un prix plus cher que la dernière fois est signalé en rouge.',
+    'En fin de mois, quand la facture arrive, cliquez sur « Regrouper en facture » : cochez les bons, recopiez le numéro et le total de la facture. Le logiciel compare les deux totaux.'] },
+  { q: 'Payer un fournisseur par virement', ecran: 'achats', etapes: [
+    'Ouvrez la facture du fournisseur dans « Achats ».',
+    'Regardez la ligne sur l’attestation de régularité fiscale. Si elle manque ou si elle est périmée, demandez-la avant de payer.',
+    'Cliquez sur « Préparer l’ordre de virement » : la lettre pour la banque est prête, avec le RIB et le montant en lettres. Cliquez sur « Télécharger le PDF », signez-la et déposez-la.',
+    'Quand la banque l’a reçue, cliquez sur « Déposé à la banque ». Quand le compte est débité, cliquez sur « Débité sur le compte » : le paiement est noté.'] },
   { q: 'Suivre le budget et la marge d’un chantier', ecran: 'chantiers', etapes: [
     'Ouvrez « Chantiers » : chaque chantier montre ce qui est vendu, le budget, ce qui est dépensé et la marge.',
     'Cliquez sur un chantier : sur sa fiche, la carte « Suivi du chantier » détaille les achats et la main-d’œuvre.',
     'Ajoutez un achat avec « + Achat » et les heures de l’équipe avec « Heures passées ».',
     'Le budget est le coût prévu au devis. Quand les dépenses s’en approchent, le chantier remonte dans « À faire ».'] },
-  { q: 'Saisir les jours des employés et préparer la paie', ecran: 'employes', etapes: [
-    'Ouvrez « Employés » dans le menu. Pour ajouter quelqu’un, cliquez sur « Nouvel employé » et indiquez s’il est payé à la journée ou au mois.',
-    'Cliquez sur un employé pour saisir ses jours travaillés du mois, ses primes et les avances déjà versées.',
-    'Le logiciel calcule la paie convenue et le reste à verser. Il ne verse rien : quand c’est fait, cliquez sur « Marquer comme versé ».',
-    'En fin de mois, « État du mois pour le comptable » donne le tableau complet : « Copier le tableau » ou « Télécharger pour Excel ».',
+  { q: 'Pointer les employés et préparer la paie de la quinzaine', ecran: 'employes', etapes: [
+    'Ouvrez « Employés » dans le menu. Pour ajouter quelqu’un, cliquez sur « Nouvel employé » : nom, CIN, CNSS, RIB, date d’entrée, payé à la journée ou au mois.',
+    'Le plus rapide : « Photo de la feuille de pointage ». Les jours de chaque ouvrier sont lus, vous vérifiez, puis « Valider le pointage ».',
+    'Sinon, cliquez sur un employé : saisissez ses jours chantier par chantier, ses primes, ses frais de déplacement, ses avances et ses congés.',
+    'Les jours passés sur un chantier comptent tout seuls dans la main-d’œuvre de ce chantier.',
+    '« Feuille de virements » prépare la lettre pour la banque : un nom, un RIB et un montant par ligne. Quand c’est versé, cliquez sur « Marquer comme versé ».',
+    'En fin de mois, « État du mois pour le comptable » donne les deux quinzaines côte à côte : « Copier le tableau » ou « Télécharger pour Excel ».',
     'Les montants sont ceux convenus, avant cotisations : les bulletins de paie restent faits par le comptable.'] }
 ];
 const ASSIST = { ouvert: false, vue: 'chat', msgs: [], enCours: false, sujet: null };
@@ -2689,18 +2849,18 @@ function contenuDetail(k, v) {
       (sel.length ? '<p class="carte-note">Ouvrez un achat pour noter son paiement.</p>' : '') + pied(`<button class="btn" data-act="aller-achats" data-v="${v === 'retard' ? 'retard' : 'payer'}">Voir dans l’écran Achats</button>`) };
   }
   if (k === 'paie') {
-    const mois = UI.empMois || TODAY.slice(0, 7), xs = paieDuMois(mois), saisis = xs.filter(x => x.saisi);
+    const mois = perCourante(), xs = paieDeLaPeriode(mois), saisis = xs.filter(x => x.saisi);
     const sel = v === 'reste' ? saisis.filter(x => !x.paye) : v === 'brut' ? saisis : xs;
     const row = x => { const st = STATUT_PAIE[x.statut];
       const droite = v === 'employes' ? `<small>${libelleTaux(x.emp)}</small>` : v === 'jours' ? `<b>${x.saisi ? nbJ(x.jours) + ' j' : '—'}</b>${pill(st[0], st[1])}`
-        : v === 'reste' ? `<b>${money(x.reste)}</b><small>${x.avances ? 'après ' + money(x.avances) + ' d’avance' : 'aucune avance'}</small>` : `<b>${money(x.brut)}</b><small>${x.primes ? 'dont ' + money(x.primes) + ' de primes' : nbJ(x.jours) + ' j'}</small>`;
+        : v === 'reste' ? `<b>${money(x.reste)}</b><small>${x.avances ? 'après ' + money(x.avances) + ' d’avance' : 'aucune avance'}</small>` : `<b>${money(x.brut)}</b><small>${x.primes + x.deplacements ? 'dont ' + money(x.primes + x.deplacements) + ' de primes et déplacements' : nbJ(x.jours) + ' j'}</small>`;
       return `<li><button data-act="pointage-ouvrir" data-id="${esc(x.emp.id)}">${ligneIco('personne')}<span><b>${esc(x.emp.nom)}</b><small>${esc(x.emp.poste || 'Employé')}</small></span><span class="droite">${droite}</span></button></li>`; };
-    const som = (l, c) => l.reduce((t, x) => t + x[c], 0), M = moisLong(mois);
-    const txt = v === 'employes' ? `<b>${nb(xs.length, 'employé')}</b> suivis en ${M}.`
-      : v === 'jours' ? `<b>${nbJ(som(saisis, 'jours'))} jours</b> travaillés en ${M}, saisis pour ${saisis.length} employé${saisis.length > 1 ? 's' : ''} sur ${xs.length}.`
+    const som = (l, c) => l.reduce((t, x) => t + x[c], 0), M = 'la ' + perLong(mois);
+    const txt = v === 'employes' ? `<b>${nb(xs.length, 'employé')}</b> suivis pour ${M}.`
+      : v === 'jours' ? `<b>${nbJ(som(saisis, 'jours'))} jours</b> travaillés pendant ${M}, saisis pour ${saisis.length} employé${saisis.length > 1 ? 's' : ''} sur ${xs.length}.`
       : v === 'reste' ? (sel.length ? `<b>${money(som(sel, 'reste'))}</b> restent à verser pour ${M}, une fois les avances retirées.` : `Plus rien à verser pour ${M}.`)
-      : (sel.length ? `<b>${money(som(sel, 'brut'))}</b> de paie pour ${M}, primes comprises.` : `Aucun jour saisi pour ${M}.`);
-    return { titre: v === 'employes' ? 'Employés' : v === 'jours' ? 'Jours travaillés' : v === 'reste' ? 'Reste à verser' : 'Paie du mois', corps: resume(txt) + liste(sel.map(row), '') + pied(`<button class="btn" data-act="etat-paie">État du mois pour le comptable</button>`) };
+      : (sel.length ? `<b>${money(som(sel, 'brut'))}</b> de paie pour ${M}, primes et déplacements compris.` : `Aucun jour saisi pour ${M}.`);
+    return { titre: v === 'employes' ? 'Employés' : v === 'jours' ? 'Jours travaillés' : v === 'reste' ? 'Reste à verser' : 'Paie de la quinzaine', corps: resume(txt) + liste(sel.map(row), '') + pied(`<button class="btn" data-act="etat-paie">État du mois pour le comptable</button>`) };
   }
   if (k === 'achats-payes') {
     const m = TODAY.slice(0, 7), pays = paiementsFournisseursDuMois(m), tot = pays.reduce((s, y) => s + centimes(y.p), 0);
@@ -2742,7 +2902,7 @@ const fournisseursListe = () => Object.values(S.fournisseurs);
 const heuresListe = () => Object.values(S.heures);
 const nomFournisseur = id => (S.fournisseurs[id] || { nom: 'Fournisseur inconnu' }).nom;
 const achHT = x => Math.round((Number(x.ht) || 0) * 100);
-const achTTC = x => { const ht = achHT(x); return ht + Math.round(ht * (x.tva == null || x.tva === '' ? 20 : Number(x.tva)) / 100); };
+const achTTC = x => { if (x.ttc != null && x.ttc !== '') return Math.round(Number(x.ttc) * 100); const ht = achHT(x); return ht + Math.round(ht * (x.tva == null || x.tva === '' ? 20 : Number(x.tva)) / 100); };
 const achPaye = x => (x.paiements || []).reduce((s, p) => s + Math.round(Number(p.montant) * 100), 0);
 const achReste = x => x.statut === 'commande' ? 0 : Math.max(0, achTTC(x) - achPaye(x));
 function achStatut(x) {
@@ -2768,18 +2928,21 @@ const estChantier = a => ['accepte', 'chantier', 'termine'].includes(a.etape) &&
 const tauxHoraire = () => { const x = S.catalogue['MO-01']; return x && Number(x.cout) ? Number(x.cout) : 78; };
 function chantier(a) {
   const vendu = totaux(a.lignes, a.remise).ht, budget = coutTotal(a.lignes);
-  const achats = achatsListe().filter(x => x.affaireId === a.id).sort((x, y) => dateAchat(y).localeCompare(dateAchat(x)));
-  const facture = achats.filter(x => x.statut !== 'commande').reduce((s, x) => s + achHT(x), 0);
-  const engage = achats.filter(x => x.statut === 'commande').reduce((s, x) => s + achHT(x), 0);
+  const achats = achatsListe().filter(x => x.affaireId === a.id && !x.blIds).sort((x, y) => dateAchat(y).localeCompare(dateAchat(x)));
+  const bls = blfListe().map(b => ({ b, ht: (b.lignes || []).filter(l => l.affaireId === a.id).reduce((s, l) => s + blLigneHT(l), 0) })).filter(y => y.ht > 0).sort((x, y) => y.b.date.localeCompare(x.b.date));
+  const facture = achats.filter(x => x.statut !== 'commande').reduce((s, x) => s + achHT(x), 0) + bls.filter(y => y.b.achatId).reduce((s, y) => s + y.ht, 0);
+  const engage = achats.filter(x => x.statut === 'commande').reduce((s, x) => s + achHT(x), 0) + bls.filter(y => !y.b.achatId).reduce((s, y) => s + y.ht, 0);
   const hs = heuresListe().filter(h => h.affaireId === a.id).sort((x, y) => y.date.localeCompare(x.date));
   const heures = hs.reduce((s, h) => s + (Number(h.heures) || 0), 0);
-  const mo = hs.reduce((s, h) => s + Math.round((Number(h.heures) || 0) * (Number(h.taux) || 0) * 100), 0);
+  const moH = hs.reduce((s, h) => s + Math.round((Number(h.heures) || 0) * (Number(h.taux) || 0) * 100), 0);
+  /* Un jour pointé sur le chantier compte 8 heures au coût horaire du catalogue. */
+  const joursP = joursSurChantier(a.id), mo = moH + Math.round(joursP * 8 * tauxHoraire() * 100);
   const heuresPrevues = a.lignes.filter(l => l.unite === 'h').reduce((s, l) => s + (Number(l.qte) || 0), 0);
-  const total = facture + mo + engage, saisi = achats.length > 0 || hs.length > 0;
+  const total = facture + mo + engage, saisi = achats.length > 0 || hs.length > 0 || bls.length > 0 || joursP > 0;
   const pct = budget ? Math.round(total / budget * 100) : 0;
   const seuil = Number(((S.params.auto || {}).budgetChantier || {}).pct) || 90;
   const factureClient = affFactures(a).reduce((s, f) => s + htSigne(f), 0);
-  return { vendu, budget, margePrevue: vendu - budget, achats, hs, facture, engage, heures, heuresPrevues, mo, total, pct, saisi, reste: budget - total, margeReelle: vendu - total,
+  return { vendu, budget, margePrevue: vendu - budget, achats, bls, hs, facture, engage, heures, joursP, heuresPrevues, mo, total, pct, saisi, reste: budget - total, margeReelle: vendu - total,
     resteAFacturer: Math.max(0, vendu - factureClient), niveau: !saisi || !budget ? '' : pct >= 100 ? 'bad' : pct >= seuil ? 'warn' : 'ok' };
 }
 const pctDe = (x, sur) => sur ? Math.round(x / sur * 100) : 0;
@@ -2804,7 +2967,7 @@ function ligneAchat(x) {
   const quand = x.statut === 'commande' ? 'commandé le ' + fdate(x.date) : 'facture du ' + fdate(x.dateFacture) + ' · échéance ' + fdate(x.echeance);
   return `<li><button class="ligne-fact" data-act="achat-ouvrir" data-id="${esc(x.id)}">
     <span class="lf-num"><b>${esc(x.numero)}</b><small>${x.statut === 'commande' ? 'Commande' : 'Facture ' + esc(x.refFacture || '')}</small></span>
-    <span class="lf-cli">${esc(nomFournisseur(x.fournisseurId))} · ${esc(x.libelle)}<small>${a ? 'Chantier : ' + esc(a.titre) : 'Frais généraux'} · ${quand}</small></span>
+    <span class="lf-cli">${esc(nomFournisseur(x.fournisseurId))} · ${esc(x.libelle)}<small>${x.blIds ? nb(x.blIds.length, 'bon') + ' de livraison' : a ? 'Chantier : ' + esc(a.titre) : 'Frais généraux'} · ${quand}</small></span>
     <span class="lf-mt"><span class="lbl">TTC</span>${money(achTTC(x))}</span>
     <span class="lf-mt ${r > 0 && st[1] === 'bad' ? 'rouge' : ''}"><span class="lbl">Reste</span>${r > 0 ? money(r) : '—'}</span>
     <span class="lf-st">${pill(st[0], st[1])}</span></button></li>`;
@@ -2820,15 +2983,16 @@ function vueAchats() {
   const rows = xs.filter(filtre).map(ligneAchat).join('');
   const fos = fournisseursListe().sort((x, y) => x.nom.localeCompare(y.nom)).map(fo => {
     const du = achatsListe().filter(x => x.fournisseurId === fo.id).reduce((s, x) => s + achReste(x), 0);
-    return `<li><button data-act="fournisseur-ouvrir" data-id="${esc(fo.id)}">${ligneIco('camion')}<span><b>${esc(fo.nom)}</b><small>${esc(fo.categorie || 'Fournisseur')}${fo.delai === '' || fo.delai == null ? '' : Number(fo.delai) ? ' · paiement à ' + esc(fo.delai) + ' j' : ' · paiement comptant'}</small></span><span class="droite"><b>${du ? money(du) : '—'}</b><small>${du ? 'à payer' : 'rien à payer'}</small></span></button></li>`;
+    return `<li><button data-act="fournisseur-ouvrir" data-id="${esc(fo.id)}">${ligneIco('camion')}<span><b>${esc(fo.nom)}</b><small>${esc(fo.categorie || 'Fournisseur')}${fo.delai === '' || fo.delai == null ? '' : Number(fo.delai) ? ' · paiement à ' + esc(fo.delai) + ' j' : ' · paiement comptant'}</small>${du && attManque(fo) ? '<small class="rouge">Attestation à demander avant de payer</small>' : ''}</span><span class="droite"><b>${du ? money(du) : '—'}</b><small>${du ? 'à payer' : 'rien à payer'}</small></span></button></li>`;
   }).join('');
-  return `<section class="page-tete"><div><p class="surtitre">Commandes, factures des fournisseurs et paiements</p><h1>Achats</h1></div>
-    <div class="tete-boutons"><button class="btn" data-act="fournisseur-nouveau">Nouveau fournisseur</button><button class="btn btn-primary" data-act="achat-nouveau">+ Nouvel achat</button></div></section>
+  return `<section class="page-tete"><div><p class="surtitre">Bons de livraison, factures des fournisseurs et paiements</p><h1>Achats</h1></div>
+    <div class="tete-boutons"><button class="btn" data-act="fournisseur-nouveau">Nouveau fournisseur</button><button class="btn" data-act="achat-nouveau">+ Nouvel achat</button><button class="btn btn-primary" data-act="blf-nouveau">+ Bon de livraison</button></div></section>
   <section class="kpis">
     ${kpi('achats', 'À payer aux fournisseurs', moneyRond(somme(dus)), nb(dus.length, 'facture'))}
     ${kpi('achats', 'Fournisseurs en retard', moneyRond(somme(ret)), nb(ret.length, 'facture'), { alerte: ret.length, v: 'retard' })}
     ${kpi('achats', 'À payer sous 7 jours', moneyRond(somme(sous7)), nb(sous7.length, 'échéance'), { v: 'sous7' })}
     ${kpi('achats-payes', 'Payé ce mois', moneyRond(pays.reduce((s, y) => s + centimes(y.p), 0)), nb(pays.length, 'paiement'))}</section>
+  ${carteBLARegrouper()}
   <div class="barre-outils"><div class="chips">${chip('toutes', 'Tous')}${chip('commandes', 'Commandes en cours')}${chip('payer', 'À payer')}${chip('retard', 'En retard')}${chip('payees', 'Payés')}</div></div>
   ${rows ? `<ul class="liste-fact">${rows}</ul>` : vide(xs.length ? 'Aucun achat dans ce filtre.' : 'Aucun achat enregistré. Commencez par « + Nouvel achat ».')}
   <section class="carte"><header class="carte-tete"><h2>Fournisseurs</h2><span class="compteur">${fournisseursListe().length}</span></header>
@@ -2839,17 +3003,17 @@ function ouvrirAchat(id) {
   const x = S.achats[id]; if (!x) return;
   const st = STATUT_ACH[achStatut(x)], r = achReste(x), a = S.affaires[x.affaireId], fo = S.fournisseurs[x.fournisseurId], cmd = x.statut === 'commande';
   const pays = (x.paiements || []).map(p => `<li><span>${fdate(p.date)} · ${esc(p.mode)}</span><b>${money(centimes(p))}</b></li>`).join('');
-  const ligne = (k, v) => `<div><dt>${k}</dt><dd>${v}</dd></div>`;
+  const ligne = (k, v) => `<div><dt>${k}</dt><dd>${v}</dd></div>`, bsX = (x.blIds || []).map(i => S.blf[i]).filter(Boolean);
   ouvrirFenetre(x.numero + ' · ' + nomFournisseur(x.fournisseurId), retourDetail() + `
     <div class="fact-entete">${pill(st[0], st[1])}<span>${cmd ? 'Montant commandé' : 'Reste à payer'} : <b>${money(cmd ? achTTC(x) : r)}</b>${cmd ? ' TTC' : ''}</span></div>
     <dl class="totaux fiche-achat">
       ${ligne('Fournisseur', fo ? `<button class="lien" data-act="fournisseur-ouvrir" data-id="${esc(fo.id)}">${esc(fo.nom)}</button>` : 'Fournisseur inconnu')}
       ${ligne('Objet', esc(x.libelle))}
-      ${ligne('Chantier', a ? `<a href="#affaire-${esc(a.id)}">${esc(a.titre)}</a>` : 'Frais généraux')}
-      ${ligne('Commandé le', fdate(x.date))}
+      ${x.blIds ? ligne('Bons de livraison', bsX.map(b => `<button class="lien" data-act="blf-ouvrir" data-id="${esc(b.id)}">${esc(b.ref || 'sans numéro')}</button>`).join(', ')) + blParChantier(bsX).map(([id, c]) => ligne(esc(nomChantier(id)), money(c) + ' HT')).join('') : ligne('Chantier', a ? `<a href="#affaire-${esc(a.id)}">${esc(a.titre)}</a>` : 'Frais généraux') + ligne('Commandé le', fdate(x.date))}
       ${cmd ? '' : ligne('Facture du fournisseur', `${esc(x.refFacture || 'sans numéro')} · ${fdate(x.dateFacture)}`) + ligne('Échéance', fdate(x.echeance))}
-      ${ligne('Montant HT', money(achHT(x)))}${ligne('TVA ' + esc(String(x.tva == null || x.tva === '' ? 20 : x.tva).replace('.', ',')) + ' %', money(achTTC(x) - achHT(x)))}
+      ${ligne('Montant HT', money(achHT(x)))}${ligne(x.ttc != null ? 'TVA' : 'TVA ' + esc(String(x.tva == null || x.tva === '' ? 20 : x.tva).replace('.', ',')) + ' %', money(achTTC(x) - achHT(x)))}
       <div class="ttc"><dt>Total TTC</dt><dd>${money(achTTC(x))}</dd></div></dl>
+    ${x.ecart ? `<p class="carte-note rouge">La facture dit ${money(Math.abs(Math.round(x.ecart * 100)))} ${x.ecart > 0 ? 'de plus' : 'de moins'} que le total des bons regroupés.</p>` : ''}
     ${cmd ? `<form class="form-paie" data-form="achat-facture" data-id="${esc(x.id)}"><h3 class="h3">Facture reçue</h3>
         <p class="carte-note">Quand la facture du fournisseur arrive, notez-la ici : l’achat passe dans « À payer ».</p>
         <div class="ligne-form"><label class="champ">N° de facture du fournisseur<input name="refFacture" required></label>
@@ -2857,9 +3021,10 @@ function ouvrirAchat(id) {
         <div class="ligne-form"><label class="champ">Date de la facture<input name="dateFacture" type="date" value="${TODAY}" required></label>
         <label class="champ">Échéance<input name="echeance" type="date" value="${addDaysISO(TODAY, fo && fo.delai !== '' && fo.delai != null ? Number(fo.delai) : 60)}" required></label></div>
         <button class="btn btn-primary" type="submit">Enregistrer la facture</button></form>`
-    : `<section><h3 class="h3">Paiements faits</h3>${pays ? `<ul class="paiements">${pays}</ul>` : vide('Aucun paiement.')}</section>
+    : `${fo && r > 0 ? blocAttestation(fo) : ''}<section><h3 class="h3">Paiements faits</h3>${pays ? `<ul class="paiements">${pays}</ul>` : vide('Aucun paiement.')}</section>
+      ${r > 0 || (x.ordres || []).length ? blocOrdres(x, r) : ''}
       ${r > 0 ? `<form class="form-paie" data-form="achat-paiement" data-id="${esc(x.id)}"><h3 class="h3">Enregistrer un paiement</h3>
-        <p class="carte-note">Le logiciel ne paie rien : notez ici le paiement une fois fait.</p>
+        <p class="carte-note">Pour un chèque, des espèces ou un virement fait sans ordre. Le logiciel ne paie rien : notez ici le paiement une fois fait.</p>
         <div class="ligne-form"><label class="champ">Montant (DH)<input name="montant" type="number" inputmode="decimal" step="0.01" min="0.01" max="${(r / 100).toFixed(2)}" value="${(r / 100).toFixed(2)}" required></label>
         <label class="champ">Date<input name="date" type="date" value="${TODAY}" required></label>
         <label class="champ">Mode<select name="mode"><option>Virement</option><option>Chèque</option><option>Espèces</option><option>Effet de commerce</option></select></label></div>
@@ -2888,19 +3053,22 @@ function ouvrirNouvelAchat(affaireId) {
     <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Enregistrer l’achat</button></div></form>`);
 }
 function ouvrirFournisseur(id) {
-  const fo = S.fournisseurs[id] || { id: '', nom: '', categorie: '', contact: '', tel: '', email: '', ice: '', delai: 60 };
+  const fo = S.fournisseurs[id] || { id: '', nom: '', categorie: '', contact: '', tel: '', email: '', ice: '', delai: 60, attestation: '', banque: '', rib: '' };
   const xs = id ? achatsListe().filter(x => x.fournisseurId === id).sort((x, y) => dateAchat(y).localeCompare(dateAchat(x))) : [];
   const du = xs.reduce((s, x) => s + achReste(x), 0);
   const v = k => esc(fo[k] == null ? '' : fo[k]);
   ouvrirFenetre(id ? fo.nom : 'Nouveau fournisseur', `${id ? `<p class="detail-resume">${du ? `<b>${money(du)} TTC</b> à payer à ce fournisseur.` : 'Rien à payer à ce fournisseur.'}</p>
     ${xs.length ? `<ul class="liste-simple detail-liste">${xs.map(x => { const st = STATUT_ACH[achStatut(x)]; return `<li><button data-act="achat-ouvrir" data-id="${esc(x.id)}">${ligneIco('panier')}<span><b>${esc(x.libelle)}</b><small>${esc(x.numero)} · ${fdate(dateAchat(x))}</small></span><span class="droite"><b>${money(achTTC(x))}</b>${pill(st[0], st[1])}</span></button></li>`; }).join('')}</ul>` : vide('Aucun achat chez ce fournisseur.')}
-    <h3 class="h3 detail-h3">Coordonnées</h3>` : ''}
+    ${blocAttestation(fo, true)}<h3 class="h3 detail-h3">Coordonnées</h3>` : ''}
     <form data-form="fournisseur" data-id="${esc(id || '')}" class="form">
       <label class="champ">Nom ou raison sociale<input name="nom" required value="${v('nom')}"></label>
       <label class="champ">Ce qu’il fournit<input name="categorie" value="${v('categorie')}" placeholder="Ex. câbles, éclairage, location"></label>
       <div class="ligne-form"><label class="champ">Interlocuteur<input name="contact" value="${v('contact')}"></label><label class="champ">Téléphone<input name="tel" inputmode="tel" value="${v('tel')}"></label></div>
       <div class="ligne-form"><label class="champ">E-mail<input name="email" type="email" value="${v('email')}"></label><label class="champ">ICE<input name="ice" inputmode="numeric" pattern="[0-9]{15}" title="15 chiffres" value="${v('ice')}"></label></div>
       <label class="champ">Délai de paiement (jours après la facture)<input name="delai" type="number" inputmode="numeric" min="0" max="365" step="1" value="${v('delai')}" required></label>
+      <label class="champ">Attestation de régularité fiscale : date écrite dessus<input name="attestation" type="date" max="${TODAY}" value="${v('attestation')}"></label>
+      <p class="carte-note">Elle vaut 6 mois. Le logiciel vous prévient avant de payer si elle manque ou si elle est périmée.</p>
+      <div class="ligne-form"><label class="champ">Banque du fournisseur<input name="banque" value="${v('banque')}"></label><label class="champ">RIB du fournisseur (24 chiffres)<input name="rib" inputmode="numeric" autocomplete="off" value="${v('rib')}"></label></div>
       <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">${id ? 'Fermer' : 'Annuler'}</button><button class="btn btn-primary" type="submit">Enregistrer</button></div></form>`);
 }
 function ouvrirHeures(affaireId) {
@@ -2908,7 +3076,8 @@ function ouvrirHeures(affaireId) {
   const ch = chantier(a), taux = tauxHoraire();
   const rows = ch.hs.map(h => `<li><span>${fdate(h.date)} · ${h.personnes ? esc(h.personnes) + ' pers. · ' : ''}<b>${esc(String(h.heures).replace('.', ','))} h</b>${h.note ? ' · ' + esc(h.note) : ''}${h.auteur && nomMembre(h.auteur) ? ' · ' + esc(nomMembre(h.auteur)) : ''}</span><span class="h-fin"><b>${money(Math.round(h.heures * h.taux * 100))}</b><button class="btn-x" data-act="heures-suppr" data-id="${esc(h.id)}" aria-label="Supprimer cette ligne d’heures">×</button></span></li>`).join('');
   ouvrirFenetre('Heures passées · ' + a.titre, `
-    <p class="detail-resume"><b>${esc(String(ch.heures).replace('.', ','))} h</b> passées${ch.heuresPrevues ? ` sur ${esc(String(ch.heuresPrevues).replace('.', ','))} h prévues au devis` : ''}, soit ${money(ch.mo)} de main-d’œuvre.</p>
+    <p class="detail-resume"><b>${esc(String(ch.heures).replace('.', ','))} h</b> passées${ch.heuresPrevues ? ` sur ${esc(String(ch.heuresPrevues).replace('.', ','))} h prévues au devis` : ''}${ch.joursP ? `, plus <b>${esc(String(ch.joursP).replace('.', ','))} j</b> pointés dans « Employés »` : ''}, soit ${money(ch.mo)} de main-d’œuvre.</p>
+    ${ch.joursP ? '<p class="carte-note">Un jour pointé compte 8 heures au coût horaire du catalogue. Ne saisissez pas ici les heures déjà pointées.</p>' : ''}
     ${rows ? `<ul class="paiements heures-liste">${rows}</ul>` : vide('Aucune heure enregistrée pour ce chantier.')}
     <form class="form-paie" data-form="heures" data-id="${esc(a.id)}"><h3 class="h3">Ajouter une journée</h3>
       <div class="ligne-form"><label class="champ">Date<input name="date" type="date" value="${TODAY}" required></label>
@@ -2925,20 +3094,21 @@ function carteSuiviChantier(a) {
   const h = n => esc(String(n).replace('.', ','));
   const ligne = (k, v, cls) => `<div${cls ? ` class="${cls}"` : ''}><dt>${k}</dt><dd>${v}</dd></div>`;
   const achats = ch.achats.map(x => { const st = STATUT_ACH[achStatut(x)]; return `<li><button data-act="achat-ouvrir" data-id="${esc(x.id)}">${ligneIco('panier')}<span><b>${esc(x.libelle)}</b><small>${esc(nomFournisseur(x.fournisseurId))} · ${fdate(dateAchat(x))}</small></span><span class="droite">${pill(st[0], st[1])}<small>${money(achHT(x))} HT</small></span></button></li>`; }).join('');
+  const bls = ch.bls.map(({ b, ht }) => `<li><button data-act="blf-ouvrir" data-id="${esc(b.id)}">${ligneIco('bon')}<span><b>Bon ${esc(b.ref || 'sans numéro')}</b><small>${esc(nomFournisseur(b.fournisseurId))} · ${fdate(b.date)}</small></span><span class="droite">${b.achatId ? pill('Facturé', 'ok') : pill('Livré', 'info')}<small>${money(ht)} HT</small></span></button></li>`).join('');
   return `<section class="carte" id="suivi-chantier"><header class="carte-tete"><h2>Suivi du chantier</h2>${pillBudget(ch)}</header>
     <dl class="totaux suivi-dl">
       ${ligne('Vendu HT', money(ch.vendu))}
       ${ligne('Budget (coût prévu au devis)', money(ch.budget))}
       ${ligne('Achats facturés', money(ch.facture))}
-      ${ch.engage ? ligne('Commandes en cours', money(ch.engage)) : ''}
-      ${ligne(`Main-d’œuvre<small>${h(ch.heures)} h passées${ch.heuresPrevues ? ' sur ' + h(ch.heuresPrevues) + ' h prévues' : ''}</small>`, money(ch.mo))}
+      ${ch.engage ? ligne('Commandé ou livré, pas encore facturé', money(ch.engage)) : ''}
+      ${ligne(`Main-d’œuvre<small>${ch.joursP ? h(ch.joursP) + ' j pointés · ' : ''}${h(ch.heures)} h passées${ch.heuresPrevues ? ' sur ' + h(ch.heuresPrevues) + ' h prévues' : ''}</small>`, money(ch.mo))}
       ${ligne('Dépensé et commandé', money(ch.total), 'ttc')}
       ${ligne(fini && ch.saisi ? 'Marge réelle' : 'Marge prévue', fini && ch.saisi ? `${money(ch.margeReelle)} · ${pctDe(ch.margeReelle, ch.vendu)} %` : `${money(ch.margePrevue)} · ${pctDe(ch.margePrevue, ch.vendu)} %`, 'marge')}
       ${fini && ch.saisi ? ligne('Marge prévue au devis', `${money(ch.margePrevue)} · ${pctDe(ch.margePrevue, ch.vendu)} %`, 'marge') : ''}
     </dl>
     ${barreBudget(ch)}<p class="carte-note${ch.niveau === 'bad' ? ' rouge' : ''}">${phraseBudget(ch)}</p>
-    ${achats ? `<ul class="liste-simple">${achats}</ul>` : ''}
-    <div class="carte-boutons"><button class="btn btn-sm" data-act="achat-nouveau" data-affaire="${esc(a.id)}">+ Achat</button><button class="btn btn-sm" data-act="heures-ouvrir" data-id="${esc(a.id)}">Heures passées</button></div></section>`;
+    ${achats || bls ? `<ul class="liste-simple">${bls}${achats}</ul>` : ''}
+    <div class="carte-boutons"><button class="btn btn-sm" data-act="blf-nouveau" data-affaire="${esc(a.id)}">+ Bon de livraison</button><button class="btn btn-sm" data-act="achat-nouveau" data-affaire="${esc(a.id)}">+ Achat</button><button class="btn btn-sm" data-act="heures-ouvrir" data-id="${esc(a.id)}">Heures passées</button></div></section>`;
 }
 function miniChantiers() {
   const xs = chantiersTous().filter(chEnCours).sort((x, y) => (x.a.etape === 'chantier' ? 0 : 1) - (y.a.etape === 'chantier' ? 0 : 1) || y.ch.pct - x.ch.pct).slice(0, 4);
@@ -2969,64 +3139,89 @@ function vueChantiers() {
     ${kpi('chantiers', 'Budgets à surveiller', String(aSurv.length), depasses ? `dont ${depasses} dépassé${depasses > 1 ? 's' : ''}` : 'aucun dépassement', { v: 'alerte', alerte: depasses })}</section>
   <div class="barre-outils"><div class="chips">${chip('encours', `En cours (${enCours.length})`)}${chip('termines', `Terminés (${termines.length})`)}${chip('tous', `Tous (${tous.length})`)}</div></div>
   ${sel.length ? `<ul class="liste-ch">${sel.map(ligneChantier).join('')}</ul>` : vide(UI.chFiltre === 'termines' ? 'Aucun chantier terminé.' : 'Aucun chantier en cours. Un chantier apparaît ici dès qu’un devis est accepté.')}
-  <p class="carte-note">Le budget est le coût prévu au devis. « Dépensé et commandé » additionne les achats, les commandes en cours et les heures de l’équipe.</p>`;
+  <p class="carte-note">Le budget est le coût prévu au devis. « Dépensé et commandé » additionne les achats, les bons de livraison, les commandes en cours et le temps de l’équipe (heures saisies et jours pointés).</p>`;
 }
 
-/* ---------- Employés : jours travaillés, paie et état du mois pour le comptable ---------- */
-/* Le logiciel note des montants convenus (jours × taux, ou salaire du mois). Il ne calcule aucune cotisation : les bulletins restent faits par le comptable. */
+/* ---------- Employés : pointage par quinzaine et par chantier, paie, congés, feuille de virements, état du mois pour le comptable ---------- */
+/* Le logiciel note des montants convenus (jours × taux, ou la moitié du salaire du mois par quinzaine). Il ne calcule aucune cotisation et ne verse rien. */
 const employesListe = () => Object.values(S.employes).sort((x, y) => x.nom.localeCompare(y.nom));
-const pointageDe = (empId, mois) => S.pointages[empId + '_' + mois] || null;
 const moisDecale = (m, n) => { const d = new Date(Date.UTC(+m.slice(0, 4), +m.slice(5, 7) - 1 + n, 1)); return d.toISOString().slice(0, 7); };
 const nbJ = n => String(n).replace('.', ',');
-function paie(emp, mois) {
-  const p = pointageDe(emp.id, mois), saisi = !!p && p.jours !== '' && p.jours != null;
-  const jours = saisi ? Number(p.jours) || 0 : 0, taux = Math.round((Number(emp.taux) || 0) * 100);
-  const base = !saisi ? 0 : emp.paie === 'mois' ? taux : Math.round(jours * taux);
-  const primes = saisi ? Math.round((Number(p.primes) || 0) * 100) : 0, avances = saisi ? Math.round((Number(p.avances) || 0) * 100) : 0;
-  const brut = base + primes, paye = saisi && p.paye ? p.paye : null;
-  return { emp, p, saisi, jours, base, primes, avances, brut, reste: brut - avances, paye, statut: !saisi ? 'saisir' : paye ? 'paye' : 'payer' };
+/* Une quinzaine s'écrit AAAA-MM-1 (du 1er au 15) ou AAAA-MM-2 (du 16 à la fin du mois). */
+const quinzaineDe = iso => iso.slice(0, 7) + '-' + (+iso.slice(8, 10) <= 15 ? 1 : 2);
+const perCourante = () => UI.empPer || quinzaineDe(TODAY);
+const perDecale = (p, n) => { const q = (+p.slice(8) - 1) + n, dm = Math.floor(q / 2); return moisDecale(p.slice(0, 7), dm) + '-' + (q - dm * 2 + 1); };
+const perBornes = p => { const m = p.slice(0, 7); return p.endsWith('-1') ? [m + '-01', m + '-15'] : [m + '-16', m + '-' + String(new Date(Date.UTC(+m.slice(0, 4), +m.slice(5, 7), 0)).getUTCDate()).padStart(2, '0')]; };
+const perLong = p => (p.endsWith('-1') ? '1re' : '2e') + ' quinzaine de ' + moisLong(p.slice(0, 7));
+const perDates = p => { const b = perBornes(p); return `du ${+b[0].slice(8)}${b[0].endsWith('-01') ? 'er' : ''} au ${fdate(b[1])}`; };
+const pointageDe = (empId, per) => S.pointages[empId + '_' + per] || null;
+const joursDe = p => !p ? 0 : p.parChantier && Object.keys(p.parChantier).length ? Object.values(p.parChantier).reduce((s, v) => s + (Number(v) || 0), 0) : Number(p.jours) || 0;
+function joursSurChantier(affaireId) { return Object.values(S.pointages).reduce((s, p) => s + (p.parChantier ? Number(p.parChantier[affaireId]) || 0 : 0), 0); }
+function paie(emp, per) {
+  const p = pointageDe(emp.id, per), saisi = !!p, jours = joursDe(p), taux = Math.round((Number(emp.taux) || 0) * 100);
+  const c = k => saisi ? Math.round((Number(p[k]) || 0) * 100) : 0;
+  const base = !saisi ? 0 : emp.paie === 'mois' ? Math.round(taux / 2) : Math.round(jours * taux);
+  const primes = c('primes'), deplacements = c('deplacements'), avances = c('avances'), brut = base + primes + deplacements, paye = saisi && p.paye ? p.paye : null;
+  return { emp, p, saisi, jours, conges: saisi ? Number(p.conges) || 0 : 0, base, primes, deplacements, avances, brut, reste: brut - avances, paye, statut: !saisi ? 'saisir' : paye ? 'paye' : 'payer' };
 }
 const STATUT_PAIE = { saisir: ['À saisir', 'warn'], payer: ['À verser', 'info'], paye: ['Versé', 'ok'] };
-const paieDuMois = mois => employesListe().filter(e => e.actif !== false || pointageDe(e.id, mois)).map(e => paie(e, mois));
+const paieDeLaPeriode = per => employesListe().filter(e => e.actif !== false || pointageDe(e.id, per)).map(e => paie(e, per));
 const libelleTaux = e => e.paie === 'mois' ? `au mois · ${money(Math.round(e.taux * 100))}` : `à la journée · ${money(Math.round(e.taux * 100))} par jour`;
+/* Congés payés : 1,5 jour par mois travaillé après 6 mois de présence, plus 1,5 jour par an tous les 5 ans d'ancienneté, 30 jours au plus (Code du travail, art. 231 et 232). À confirmer avec le comptable. */
+function conges(emp) {
+  if (!emp.entree) return null;
+  const moisEntre = (a, b) => Math.max(0, (+b.slice(0, 4) - +a.slice(0, 4)) * 12 + (+b.slice(5, 7) - +a.slice(5, 7)) - (+b.slice(8, 10) < +a.slice(8, 10) ? 1 : 0));
+  const an = TODAY.slice(0, 4), anciennete = moisEntre(emp.entree, TODAY);
+  const parAn = Math.min(30, 18 + 1.5 * Math.floor(anciennete / 60)), debut = emp.entree > an + '-01-01' ? emp.entree : an + '-01-01';
+  const acquis = anciennete < 6 ? 0 : Math.round(moisEntre(debut, TODAY) * parAn / 12 * 2) / 2;
+  const pris = Object.values(S.pointages).filter(p => p.employeId === emp.id && (p.periode || '').slice(0, 4) === an).reduce((s, p) => s + (Number(p.conges) || 0), 0);
+  return { ouvert: anciennete >= 6, parAn, acquis, pris, solde: acquis - pris };
+}
+const phraseConges = emp => { const c = conges(emp); return !c ? 'Congés : indiquez la date d’entrée sur la fiche.' : !c.ouvert ? 'Congés : le droit s’ouvre après 6 mois de présence.' : `Congés ${TODAY.slice(0, 4)} : ${nbJ(c.acquis)} j acquis, ${nbJ(c.pris)} j pris, reste ${nbJ(c.solde)} j.`; };
 function lignePaie(x) {
-  const st = STATUT_PAIE[x.statut];
+  const st = STATUT_PAIE[x.statut], nCh = x.p && x.p.parChantier ? Object.keys(x.p.parChantier).filter(k => k !== 'autre').length : 0;
   return `<li><button class="ligne-fact" data-act="pointage-ouvrir" data-id="${esc(x.emp.id)}">
-    <span class="lf-num"><b>${x.saisi ? nbJ(x.jours) + ' j' : '—'}</b><small>jours travaillés</small></span>
+    <span class="lf-num"><b>${x.saisi ? nbJ(x.jours) + ' j' : '—'}</b><small>${x.saisi && nCh ? 'sur ' + nb(nCh, 'chantier') : 'jours travaillés'}</small></span>
     <span class="lf-cli">${esc(x.emp.nom)}<small>${esc(x.emp.poste || 'Employé')} · ${libelleTaux(x.emp)}</small></span>
     <span class="lf-mt"><span class="lbl">Paie</span>${x.saisi ? money(x.brut) : '—'}</span>
     <span class="lf-mt"><span class="lbl">Reste à verser</span>${x.saisi && !x.paye ? money(x.reste) : '—'}</span>
     <span class="lf-st">${pill(st[0], st[1])}</span></button></li>`;
 }
 function vueEmployes() {
-  const mois = UI.empMois || TODAY.slice(0, 7), xs = paieDuMois(mois), saisis = xs.filter(x => x.saisi);
-  const aVerser = saisis.filter(x => !x.paye);
+  const per = perCourante(), xs = paieDeLaPeriode(per), saisis = xs.filter(x => x.saisi), aVerser = saisis.filter(x => !x.paye);
   const actifs = employesListe().filter(e => e.actif !== false), auJour = actifs.filter(e => e.paie !== 'mois').length;
-  return `<section class="page-tete"><div><p class="surtitre">Jours travaillés, paie et état du mois pour le comptable</p><h1>Employés</h1></div>
-    <div class="tete-boutons"><button class="btn" data-act="employe-nouveau">Nouvel employé</button><button class="btn btn-primary" data-act="etat-paie">État du mois pour le comptable</button></div></section>
-  <div class="mois-choix"><button class="btn btn-sm" data-act="emp-mois" data-v="-1" aria-label="Mois précédent">${ico('gauche')}</button><b>${moisLong(mois).replace(/^./, c => c.toUpperCase())}</b><button class="btn btn-sm" data-act="emp-mois" data-v="1" aria-label="Mois suivant"${mois >= TODAY.slice(0, 7) ? ' disabled' : ''}>${ico('chevron')}</button></div>
+  return `<section class="page-tete"><div><p class="surtitre">Pointage par chantier, paie de la quinzaine et état du mois pour le comptable</p><h1>Employés</h1></div>
+    <div class="tete-boutons"><button class="btn" data-act="employe-nouveau">Nouvel employé</button><button class="btn" data-act="virements-paie">Feuille de virements</button><button class="btn btn-primary" data-act="etat-paie">État du mois pour le comptable</button></div></section>
+  <div class="mois-choix"><button class="btn btn-sm" data-act="emp-per" data-v="-1" aria-label="Quinzaine précédente">${ico('gauche')}</button><b>${perLong(per).replace(/^./, c => c.toUpperCase())}<small>${perDates(per)}</small></b><button class="btn btn-sm" data-act="emp-per" data-v="1" aria-label="Quinzaine suivante"${per >= quinzaineDe(TODAY) ? ' disabled' : ''}>${ico('chevron')}</button></div>
   <section class="kpis">
     ${kpi('paie', 'Employés', String(actifs.length), `${auJour} à la journée, ${actifs.length - auJour} au mois`, { v: 'employes' })}
     ${kpi('paie', 'Jours travaillés', nbJ(saisis.reduce((s, x) => s + x.jours, 0)), `${saisis.length} saisi${saisis.length > 1 ? 's' : ''} sur ${xs.length}`, { v: 'jours', alerte: 0 })}
-    ${kpi('paie', 'Paie du mois', moneyRond(saisis.reduce((s, x) => s + x.brut, 0)), `dont primes : ${moneyRond(saisis.reduce((s, x) => s + x.primes, 0))}`, { v: 'brut' })}
+    ${kpi('paie', 'Paie de la quinzaine', moneyRond(saisis.reduce((s, x) => s + x.brut, 0)), `dont primes et déplacements : ${moneyRond(saisis.reduce((s, x) => s + x.primes + x.deplacements, 0))}`, { v: 'brut' })}
     ${kpi('paie', 'Reste à verser', moneyRond(aVerser.reduce((s, x) => s + x.reste, 0)), `avances déjà versées : ${moneyRond(aVerser.reduce((s, x) => s + x.avances, 0))}`, { v: 'reste' })}</section>
+  <div class="photo-bloc photo-pointage"><div class="photo-boutons"><label class="btn" for="pointage-photo">${ico('photo')}Photo de la feuille de pointage</label><input type="file" id="pointage-photo" accept="image/*" class="sr"><button type="button" class="btn btn-ghost" data-act="pointage-exemple">Voir un exemple</button></div>
+    <p class="carte-note">Photographiez la feuille de pointage du chantier : les jours de chaque ouvrier sont lus. Vous vérifiez, puis vous validez.</p><p class="photo-etat" role="status"></p></div>
   ${xs.length ? `<ul class="liste-fact">${xs.map(lignePaie).join('')}</ul>` : vide('Aucun employé. Commencez par « Nouvel employé ».')}
-  <p class="carte-note">Cliquez sur un employé pour saisir ses jours du mois, ses primes et ses avances. Les montants sont ceux convenus avec lui, avant cotisations : les bulletins de paie restent faits par le comptable.</p>`;
+  <p class="carte-note">Cliquez sur un employé pour saisir ses jours par chantier, ses primes, ses frais de déplacement et ses avances. Les montants sont ceux convenus avec lui, avant cotisations : les bulletins de paie restent faits par le comptable.</p>`;
 }
+const chantiersDePointage = (per, pc) => { const debut = perBornes(per)[0]; return affairesListe().filter(a => a.lignes.length && (['accepte', 'chantier'].includes(a.etape) || (a.etape === 'termine' && ((a.dates || {}).fin || '') >= debut) || Number((pc || {})[a.id]) > 0)).sort((x, y) => (x.etape === 'chantier' ? 0 : 1) - (y.etape === 'chantier' ? 0 : 1) || (y.numero || '').localeCompare(x.numero || '')); };
 function ouvrirPointage(empId) {
   const emp = S.employes[empId]; if (!emp) return;
-  const mois = UI.empMois || TODAY.slice(0, 7), x = paie(emp, mois), p = x.p || {};
-  const st = STATUT_PAIE[x.statut];
-  ouvrirFenetre(`${emp.nom} · ${moisLong(mois)}`, retourDetail() + `
-    <div class="fact-entete">${pill(st[0], st[1])}<span>${x.saisi ? `Paie du mois : <b>${money(x.brut)}</b>${x.avances ? `, reste à verser <b>${money(x.reste)}</b>` : ''}` : 'Jours du mois pas encore saisis'}</span></div>
-    <p class="carte-note">${esc(emp.poste || 'Employé')} · ${libelleTaux(emp)} · <button class="lien" data-act="employe-ouvrir" data-id="${esc(emp.id)}">Modifier la fiche</button></p>
+  const per = perCourante(), x = paie(emp, per), p = x.p || {}, st = STATUT_PAIE[x.statut];
+  const pc = p.parChantier || (p.jours ? { autre: p.jours } : {});
+  const champJ = (k, lbl) => `<label class="champ jours-ch"><span>${lbl}</span><input name="ch_${esc(k)}" type="number" inputmode="decimal" min="0" max="16" step="0.5" value="${esc(pc[k] || '')}" placeholder="0"></label>`;
+  ouvrirFenetre(`${emp.nom} · ${perLong(per)}`, retourDetail() + `
+    <div class="fact-entete">${pill(st[0], st[1])}<span>${x.saisi ? `Paie de la quinzaine : <b>${money(x.brut)}</b>${x.avances ? `, reste à verser <b>${money(x.reste)}</b>` : ''}` : 'Jours de la quinzaine pas encore saisis'}</span></div>
+    <p class="carte-note">${esc(emp.poste || 'Employé')} · ${libelleTaux(emp)} · ${phraseConges(emp)} <button class="lien" data-act="employe-ouvrir" data-id="${esc(emp.id)}">Modifier la fiche</button></p>
     ${x.paye ? `<p class="detail-resume">Versé le ${fdate(x.paye.date)} (${esc(x.paye.mode)}).</p>` : ''}
     <form class="form" data-form="pointage" data-id="${esc(emp.id)}">
-      <div class="ligne-form"><label class="champ">Jours travaillés<input name="jours" type="number" inputmode="decimal" min="0" max="31" step="0.5" value="${x.saisi ? esc(x.jours) : ''}" required></label>
-      <label class="champ">Primes (DH)<input name="primes" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.primes || 0)}"></label>
-      <label class="champ">Avances déjà versées (DH)<input name="avances" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.avances || 0)}"></label></div>
-      <label class="champ">Note pour le comptable (facultatif)<input name="note" value="${esc(p.note || '')}" placeholder="Ex. 2 jours de congé, heures du samedi"></label>
-      <p class="carte-note">${emp.paie === 'mois' ? 'Payé au mois : la paie est le salaire du mois, plus les primes. Les jours servent au comptable.' : 'Payé à la journée : jours × taux, plus les primes.'} Le reste à verser retire les avances.</p>
+      <fieldset class="jours-chantiers"><legend>Jours travaillés, ${perDates(per)}</legend>
+        ${chantiersDePointage(per, pc).map(a => champJ(a.id, esc(a.titre))).join('')}${champJ('autre', 'Hors chantier (dépôt, entretien, divers)')}</fieldset>
+      <div class="ligne-form"><label class="champ">Primes (DH)<input name="primes" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.primes || 0)}"></label>
+      <label class="champ">Frais de déplacement (DH)<input name="deplacements" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.deplacements || 0)}"></label></div>
+      <div class="ligne-form"><label class="champ">Avances déjà versées (DH)<input name="avances" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.avances || 0)}"></label>
+      <label class="champ">Jours de congé pris<input name="conges" type="number" inputmode="decimal" min="0" max="16" step="0.5" value="${esc(p.conges || 0)}"></label></div>
+      <label class="champ">Note pour le comptable (facultatif)<input name="note" value="${esc(p.note || '')}" placeholder="Ex. prime de l’Aïd, heures du samedi"></label>
+      <p class="carte-note">${emp.paie === 'mois' ? 'Payé au mois : chaque quinzaine compte la moitié du salaire, plus les primes et les déplacements. Les jours servent au suivi des chantiers.' : 'Payé à la journée : jours × taux, plus les primes et les déplacements.'} Le reste à verser retire les avances. Les jours passés sur un chantier comptent dans sa main-d’œuvre.</p>
       <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Enregistrer</button></div></form>
     ${x.saisi && !x.paye ? `<form class="form-paie" data-form="paie-versee" data-id="${esc(emp.id)}"><h3 class="h3">Noter le versement</h3>
       <p class="carte-note">Le logiciel ne verse rien : notez ici le paiement une fois fait (${money(x.reste)}).</p>
@@ -3035,9 +3230,9 @@ function ouvrirPointage(empId) {
       <button class="btn btn-primary" type="submit">Marquer comme versé</button></form>` : ''}`);
 }
 function ouvrirEmploye(id) {
-  const e = S.employes[id] || { id: '', nom: '', poste: 'Électricien', paie: 'jour', taux: '', tel: '', entree: TODAY, actif: true };
+  const e = S.employes[id] || { id: '', nom: '', poste: 'Électricien', paie: 'jour', taux: '', tel: '', entree: TODAY, actif: true, cin: '', cnss: '', rib: '', banque: '' };
   const v = k => esc(e[k] == null ? '' : e[k]);
-  ouvrirFenetre(id ? e.nom : 'Nouvel employé', `<form data-form="employe" data-id="${esc(id || '')}" class="form">
+  ouvrirFenetre(id ? e.nom : 'Nouvel employé', `${id ? `<p class="detail-resume">${phraseConges(e)}</p>` : ''}<form data-form="employe" data-id="${esc(id || '')}" class="form">
     <label class="champ">Nom et prénom<input name="nom" required value="${v('nom')}"></label>
     <label class="champ">Poste<input name="poste" value="${v('poste')}" placeholder="Ex. électricien, chef d’équipe, aide"></label>
     <fieldset class="choix"><legend>Comment est-il payé ?</legend>
@@ -3045,31 +3240,342 @@ function ouvrirEmploye(id) {
       <label><input type="radio" name="paie" value="mois"${e.paie === 'mois' ? ' checked' : ''}> Au mois</label></fieldset>
     <div class="ligne-form"><label class="champ">Montant convenu (DH, par jour ou par mois)<input name="taux" type="number" inputmode="decimal" min="0" step="0.01" value="${v('taux')}" required></label>
     <label class="champ">Téléphone<input name="tel" inputmode="tel" value="${v('tel')}"></label></div>
+    <div class="ligne-form"><label class="champ">N° de CIN<input name="cin" autocomplete="off" value="${v('cin')}"></label><label class="champ">N° CNSS<input name="cnss" inputmode="numeric" autocomplete="off" value="${v('cnss')}"></label></div>
+    <div class="ligne-form"><label class="champ">Banque<input name="banque" value="${v('banque')}"></label><label class="champ">RIB (24 chiffres), pour la feuille de virements<input name="rib" inputmode="numeric" autocomplete="off" value="${v('rib')}"></label></div>
     <div class="ligne-form"><label class="champ">Date d’entrée<input name="entree" type="date" value="${v('entree')}"></label>
     <label class="champ case"><input type="checkbox" name="actif"${e.actif !== false ? ' checked' : ''}> Travaille encore chez Electropack</label></div>
+    <p class="carte-note">La date d’entrée sert à compter les congés : 1,5 jour par mois après 6 mois de présence (règle à confirmer avec le comptable).</p>
     <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Enregistrer</button></div></form>`);
 }
+/* État du mois pour le comptable : les deux quinzaines côte à côte, comme dans le tableau de paie d'origine. */
 function lignesEtatPaie(mois) {
-  const xs = paieDuMois(mois).filter(x => x.saisi);
-  const tete = ['Employé', 'Poste', 'Payé', 'Jours', 'Base (DH)', 'Primes (DH)', 'Total (DH)', 'Avances (DH)', 'Reste à verser (DH)', 'Versé le', 'Note'];
-  const n = c => (c / 100).toFixed(2).replace('.', ',');
-  const rows = xs.map(x => [x.emp.nom, x.emp.poste || '', x.emp.paie === 'mois' ? 'au mois' : 'à la journée', nbJ(x.jours), n(x.base), n(x.primes), n(x.brut), n(x.avances), n(x.paye ? 0 : x.reste), x.paye ? fdate(x.paye.date) : '', (x.p && x.p.note) || '']);
-  const tot = k => xs.reduce((s, x) => s + x[k], 0);
-  rows.push(['Total', '', '', nbJ(xs.reduce((s, x) => s + x.jours, 0)), n(tot('base')), n(tot('primes')), n(tot('brut')), n(tot('avances')), n(xs.reduce((s, x) => s + (x.paye ? 0 : x.reste), 0)), '', '']);
-  return { tete, rows, xs };
+  const xs = employesListe().map(e => ({ e, a: paie(e, mois + '-1'), b: paie(e, mois + '-2') })).filter(x => x.a.saisi || x.b.saisi);
+  const tete = ['Employé', 'CIN', 'N° CNSS', 'Poste', 'Payé', 'Montant convenu (DH)', 'Jours 1re quinzaine', 'Jours 2e quinzaine', 'Total jours', 'Base (DH)', 'Primes (DH)', 'Déplacements (DH)', 'Total (DH)', 'Avances (DH)', 'Reste à verser (DH)', 'Congés pris (j)'];
+  const n = c => (c / 100).toFixed(2).replace('.', ','), s2 = (x, k) => x.a[k] + x.b[k], reste = x => (x.a.saisi && !x.a.paye ? x.a.reste : 0) + (x.b.saisi && !x.b.paye ? x.b.reste : 0);
+  const rows = xs.map(x => [x.e.nom, x.e.cin || '', x.e.cnss || '', x.e.poste || '', x.e.paie === 'mois' ? 'au mois' : 'à la journée', n(Math.round((Number(x.e.taux) || 0) * 100)), x.a.saisi ? nbJ(x.a.jours) : '', x.b.saisi ? nbJ(x.b.jours) : '', nbJ(s2(x, 'jours')), n(s2(x, 'base')), n(s2(x, 'primes')), n(s2(x, 'deplacements')), n(s2(x, 'brut')), n(s2(x, 'avances')), n(reste(x)), nbJ(s2(x, 'conges'))]);
+  const tot = k => xs.reduce((s, x) => s + s2(x, k), 0);
+  rows.push(['Total', '', '', '', '', '', nbJ(xs.reduce((s, x) => s + x.a.jours, 0)), nbJ(xs.reduce((s, x) => s + x.b.jours, 0)), nbJ(tot('jours')), n(tot('base')), n(tot('primes')), n(tot('deplacements')), n(tot('brut')), n(tot('avances')), n(xs.reduce((s, x) => s + reste(x), 0)), nbJ(tot('conges'))]);
+  return { tete, rows, xs, brut: tot('brut'), reste: xs.reduce((s, x) => s + reste(x), 0) };
 }
+const milliers = v => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, ' ');
 function ouvrirEtatPaie() {
-  const mois = UI.empMois || TODAY.slice(0, 7), { tete, rows, xs } = lignesEtatPaie(mois), manque = paieDuMois(mois).length - xs.length;
-  const milliers = v => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
-  const cel = (v, i, tag) => `<${tag}${i >= 3 && i <= 8 ? ' class="num"' : ''}>${esc(tag === 'td' && i >= 4 && i <= 8 ? milliers(v) : v)}</${tag}>`;
-  const som = c => xs.reduce((t, x) => t + x[c], 0);
+  const mois = perCourante().slice(0, 7), { tete, rows, xs, brut, reste } = lignesEtatPaie(mois);
+  const cel = (v, i, tag) => `<${tag}${i >= 5 ? ' class="num"' : ''}>${esc(tag === 'td' && (i === 5 || (i >= 9 && i <= 14)) ? milliers(v) : v)}</${tag}>`;
   ouvrirFenetre(`État de paie · ${moisLong(mois)}`, `
-    <p class="detail-resume">${xs.length ? `<b>${money(som('brut'))}</b> de paie pour ${nb(xs.length, 'employé')}. Reste à verser : ${money(xs.filter(x => !x.paye).reduce((t, x) => t + x.reste, 0))}.` : 'Aucun jour saisi pour ce mois.'}${manque ? ` <span class="rouge">${nb(manque, 'employé')} sans jours saisis.</span>` : ''}</p>
+    <p class="detail-resume">${xs.length ? `<b>${money(brut)}</b> de paie pour ${nb(xs.length, 'employé')} sur les deux quinzaines. Reste à verser : ${money(reste)}.` : 'Aucun jour saisi pour ce mois.'}</p>
     ${xs.length ? `<div class="table-scroll"><table class="table etat-paie"><thead><tr>${tete.map((t, i) => cel(t, i, 'th')).join('')}</tr></thead><tbody>${rows.map((r, j) => `<tr${j === rows.length - 1 ? ' class="total"' : ''}>${r.map((v, i) => cel(v, i, 'td')).join('')}</tr>`).join('')}</tbody></table></div>` : ''}
     <p class="carte-note">Montants convenus, avant cotisations. Les bulletins de paie et les déclarations restent faits par le comptable.</p>
     <div class="fen-pied"><button class="btn" data-act="etat-paie-copier">Copier le tableau</button><button class="btn btn-primary" data-act="etat-paie-csv">Télécharger pour Excel</button></div>`, true);
 }
-const tsvEtatPaie = (mois, sep) => { const { tete, rows } = lignesEtatPaie(mois); return [tete].concat(rows).map(r => r.map(v => sep === ';' ? '"' + String(v).replace(/"/g, '""') + '"' : String(v).replace(/[\t\n]/g, ' ')).join(sep)).join('\n'); };
+const enTSV = (tete, rows, sep) => [tete].concat(rows).map(r => r.map(v => sep === ';' ? '"' + String(v).replace(/"/g, '""') + '"' : String(v).replace(/[\t\n]/g, ' ')).join(sep)).join('\n');
+const tsvEtatPaie = (mois, sep) => { const { tete, rows } = lignesEtatPaie(mois); return enTSV(tete, rows, sep); };
+/* Feuille de virements de la quinzaine : un bénéficiaire, un RIB et un montant par ligne, à déposer à la banque. */
+function virementsPaie(per) {
+  const dus = paieDeLaPeriode(per).filter(x => x.statut === 'payer' && x.reste > 0);
+  const avec = dus.filter(x => x.emp.rib), sans = dus.filter(x => !x.emp.rib);
+  return { avec, sans, total: avec.reduce((s, x) => s + x.reste, 0) };
+}
+function ouvrirVirementsPaie() {
+  const per = perCourante(), { avec, sans, total } = virementsPaie(per);
+  ouvrirFenetre(`Feuille de virements · ${perLong(per)}`, `
+    <p class="detail-resume">${avec.length ? `<b>${money(total)}</b> à virer à ${nb(avec.length, 'employé')}, ${perDates(per)}.` : 'Aucun virement à préparer pour cette quinzaine : tout est versé, ou rien n’est saisi.'}</p>
+    ${avec.length ? `<div class="table-scroll"><table class="table etat-paie"><thead><tr><th>Bénéficiaire</th><th>Banque</th><th>RIB</th><th class="num">Montant (DH)</th></tr></thead><tbody>${avec.map(x => `<tr><td>${esc(x.emp.nom)}</td><td>${esc(x.emp.banque || '')}</td><td>${esc(x.emp.rib)}</td><td class="num">${nbr(x.reste)}</td></tr>`).join('')}<tr class="total"><td>Total</td><td></td><td></td><td class="num">${nbr(total)}</td></tr></tbody></table></div>
+      <p class="carte-note">Arrêté à la somme de : ${enLettres(total)}.</p>` : ''}
+    ${sans.length ? `<p class="carte-note">Sans RIB sur leur fiche, donc à payer autrement (${money(sans.reduce((s, x) => s + x.reste, 0))}) : ${sans.map(x => esc(x.emp.nom)).join(', ')}.</p>` : ''}
+    ${avec.length ? `<div class="fen-pied"><button class="btn btn-ghost" data-act="virements-verses">Noter ces virements comme versés</button><button class="btn" data-act="virements-copier">Copier le tableau</button><button class="btn btn-primary" data-act="virements-pdf">Télécharger le PDF</button></div>` : ''}`, true);
+}
+/* Feuille de pointage manuscrite lue par photo : les jours de chaque ouvrier sont proposés, rien n'est enregistré avant validation. */
+const invitePointage = noms => `Tu lis la photo d'une feuille de pointage, souvent manuscrite, d'une entreprise d'électricité : pour chaque ouvrier, le nombre de jours travaillés sur la période.
+Réponds uniquement par un objet JSON, sans texte autour : {"lignes": [{"nom": "nom écrit sur la feuille", "jours": nombre}], "lisible": true | false}
+Noms des employés, pour t'aider à lire l'écriture : ${noms.join(' ; ')}.
+Règles : ne devine jamais. Si un nombre de jours est illisible, mets null. Une demi-journée vaut 0.5. Si la feuille montre une case par jour, compte les cases cochées. Si la photo n'est pas une feuille de pointage, mets "lisible": false.`;
+const memeNom = (a, b) => { const x = norm(a).split(/\s+/).filter(Boolean), y = norm(b).split(/\s+/).filter(Boolean), court = x.length <= y.length ? x : y, long = court === x ? y : x; return court.length > 0 && court.every(t => long.includes(t)); };
+function ouvrirPointageLot(lignes, exemple) {
+  const per = perCourante(), es = employesListe().filter(e => e.actif !== false);
+  const lus = (Array.isArray(lignes) ? lignes : []).filter(l => l && typeof l.nom === 'string' && l.nom.trim());
+  const rows = es.map(e => { const l = lus.find(l => memeNom(e.nom, l.nom)), p = pointageDe(e.id, per), j = l && typeof l.jours === 'number' && isFinite(l.jours) && l.jours >= 0 ? Math.min(16, l.jours) : '';
+    return `<label class="champ jours-ch"><span>${esc(e.nom)}<small>${p && p.paye ? 'déjà versé : pas modifié' : p ? 'déjà saisi : ' + nbJ(joursDe(p)) + ' j' : l ? 'lu sur la feuille' : 'pas trouvé sur la feuille'}</small></span><input name="j_${esc(e.id)}" type="number" inputmode="decimal" min="0" max="16" step="0.5" value="${esc(j)}" placeholder="—"${p && p.paye ? ' disabled' : ''}></label>`; }).join('');
+  const inconnus = lus.filter(l => !es.some(e => memeNom(e.nom, l.nom))).map(l => l.nom.trim());
+  ouvrirFenetre(`Pointage lu · ${perLong(per)}`, `<form class="form" data-form="pointage-lot">
+    <p>${exemple ? 'Exemple : voilà ce qu’une photo de la feuille remplit.' : 'Voici les jours lus sur la photo.'} Vérifiez chaque nombre, choisissez le chantier, puis validez. Une case vide ne change rien.</p>
+    <label class="champ">Chantier de cette feuille<select name="aff">${chantiersDePointage(per).map(a => `<option value="${esc(a.id)}">${esc(a.titre)}</option>`).join('')}<option value="autre">Hors chantier (dépôt, entretien, divers)</option></select></label>
+    <fieldset class="jours-chantiers"><legend>Jours travaillés, ${perDates(per)}</legend>${rows}</fieldset>
+    ${inconnus.length ? `<p class="carte-note rouge">Noms lus sur la feuille mais absents de la liste des employés : ${inconnus.map(esc).join(', ')}.</p>` : ''}
+    <p class="carte-note">Les jours validés s’ajoutent pour ce chantier. Les primes, déplacements et avances se saisissent ensuite sur la fiche de chacun.</p>
+    <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Valider le pointage</button></div></form>`);
+}
+async function lirePhotoPointage(input, exemple) {
+  const etat = $('.photo-pointage .photo-etat'), f = input && input.files && input.files[0], es = employesListe().filter(e => e.actif !== false);
+  const dire = t => { if (etat) etat.textContent = t; };
+  if (exemple) return ouvrirPointageLot(es.slice(0, 6).map((e, i) => ({ nom: e.nom.split(' ')[0], jours: [5, 4.5, 5, 3, 5, 4][i] })), true);
+  if (!f) return;
+  if (!ia) return dire('La lecture de photo marche quand la maquette est ouverte dans Claude. Ici, essayez « Voir un exemple ».');
+  dire('Lecture de la feuille…');
+  try {
+    const lim = typeof ia.limits === 'function' ? await ia.limits() : {};
+    if (!lim || !lim.images) return dire('La lecture de photo n’est pas disponible ici. Saisissez les jours à la main, ou essayez « Voir un exemple ».');
+    const r = await ia.json(invitePointage(es.map(e => e.nom)), { images: [await reduireImage(f, 2000)], modelTier: 'default', cache: false });
+    if (!r || typeof r !== 'object' || r.lisible === false || !Array.isArray(r.lignes) || !r.lignes.length) return dire('Je n’ai pas reconnu de feuille de pointage sur cette photo. Reprenez-la bien à plat, ou saisissez à la main.');
+    dire(''); ouvrirPointageLot(r.lignes, false);
+  } catch (e) {
+    dire(e && e.code === 'rate_limited' ? 'Trop de demandes d’un coup. Réessayez dans une minute.' : e && e.code === 'not_granted' ? 'La lecture de photo a été refusée. Saisissez les jours à la main.' : 'La photo n’a pas pu être lue. Saisissez les jours à la main.');
+  }
+}
+
+/* ---------- Bons de livraison des fournisseurs : une ligne par article, un chantier par ligne, puis regroupement en facture du mois ---------- */
+const blfListe = () => Object.values(S.blf);
+const tvaL = l => l.tva == null || l.tva === '' ? 20 : Number(l.tva);
+const blLigneHT = l => Math.round((Number(l.qte) || 0) * (Number(l.pu) || 0) * 100);
+const blHT = b => (b.lignes || []).reduce((s, l) => s + blLigneHT(l), 0);
+const blTTC = b => (b.lignes || []).reduce((s, l) => s + blLigneHT(l) + Math.round(blLigneHT(l) * tvaL(l) / 100), 0);
+const blARegrouper = foId => blfListe().filter(b => !b.achatId && (!foId || b.fournisseurId === foId)).sort((x, y) => x.date.localeCompare(y.date) || (x.ref || '').localeCompare(y.ref || ''));
+const nomChantier = id => { const a = S.affaires[id]; return a ? a.titre : 'Frais généraux'; };
+/* Part HT d'un bon par chantier : [[affaireId ou '', centimes], …] */
+function blParChantier(bs) {
+  const m = new Map();
+  bs.forEach(b => (b.lignes || []).forEach(l => m.set(l.affaireId || '', (m.get(l.affaireId || '') || 0) + blLigneHT(l))));
+  return [...m.entries()].sort((x, y) => y[1] - x[1]);
+}
+const blChantiersTxt = b => { const c = blParChantier([b]); return c.length === 1 ? nomChantier(c[0][0]) : c.length + ' chantiers'; };
+/* Dernier prix payé pour le même article chez le même fournisseur, avant ce bon. */
+function dernierPrix(foId, designation, avant, saufId) {
+  const k = norm(designation); let best = null;
+  blfListe().forEach(b => {
+    if (b.fournisseurId !== foId || b.id === saufId || (avant && b.date > avant)) return;
+    (b.lignes || []).forEach(l => { if (norm(l.designation) === k && Number(l.pu) > 0 && (!best || b.date > best.date)) best = { pu: Number(l.pu), date: b.date, ref: b.ref }; });
+  });
+  return best;
+}
+function variationPrix(b, l) {
+  const d = dernierPrix(b.fournisseurId, l.designation, b.date, b.id); if (!d) return null;
+  const pct = Math.round((Number(l.pu) - d.pu) / d.pu * 100);
+  return pct ? { avant: d, pct } : null;
+}
+const seuilHausse = () => Number(((S.params.auto || {}).prixHausse || {}).pct) || 10;
+const haussesPrix = b => (b.lignes || []).map(l => { const v = variationPrix(b, l); return v && v.pct >= seuilHausse() ? Object.assign({ l }, v) : null; }).filter(Boolean);
+
+function ligneBLF(b) {
+  const h = haussesPrix(b).length;
+  return `<li><button data-act="blf-ouvrir" data-id="${esc(b.id)}">${ligneIco('bon')}<span><b>${esc(b.ref || 'Bon sans numéro')} · ${esc(nomFournisseur(b.fournisseurId))}</b><small>${fdate(b.date)} · ${esc(blChantiersTxt(b))}</small>${h ? '<small class="rouge">Prix en hausse</small>' : ''}</span><span class="droite"><b>${money(blHT(b))}</b><small>HT</small></span></button></li>`;
+}
+function carteBLARegrouper() {
+  const bs = blARegrouper(); if (!bs.length) return '';
+  const parFo = new Map(); bs.forEach(b => parFo.set(b.fournisseurId, (parFo.get(b.fournisseurId) || []).concat([b])));
+  const boutons = [...parFo.entries()].map(([fo, l]) => `<button class="btn btn-sm" data-act="blf-regrouper" data-id="${esc(fo)}">${esc(nomFournisseur(fo))} : regrouper ${nb(l.length, 'bon')}</button>`).join('');
+  return `<section class="carte"><header class="carte-tete"><h2>Bons de livraison à regrouper en facture</h2><span class="compteur">${bs.length}</span></header>
+    <ul class="liste-simple">${bs.slice().reverse().map(ligneBLF).join('')}</ul>
+    <p class="carte-note">Quand la facture du mois arrive, regroupez les bons du fournisseur : le logiciel compare son total avec celui des bons.</p>
+    <div class="carte-boutons">${boutons}</div></section>`;
+}
+const optionsChantiers = sel => `<option value="">Frais généraux</option>` + affairesListe().filter(a => estChantier(a) || a.id === sel).sort((x, y) => (x.etape === 'chantier' ? 0 : 1) - (y.etape === 'chantier' ? 0 : 1) || (y.numero || '').localeCompare(x.numero || '')).map(a => `<option value="${esc(a.id)}"${a.id === sel ? ' selected' : ''}>${esc(a.titre)}</option>`).join('');
+const ligneFormBLF = l => `<div class="blf-l">
+  <label class="champ blf-des">Désignation<input name="des" list="blf-des-liste" value="${esc(l.designation || '')}" autocomplete="off"></label>
+  <label class="champ">Quantité<input name="qte" type="number" inputmode="decimal" step="0.001" min="0" value="${esc(l.qte == null ? '' : l.qte)}"></label>
+  <label class="champ">Prix unitaire HT<input name="pu" type="number" inputmode="decimal" step="0.01" min="0" value="${esc(l.pu == null ? '' : l.pu)}"></label>
+  <label class="champ blf-tva">TVA %<input name="tva" type="number" inputmode="decimal" step="0.5" min="0" max="100" value="${esc(l.tva == null ? 20 : l.tva)}"></label>
+  <label class="champ blf-ch">Chantier<select name="aff">${optionsChantiers(l.affaireId || '')}</select></label>
+  <button type="button" class="btn-x" data-act="blf-suppr" aria-label="Retirer cette ligne">×</button></div>`;
+function majTotalBLF(form) {
+  let ht = 0, ttc = 0;
+  form.querySelectorAll('.blf-l').forEach(r => { const v = n => Number(r.querySelector(`[name="${n}"]`).value) || 0, h = Math.round(v('qte') * v('pu') * 100); ht += h; ttc += h + Math.round(h * (r.querySelector('[name="tva"]').value === '' ? 20 : v('tva')) / 100); });
+  form.querySelector('.blf-total').innerHTML = `Total HT <b>${money(ht)}</b> · TVA <b>${money(ttc - ht)}</b> · TTC <b>${money(ttc)}</b>`;
+}
+function ouvrirFormBLF(id, affaireId) {
+  const b = S.blf[id] || { id: '', fournisseurId: '', ref: '', date: TODAY, lignes: [{ affaireId }, { affaireId }, { affaireId }] };
+  const fos = fournisseursListe().sort((x, y) => x.nom.localeCompare(y.nom));
+  const connus = [...new Set(blfListe().flatMap(x => (x.lignes || []).map(l => l.designation)))].sort((x, y) => x.localeCompare(y));
+  ouvrirFenetre(id ? 'Modifier le bon de livraison' : 'Nouveau bon de livraison', `<form data-form="blf" data-id="${esc(id || '')}" class="form">
+    <div class="photo-bloc"><div class="photo-boutons"><label class="btn" for="blf-photo">${ico('photo')}Remplir avec une photo</label><input type="file" id="blf-photo" accept="image/*" class="sr"><button type="button" class="btn btn-ghost" data-act="blf-exemple">Voir un exemple</button></div>
+      <p class="carte-note">Photographiez le bon de livraison : le fournisseur, le numéro, la date et toutes les lignes se remplissent. Vous vérifiez, vous choisissez le chantier de chaque ligne, puis vous enregistrez.</p><p class="photo-etat" role="status"></p></div>
+    <label class="champ">Fournisseur<select name="fournisseurId" required>${fos.map(f => `<option value="${esc(f.id)}"${f.id === b.fournisseurId ? ' selected' : ''}>${esc(f.nom)}</option>`).join('')}<option value="__nouveau"${fos.length ? '' : ' selected'}>+ Nouveau fournisseur…</option></select></label>
+    <label class="champ nouveau-fo"${fos.length ? ' hidden' : ''}>Nom du nouveau fournisseur<input name="nouveauNom"></label>
+    <div class="ligne-form"><label class="champ">N° du bon chez le fournisseur<input name="ref" value="${esc(b.ref || '')}" maxlength="40" autocomplete="off"></label>
+    <label class="champ">Date du bon<input name="date" type="date" value="${esc(b.date || TODAY)}" max="${TODAY}" required></label></div>
+    <datalist id="blf-des-liste">${connus.map(c => `<option value="${esc(c)}">`).join('')}</datalist>
+    <div class="blf-lignes">${b.lignes.map(ligneFormBLF).join('')}</div>
+    <div class="carte-boutons"><button type="button" class="btn btn-sm" data-act="blf-ligne">+ Ligne</button></div>
+    <p class="blf-total" role="status"></p>
+    <p class="carte-note">Chaque ligne va sur son chantier. Une ligne sans chantier compte dans les frais généraux.</p>
+    <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Enregistrer le bon</button></div></form>`, true);
+  majTotalBLF($('#fenetre form[data-form="blf"]'));
+}
+function ouvrirBLF(id) {
+  const b = S.blf[id]; if (!b) return;
+  const x = S.achats[b.achatId], rows = (b.lignes || []).map(l => { const v = variationPrix(b, l);
+    return `<tr><td>${esc(l.designation)}${v ? `<small class="${v.pct >= seuilHausse() ? 'rouge' : ''}">${v.pct > 0 ? 'Hausse' : 'Baisse'} de ${Math.abs(v.pct)} % : ${nbr(Math.round(v.avant.pu * 100))} le ${fdate(v.avant.date)}</small>` : ''}</td><td class="num">${esc(String(l.qte).replace('.', ','))}</td><td class="num">${nbr(Math.round(l.pu * 100))}</td><td class="num">${nbr(blLigneHT(l))}</td><td>${esc(nomChantier(l.affaireId))}</td></tr>`; }).join('');
+  const parts = blParChantier([b]).map(([a, c]) => `<li><span>${a ? `<a href="#affaire-${esc(a)}">${esc(nomChantier(a))}</a>` : 'Frais généraux'}</span><b>${money(c)}</b></li>`).join('');
+  ouvrirFenetre(`Bon ${b.ref || 'sans numéro'} · ${nomFournisseur(b.fournisseurId)}`, `
+    <div class="fact-entete">${x ? pill('Facturé', 'ok') : pill('À regrouper', 'info')}<span>${fdate(b.date)} · <b>${money(blHT(b))}</b> HT, ${money(blTTC(b))} TTC</span></div>
+    ${x ? `<p class="detail-resume">Ce bon figure sur la facture ${esc(x.refFacture || '')} : <button class="lien" data-act="achat-ouvrir" data-id="${esc(x.id)}">${esc(x.numero)}</button>.</p>` : ''}
+    <div class="table-scroll"><table class="table table-blf"><thead><tr><th>Désignation</th><th class="num">Qté</th><th class="num">P.U. HT</th><th class="num">Montant HT</th><th>Chantier</th></tr></thead><tbody>${rows}</tbody></table></div>
+    <h3 class="h3 detail-h3">Par chantier (HT)</h3><ul class="paiements">${parts}</ul>
+    ${x ? '' : `<div class="fen-pied"><button class="btn btn-ghost" data-act="blf-supprimer" data-id="${esc(b.id)}">Supprimer</button><button class="btn" data-act="blf-modifier" data-id="${esc(b.id)}">Modifier</button><button class="btn btn-primary" data-act="blf-regrouper" data-id="${esc(b.fournisseurId)}">Regrouper en facture</button></div>`}`, true);
+}
+function majControleRegroupement(form) {
+  const ids = [...form.querySelectorAll('input[name="bl"]:checked')].map(i => i.value), tot = ids.reduce((s, i) => s + blTTC(S.blf[i]), 0);
+  const saisi = form.elements.ttc.value === '' ? null : Math.round(Number(form.elements.ttc.value) * 100), el = form.querySelector('.regroup-ctrl');
+  const ecart = saisi === null ? null : saisi - tot;
+  el.className = 'regroup-ctrl' + (ecart === null ? '' : ecart === 0 ? ' ok' : ' alerte');
+  el.innerHTML = `Total des ${nb(ids.length, 'bon')} coché${ids.length > 1 ? 's' : ''} : <b>${money(tot)}</b> TTC.` + (ecart === null ? '' : ecart === 0 ? ' La facture dit la même chose.' : ` La facture dit <b>${money(saisi)}</b> : écart de <b>${money(Math.abs(ecart))}</b>${ecart > 0 ? ' en plus. Il manque peut-être un bon, ou un prix a changé.' : ' en moins. Un bon coché n’est peut-être pas sur cette facture.'}`);
+  return { ids, tot, ecart };
+}
+function ouvrirRegroupement(foId) {
+  const fo = S.fournisseurs[foId], bs = blARegrouper(foId); if (!fo) return;
+  if (!bs.length) { toast('Aucun bon de livraison à regrouper pour ce fournisseur.'); return; }
+  const delai = fo.delai !== '' && fo.delai != null ? Number(fo.delai) : 60;
+  ouvrirFenetre(`Facture de ${fo.nom}`, `<form data-form="blf-regrouper" data-id="${esc(foId)}" class="form">
+    <p>Cochez les bons de livraison qui figurent sur la facture, puis recopiez son numéro et son total.</p>
+    <ul class="liste-coche">${bs.map(b => `<li><label><input type="checkbox" name="bl" value="${esc(b.id)}" checked><span><b>${esc(b.ref || 'Bon sans numéro')}</b><small>${fdate(b.date)} · ${esc(blChantiersTxt(b))}</small></span><b>${money(blTTC(b))}</b></label></li>`).join('')}</ul>
+    <div class="ligne-form"><label class="champ">N° de la facture<input name="refFacture" required maxlength="40" autocomplete="off"></label>
+    <label class="champ">Date de la facture<input name="dateFacture" type="date" value="${TODAY}" required></label>
+    <label class="champ">Échéance<input name="echeance" type="date" value="${addDaysISO(TODAY, delai)}" required></label></div>
+    <label class="champ">Total TTC écrit sur la facture (DH)<input name="ttc" type="number" inputmode="decimal" step="0.01" min="0.01" required></label>
+    <p class="regroup-ctrl" role="status"></p>
+    <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Créer la facture à payer</button></div></form>`);
+  majControleRegroupement($('#fenetre form[data-form="blf-regrouper"]'));
+}
+/* Lecture d'un bon de livraison par photo : fournisseur, numéro, date et lignes. Rien n'est enregistré avant vérification. */
+const INVITE_PHOTO_BL = () => `Tu lis la photo d'un bon de livraison (ou d'une facture) reçu d'un fournisseur par une entreprise d'électricité marocaine.
+Réponds uniquement par un objet JSON, sans texte autour, avec exactement ces clés :
+{"fournisseur": "nom du fournisseur", "numero": "numéro du document", "date": "AAAA-MM-JJ", "chantier": "nom du chantier ou du client écrit sur le document, sinon chaîne vide", "lignes": [{"designation": "texte de la ligne", "qte": nombre, "pu": nombre (prix unitaire hors taxes en dirhams), "tva": nombre (taux en %)}], "lisible": true | false}
+Chantiers en cours, pour reconnaître celui du document : ${affairesListe().filter(estChantier).map(a => a.titre).join(' ; ') || 'aucun'}.
+Règles : ne devine jamais. Une valeur illisible vaut "" pour un texte et null pour un nombre. Recopie les lignes dans l'ordre, sans en inventer. Si la photo n'est pas un document de ce genre, mets "lisible": false.`;
+const EXEMPLE_PHOTO_BL = { fournisseur: 'Comptoir Électrique Atlas', numero: 'BL-45102', date: '', chantier: '', lisible: true, lignes: [{ designation: 'Disjoncteur 16 A courbe C', qte: 20, pu: 44, tva: 20 }, { designation: 'Interrupteur différentiel 40 A 30 mA', qte: 2, pu: 415, tva: 20 }, { designation: 'Boîte de dérivation étanche', qte: 15, pu: 12.5, tva: 20 }] };
+function remplirBLF(form, r) {
+  const el = form.elements, txt = v => (typeof v === 'string' ? v : '').trim().slice(0, 140), num = v => typeof v === 'number' && isFinite(v) && v >= 0 ? v : null, remplis = [];
+  const nomFo = txt(r.fournisseur);
+  if (nomFo) {
+    const trouve = fournisseursListe().find(f => norm(f.nom) === norm(nomFo) || norm(f.nom).includes(norm(nomFo)) || norm(nomFo).includes(norm(f.nom)));
+    el.fournisseurId.value = trouve ? trouve.id : '__nouveau';
+    const b = form.querySelector('.nouveau-fo'); b.hidden = !!trouve; b.querySelector('input').required = !trouve; if (!trouve) el.nouveauNom.value = nomFo;
+    remplis.push('fournisseur');
+  }
+  if (txt(r.numero)) { el.ref.value = txt(r.numero).slice(0, 40); remplis.push('numéro'); }
+  if (/^\d{4}-\d{2}-\d{2}$/.test(r.date || '') && r.date <= TODAY) { el.date.value = r.date; remplis.push('date'); }
+  const ch = txt(r.chantier), aff = ch ? affairesListe().filter(estChantier).find(a => norm(a.titre).includes(norm(ch)) || norm(ch).includes(norm(a.titre)) || norm(nomClient(a.clientId)).includes(norm(ch))) : null;
+  const lignes = (Array.isArray(r.lignes) ? r.lignes : []).slice(0, 40).map(l => ({ designation: txt(l && l.designation), qte: num(l && l.qte), pu: num(l && l.pu), tva: num(l && l.tva) === null ? 20 : l.tva, affaireId: aff ? aff.id : '' })).filter(l => l.designation);
+  if (lignes.length) { form.querySelector('.blf-lignes').innerHTML = lignes.map(ligneFormBLF).join(''); remplis.push(nb(lignes.length, 'ligne')); if (aff) remplis.push('chantier proposé'); }
+  majTotalBLF(form);
+  return remplis;
+}
+async function lirePhotoBLF(input, exemple) {
+  const form = input.closest('form'), etat = form.querySelector('.photo-etat'), f = input.files && input.files[0];
+  const dire = (t, cls) => { etat.textContent = t; etat.className = 'photo-etat' + (cls ? ' ' + cls : ''); };
+  if (exemple) { const r = remplirBLF(form, Object.assign({}, EXEMPLE_PHOTO_BL, { date: addDaysISO(TODAY, -1) })); return dire(`Exemple : voilà ce qu’une photo remplit (${r.join(', ')}). Choisissez le chantier de chaque ligne, vérifiez, puis enregistrez.`, 'ok'); }
+  if (!f) return;
+  if (!ia) return dire('La lecture de photo marche quand la maquette est ouverte dans Claude. Ici, essayez « Voir un exemple ».');
+  dire('Lecture de la photo…');
+  try {
+    const lim = typeof ia.limits === 'function' ? await ia.limits() : {};
+    if (!lim || !lim.images) return dire('La lecture de photo n’est pas disponible ici. Remplissez les lignes à la main, ou essayez « Voir un exemple ».');
+    const r = await ia.json(INVITE_PHOTO_BL(), { images: [await reduireImage(f, 2000)], modelTier: 'default', cache: false });
+    if (!r || typeof r !== 'object' || r.lisible === false) return dire('Je n’ai pas reconnu de bon de livraison sur cette photo. Reprenez-la bien à plat, ou remplissez à la main.');
+    const remplis = remplirBLF(form, r);
+    dire(remplis.length ? `Rempli d’après la photo : ${remplis.join(', ')}. Vérifiez chaque ligne et son chantier avant d’enregistrer.` : 'Rien de lisible sur cette photo. Remplissez les lignes à la main.', remplis.length ? 'ok' : '');
+  } catch (e) {
+    dire(e && e.code === 'rate_limited' ? 'Trop de demandes d’un coup. Réessayez dans une minute.' : e && e.code === 'not_granted' ? 'La lecture de photo a été refusée. Remplissez les lignes à la main.' : 'La photo n’a pas pu être lue. Remplissez les lignes à la main.');
+  }
+}
+
+/* ---------- Payer un fournisseur : attestation de régularité fiscale et ordre de virement ---------- */
+/* L'attestation vaut 6 mois. Sans elle, la TVA peut devoir être retenue à la source : le logiciel prévient, le comptable tranche. */
+const finAttestation = iso => { const d = new Date(iso + 'T00:00:00Z'); d.setUTCMonth(d.getUTCMonth() + 6); return d.toISOString().slice(0, 10); };
+function etatAttestation(fo) {
+  if (!fo || !fo.attestation) return { k: 'absente', ton: 'bad', txt: 'Attestation de régularité fiscale jamais reçue' };
+  const fin = finAttestation(fo.attestation), n = daysBetween(TODAY, fin);
+  if (n < 0) return { k: 'perimee', ton: 'bad', txt: `Attestation de régularité fiscale périmée depuis le ${fdate(fin)}` };
+  return { k: n <= 30 ? 'bientot' : 'ok', ton: n <= 30 ? 'warn' : 'ok', txt: `Attestation de régularité fiscale valable jusqu’au ${fdate(fin)}` };
+}
+const attManque = fo => ['absente', 'perimee'].includes(etatAttestation(fo).k);
+const ETAT_ORDRE = { prepare: ['Préparé', 'neutral'], depose: ['Déposé à la banque', 'info'], debite: ['Débité', 'ok'] };
+const ordresEnCours = x => (x.ordres || []).filter(o => o.etat !== 'debite').reduce((s, o) => s + Math.round(Number(o.montant) * 100), 0);
+function blocAttestation(fo, sansLien) {
+  const e = etatAttestation(fo);
+  return `<p class="alerte-att att-${e.ton}">${ico(e.ton === 'ok' ? 'coche' : 'cloche')}<span><b>${e.txt}.</b>${attManque(fo) ? ' Demandez-la au fournisseur avant de payer : sans attestation de moins de 6 mois, la TVA peut devoir être retenue. Voyez avec le comptable.' : ''}${sansLien ? '' : ` <button class="lien" data-act="fournisseur-ouvrir" data-id="${esc(fo.id)}">${attManque(fo) ? 'Noter l’attestation reçue' : 'Voir la fiche'}</button>`}</span></p>`;
+}
+function blocOrdres(x, reste) {
+  const libre = reste - ordresEnCours(x);
+  const lignes = (x.ordres || []).map(o => { const st = ETAT_ORDRE[o.etat] || ETAT_ORDRE.prepare;
+    const suite = o.etat === 'prepare' ? `<button class="btn btn-sm" data-act="ordre-etat" data-id="${esc(x.id)}" data-o="${esc(o.id)}" data-e="depose">Déposé à la banque</button>` : o.etat === 'depose' ? `<button class="btn btn-sm btn-primary" data-act="ordre-etat" data-id="${esc(x.id)}" data-o="${esc(o.id)}" data-e="debite">Débité sur le compte</button>` : '';
+    return `<li class="ordre"><span><b>${money(Math.round(o.montant * 100))}</b><small>ordre du ${fdate(o.date)}${o.depot ? ' · déposé le ' + fdate(o.depot) : ''}${o.debit ? ' · débité le ' + fdate(o.debit) : ''}</small></span>${pill(st[0], st[1])}<span class="ordre-btns"><button class="btn btn-sm btn-ghost" data-act="ordre-voir" data-id="${esc(x.id)}" data-o="${esc(o.id)}">Voir</button>${suite}${o.etat === 'prepare' ? `<button class="btn btn-sm btn-ghost" data-act="ordre-annuler" data-id="${esc(x.id)}" data-o="${esc(o.id)}">Annuler</button>` : ''}</span></li>`; }).join('');
+  return `<section><h3 class="h3">Ordres de virement</h3>${lignes ? `<ul class="ordres">${lignes}</ul>` : ''}
+    ${libre > 0 ? `<form class="form-paie" data-form="ordre" data-id="${esc(x.id)}"><p class="carte-note">Le logiciel prépare la lettre pour la banque : fournisseur, RIB, montant en chiffres et en lettres. Vous la signez et la déposez.</p>
+      <div class="ligne-form"><label class="champ">Montant (DH)<input name="montant" type="number" inputmode="decimal" step="0.01" min="0.01" max="${(libre / 100).toFixed(2)}" value="${(libre / 100).toFixed(2)}" required></label>
+      <label class="champ">Date de l’ordre<input name="date" type="date" value="${TODAY}" required></label></div>
+      <button class="btn btn-primary" type="submit">Préparer l’ordre de virement</button></form>` : lignes ? '<p class="carte-note">Tout le reste à payer est couvert par les ordres ci-dessus.</p>' : ''}</section>`;
+}
+function texteOrdre(x, o) {
+  const soc = S.params.societe, fo = S.fournisseurs[x.fournisseurId] || {}, m = Math.round(Number(o.montant) * 100), vide = '……………………………………';
+  return { soc, fo, m, date: o.date,
+    banque: soc.banque || vide, compte: soc.rib || vide,
+    lignes: [['Bénéficiaire', fo.nom || vide], ['Banque du bénéficiaire', fo.banque || vide], ['RIB du bénéficiaire', fo.rib || vide],
+      ['Montant en chiffres', nbr(m) + ' DH'], ['Montant en lettres', enLettres(m).replace(/^./, c => c.toUpperCase())],
+      ['Motif', 'Règlement de la facture n° ' + (x.refFacture || vide) + (x.dateFacture ? ' du ' + jma(x.dateFacture) : '')]] };
+}
+function ouvrirOrdre(achatId, ordreId) {
+  const x = S.achats[achatId], o = x && (x.ordres || []).find(y => y.id === ordreId); if (!o) return;
+  const t = texteOrdre(x, o), logo = (S.params.logo || {}).data;
+  ouvrirFenetre('Ordre de virement · ' + nomFournisseur(x.fournisseurId), `<p><button class="lien retour-detail" data-act="achat-ouvrir" data-id="${esc(x.id)}">${ico('gauche')}Retour à la facture ${esc(x.numero)}</button></p>
+    <article class="doc lettre">${t.soc.mentionTest ? '<div class="doc-fil" aria-hidden="true">TEST · SANS VALEUR</div>' : ''}
+      <header class="lettre-tete">${logo ? `<img class="doc-logo-img" src="${esc(logo)}" alt="${esc(t.soc.nom)}">` : `<b>${esc(t.soc.nom)}</b>`}<p>Casablanca, le ${jma(t.date)}</p></header>
+      <p class="lettre-dest">À l’attention de : <b>${esc(t.banque)}</b></p>
+      <h3 class="lettre-titre">Ordre de virement</h3>
+      <p>Par le débit de notre compte n° <b>${esc(t.compte)}</b>, nous vous prions de bien vouloir effectuer le virement suivant :</p>
+      <dl class="lettre-dl">${t.lignes.map(([k, v]) => `<div><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join('')}</dl>
+      <div class="lettre-bas"><div><b>Signature et cachet</b></div><div><b>Accusé de réception de la banque</b><span>Reçu le :</span></div></div>
+      <footer class="doc-pied">${piedSociete(t.soc).map(l => `<p>${esc(l)}</p>`).join('')}</footer></article>
+    ${t.soc.rib ? '' : '<p class="carte-note">La banque et le RIB d’Electropack se saisissent une fois dans « Réglages ». Tant qu’ils sont vides, la lettre laisse des pointillés.</p>'}
+    <div class="fen-pied"><button class="btn btn-primary" data-act="ordre-pdf" data-id="${esc(x.id)}" data-o="${esc(o.id)}">Télécharger le PDF</button></div>`, true);
+}
+/* PDF d'une lettre simple (ordre de virement, feuille de virements) : en-tête, texte, lignes ou tableau, signatures, pied. */
+function pdfLettre(jsPDF, L) {
+  const soc = S.params.societe, doc = new jsPDF({ unit: 'mm', format: 'a4' }), M = 20, R = 190, H = 297, INK = [22, 26, 38], MUTED = [96, 104, 120], NAVY = [18, 41, 77];
+  const logo = S.params.logo || {}; let y = 16;
+  if (logo.data && logo.w && logo.h) { try { const k = Math.min(18 / logo.h, 46 / logo.w); doc.addImage(logo.data, /^data:image\/png/.test(logo.data) ? 'PNG' : 'JPEG', M, y, logo.w * k, logo.h * k); } catch (e) { /* sans logo */ } }
+  else { doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.setTextColor(...NAVY); doc.text(pt(soc.nom), M, y + 8); }
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10); doc.setTextColor(...INK); doc.text(pt('Casablanca, le ' + jma(L.date)), R, y + 6, { align: 'right' });
+  y = 48;
+  if (L.dest) { doc.text(pt('À l’attention de : '), M, y); doc.setFont('helvetica', 'bold'); doc.text(pt(L.dest), M + doc.getTextWidth(pt('À l’attention de : ')) + 1, y); y += 12; }
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.text(pt(L.titre.toUpperCase()), 105, y, { align: 'center' }); y += 11;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+  (L.intro || []).forEach(p => { const l = doc.splitTextToSize(pt(p), R - M); doc.text(l, M, y); y += l.length * 5 + 3; });
+  (L.lignes || []).forEach(([k, v]) => { doc.setFont('helvetica', 'normal'); doc.setTextColor(...MUTED); doc.text(pt(k), M, y); doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); const l = doc.splitTextToSize(pt(v), R - M - 52); doc.text(l, M + 52, y); y += l.length * 5 + 3.5; });
+  if (L.table) {
+    doc.autoTable({ startY: y + 2, margin: { left: M, right: 210 - R, bottom: 30 }, head: [L.table.head], body: L.table.body.map(r => r.map(pt)), foot: L.table.foot ? [L.table.foot.map(pt)] : undefined, theme: 'grid',
+      styles: { font: 'helvetica', fontSize: 9.5, cellPadding: 2.2, textColor: INK, lineColor: [44, 48, 58], lineWidth: 0.2 }, headStyles: { fillColor: [236, 236, 236], textColor: INK, fontStyle: 'bold' }, footStyles: { fillColor: [236, 236, 236], textColor: INK, fontStyle: 'bold' },
+      columnStyles: L.table.cols || {}, didParseCell: d => { if (d.section !== 'body' && L.table.cols && L.table.cols[d.column.index] && L.table.cols[d.column.index].halign) d.cell.styles.halign = L.table.cols[d.column.index].halign; } });
+    y = doc.lastAutoTable.finalY + 8;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(10);
+    (L.apres || []).forEach(p => { const l = doc.splitTextToSize(pt(p), R - M); doc.text(l, M, y); y += l.length * 5 + 3; });
+  }
+  if (y > H - 80) { doc.addPage(); y = 24; }
+  y += 8; doc.setDrawColor(44, 48, 58); doc.setLineWidth(0.3);
+  doc.roundedRect(M, y, 80, 34, 2, 2, 'S'); doc.roundedRect(R - 80, y, 80, 34, 2, 2, 'S');
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.text('Signature et cachet', M + 4, y + 6.5); doc.text(pt('Accusé de réception de la banque'), R - 76, y + 6.5);
+  doc.setFont('helvetica', 'normal'); doc.setTextColor(...MUTED); doc.text(pt('Reçu le :'), R - 76, y + 13);
+  const n = doc.getNumberOfPages(), pied = piedSociete(soc).map(pt);
+  for (let i = 1; i <= n; i++) {
+    doc.setPage(i);
+    if (soc.mentionTest) { doc.saveGraphicsState(); doc.setGState(new doc.GState({ opacity: 0.12 })); doc.setTextColor(190, 51, 40); doc.setFont('helvetica', 'bold'); doc.setFontSize(46); const w = doc.getTextWidth('DOCUMENT DE TEST'), ang = 28 * Math.PI / 180; doc.text('DOCUMENT DE TEST', 105 - Math.cos(ang) * w / 2, 165 + Math.sin(ang) * w / 2, { angle: 28 }); doc.restoreGraphicsState(); }
+    doc.setFont('helvetica', 'bold'); doc.setTextColor(...NAVY);
+    pied.forEach((l, k) => { let fs = 8; doc.setFontSize(fs); while (doc.getTextWidth(l) > 180 && fs > 6) { fs -= 0.3; doc.setFontSize(fs); } doc.text(l, 105, H - 16 + k * 4, { align: 'center' }); });
+  }
+  return doc;
+}
+/* Un PDF s'enregistre par Claude quand la maquette y est ouverte, sinon par le navigateur (lien de démonstration). */
+const pdfPossible = () => !!dl || !window.claude;
+async function enregistrerPDF(doc, nom) {
+  if (dl) { await dl.save({ filename: nom, data: doc.output('blob') }); return true; }
+  if (!window.claude) { doc.save(nom); return true; }
+  return false;
+}
+async function telechargerLettre(construire, nom, btn) {
+  const lib = btn ? btn.textContent : '';
+  if (btn) { btn.disabled = true; btn.textContent = 'Préparation…'; }
+  try { const jsPDF = await chargerPdf(); toast(await enregistrerPDF(construire(jsPDF), nom.replace(/[\\/:*?"<>|]/g, '')) ? 'PDF enregistré.' : 'Le téléchargement n’est pas disponible ici.'); }
+  catch (e) { if (!(e && e.code === 'declined')) toast('Le PDF n’a pas pu être créé. Vérifiez la connexion puis réessayez.'); }
+  finally { if (btn && btn.isConnected) { btn.disabled = false; btn.textContent = lib; } }
+}
 
 /* ---------- Saisie par photo : la photo d'une facture ou d'un bon de fournisseur remplit le formulaire d'achat ---------- */
 const INVITE_PHOTO = `Tu lis la photo d'un document reçu d'un fournisseur par une entreprise d'électricité marocaine (facture, bon de commande, devis ou bon de livraison).
@@ -3216,7 +3722,7 @@ Object.assign(ACTIONS, {
   'envoyer-devis': () => { const a = affaireCourante(); if (!a || !a.lignes.length) return; ouvrirMessage('envoi', { a, c: S.clients[a.clientId] }, { envoiDevis: a.id }); },
   'relancer-devis': () => { const a = affaireCourante(); if (a) ouvrirMessage('devis1', { a, c: S.clients[a.clientId] }, {}); },
   'relancer-facture': el => { const f = S.factures[el.dataset.id]; if (!f) return; const t = TACHES['fact3_' + f.id] || TACHES['fact2_' + f.id] || TACHES['fact1_' + f.id]; ouvrirMessage(t ? t.msg : 'fact1', { f, a: S.affaires[f.affaireId], c: S.clients[f.clientId] }, t ? { tache: t.key } : {}); },
-  'apercu-devis': () => { const a = affaireCourante(); if (!a) return; if (!a.numero) a.numero = nextNumero('D', 'affaires'); ouvrirFenetre('Aperçu du devis ' + a.numero, (dl ? `<div class="fen-pied fen-pied-haut"><button class="btn btn-primary" data-act="pdf" data-kind="devis" data-id="${a.id}">Télécharger le PDF</button></div>` : '') + documentHTML('devis', a), true); },
+  'apercu-devis': () => { const a = affaireCourante(); if (!a) return; if (!a.numero) a.numero = nextNumero('D', 'affaires'); ouvrirFenetre('Aperçu du devis ' + a.numero, (pdfPossible() ? `<div class="fen-pied fen-pied-haut"><button class="btn btn-primary" data-act="pdf" data-kind="devis" data-id="${a.id}">Télécharger le PDF</button></div>` : '') + documentHTML('devis', a), true); },
   'creer-acompte': () => { const a = affaireCourante(); if (!a) return; const f = creerAcompte(a, false); rendre(true); ouvrirFacture(f.id); },
   'creer-solde': () => { const a = affaireCourante(); if (!a) return; const f = creerSolde(a); rendre(true); ouvrirFacture(f.id); },
   'ouvrir-facture': el => ouvrirFacture(el.dataset.id),
@@ -3274,23 +3780,63 @@ Object.assign(ACTIONS, {
   'demandes-copier': async () => { try { await navigator.clipboard.writeText(texteDemandes()); toast('Demandes copiées.'); } catch (e) { toast('Copie impossible ici. Sélectionnez le texte à la main.'); } },
   'exemples-charger': el => reinitialiserDemo(el),
   'exemples-ajouter': async el => {
-    const D = buildDemo(TODAY), ops = [];
-    ['fournisseurs', 'achats', 'heures', 'employes', 'pointages'].forEach(k => D[k].forEach(o => { if (!S[k][o.id]) ops.push([k, o]); }));
+    const D = buildDemo(TODAY), ops = [], dels = [];
+    /* On ajoute ce qui manque. Sur une fiche d'exemple déjà là, on complète seulement les cases nouvelles : ce qui a été saisi reste. */
+    ['fournisseurs', 'achats', 'heures', 'employes', 'pointages', 'blf', 'clients'].forEach(k => D[k].forEach(o => {
+      const cur = S[k][o.id];
+      if (!cur) { if (k !== 'clients') ops.push([k, o]); }
+      else if (['fournisseurs', 'employes', 'clients'].includes(k) && Object.keys(o).some(f => cur[f] === undefined)) ops.push([k, Object.assign({}, o, cur)]);
+    }));
+    D.factures.forEach(o => { const cur = S.factures[o.id]; if (!cur) return; let change = false;
+      (cur.paiements || []).forEach((p, i) => { const q = (o.paiements || [])[i]; if (q && q.cheque && p.mode === 'Chèque' && p.remis === undefined) { p.cheque = q.cheque; p.remis = q.remis; change = true; } });
+      if (change) ops.push(['factures', cur]); });
+    /* Anciens exemples remplacés : jours saisis au mois, et heures du chantier en cours reprises par le pointage. */
+    Object.keys(S.pointages).forEach(id => { if (/^em0\d_\d{4}-\d{2}$/.test(id)) dels.push(['pointages', id]); });
+    ['hr01', 'hr02', 'hr03', 'hr04', 'hr05'].forEach(id => { if (S.heures[id] && !D.heures.some(h => h.id === id)) dels.push(['heures', id]); });
     el.disabled = true; enReset = true; let n = 0;
     try {
       for (const [k, o] of ops) { if (mode === 'db') await ecrireSur(k + '/' + o.id, clone(o)); S[k][o.id] = o; n++; if (el.isConnected) el.textContent = `Ajout… ${n} / ${ops.length}`; }
+      dels.forEach(([k, id]) => supprimerDoc(k, id));
       S.params.exemples = { version: EXEMPLES_VERSION }; persistParam('exemples'); toast('Exemples ajoutés.');
     } catch (e) { toast(`Ajout interrompu (${n} sur ${ops.length}). Réessayez dans une minute.`); }
     enReset = false; rendre(true);
   },
-  'emp-mois': el => { UI.empMois = moisDecale(UI.empMois || TODAY.slice(0, 7), Number(el.dataset.v)); if (UI.empMois > TODAY.slice(0, 7)) UI.empMois = TODAY.slice(0, 7); rendre(true); },
+  'emp-per': el => { UI.empPer = perDecale(perCourante(), Number(el.dataset.v)); if (UI.empPer > quinzaineDe(TODAY)) UI.empPer = quinzaineDe(TODAY); rendre(true); },
   'employe-nouveau': () => ouvrirEmploye(''),
   'employe-ouvrir': el => ouvrirEmploye(el.dataset.id),
   'pointage-ouvrir': el => ouvrirPointage(el.dataset.id),
   'etat-paie': () => ouvrirEtatPaie(),
-  'etat-paie-copier': async () => { try { await navigator.clipboard.writeText(tsvEtatPaie(UI.empMois || TODAY.slice(0, 7), '\t')); toast('Tableau copié : collez-le dans Excel ou dans un e-mail.'); } catch (e) { toast('Copie impossible ici. Utilisez « Télécharger pour Excel ».'); } },
+  'cheques-bordereau': () => ouvrirBordereau(),
+  'cheques-copier': async () => { try { await navigator.clipboard.writeText(enTSV(TETE_BORDEREAU, lignesBordereau(), '\t')); toast('Tableau copié.'); } catch (e) { toast('Copie impossible ici. Utilisez « Télécharger le PDF ».'); } },
+  'cheques-pdf': el => {
+    const cs = chequesARemettre(), total = cs.reduce((t, x) => t + centimes(x.p), 0), soc = S.params.societe, vide = '……………………………………';
+    telechargerLettre(jsPDF => pdfLettre(jsPDF, { date: TODAY, dest: soc.banque || vide, titre: 'Bordereau de remise de chèques', intro: ['Veuillez créditer notre compte n° ' + (soc.rib || vide) + ' du montant des chèques suivants :'],
+      table: { head: TETE_BORDEREAU, body: lignesBordereau(), foot: ['Total', '', '', '', '', nbr(total)], cols: { 5: { halign: 'right' } } }, apres: ['Arrêté le présent bordereau à la somme de : ' + enLettres(total) + '.'] }), `Remise de chèques ${TODAY}.pdf`, el);
+  },
+  'cheques-remis': el => {
+    const cs = chequesARemettre(); if (!cs.length) return;
+    if (el.dataset.sur !== '1') { el.dataset.sur = '1'; el.textContent = `Confirmer : ${cs.length} chèque${cs.length > 1 ? 's' : ''} remis aujourd’hui`; return; }
+    const fs = new Set(); cs.forEach(({ f, p }) => { p.remis = TODAY; fs.add(f); }); fs.forEach(f => persist('factures', f));
+    fermerFenetre(); toast(`${nb(cs.length, 'chèque')} noté${cs.length > 1 ? 's' : ''} comme remis en banque.`); rendre(true);
+  },
+  'pointage-exemple': el => lirePhotoPointage(null, true),
+  'virements-paie': () => ouvrirVirementsPaie(),
+  'virements-copier': async () => { const v = virementsPaie(perCourante()); try { await navigator.clipboard.writeText(enTSV(['Bénéficiaire', 'Banque', 'RIB', 'Montant (DH)'], v.avec.map(x => [x.emp.nom, x.emp.banque || '', x.emp.rib, (x.reste / 100).toFixed(2).replace('.', ',')]), '\t')); toast('Tableau copié : collez-le dans Excel ou sur le site de la banque.'); } catch (e) { toast('Copie impossible ici. Utilisez « Télécharger le PDF ».'); } },
+  'virements-pdf': el => {
+    const per = perCourante(), v = virementsPaie(per), soc = S.params.societe, vide = '……………………………………';
+    telechargerLettre(jsPDF => pdfLettre(jsPDF, { date: TODAY, dest: soc.banque || vide, titre: 'Ordre de virements des salaires', intro: ['Par le débit de notre compte n° ' + (soc.rib || vide) + ', nous vous prions de bien vouloir effectuer les virements suivants, pour la ' + perLong(per) + ' :'],
+      table: { head: ['Bénéficiaire', 'Banque', 'RIB', 'Montant (DH)'], body: v.avec.map(x => [x.emp.nom, x.emp.banque || '', x.emp.rib, nbr(x.reste)]), foot: ['Total', '', '', nbr(v.total)], cols: { 3: { halign: 'right' } } },
+      apres: ['Arrêté le présent ordre à la somme de : ' + enLettres(v.total) + '.'] }), `Virements des salaires ${per}.pdf`, el);
+  },
+  'virements-verses': el => {
+    const per = perCourante(), v = virementsPaie(per); if (!v.avec.length) return;
+    if (el.dataset.sur !== '1') { el.dataset.sur = '1'; el.textContent = `Confirmer : ${v.avec.length} virement${v.avec.length > 1 ? 's' : ''} versé${v.avec.length > 1 ? 's' : ''} aujourd’hui`; return; }
+    v.avec.forEach(x => { x.p.paye = { date: TODAY, mode: 'Virement' }; persist('pointages', x.p); });
+    fermerFenetre(); toast(`${nb(v.avec.length, 'virement')} noté${v.avec.length > 1 ? 's' : ''} comme versé${v.avec.length > 1 ? 's' : ''}.`); rendre(true);
+  },
+  'etat-paie-copier': async () => { try { await navigator.clipboard.writeText(tsvEtatPaie(perCourante().slice(0, 7), '\t')); toast('Tableau copié : collez-le dans Excel ou dans un e-mail.'); } catch (e) { toast('Copie impossible ici. Utilisez « Télécharger pour Excel ».'); } },
   'etat-paie-csv': async () => {
-    const mois = UI.empMois || TODAY.slice(0, 7), nom = `etat-paie-${mois}.csv`, blob = new Blob(['\ufeff' + tsvEtatPaie(mois, ';')], { type: 'text/csv;charset=utf-8' });
+    const mois = perCourante().slice(0, 7), nom = `etat-paie-${mois}.csv`, blob = new Blob(['\ufeff' + tsvEtatPaie(mois, ';')], { type: 'text/csv;charset=utf-8' });
     try {
       if (dl) await dl.save({ filename: nom, data: blob });
       else { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nom; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
@@ -3303,6 +3849,32 @@ Object.assign(ACTIONS, {
   'aller-achats': el => { UI.achFiltre = el.dataset.v || 'toutes'; fermerFenetre(); if (location.hash === '#achats') { rendre(true); window.scrollTo(0, 0); } else location.hash = 'achats'; },
   'achat-nouveau': el => ouvrirNouvelAchat(el.dataset.affaire || ''),
   'achat-ouvrir': el => ouvrirAchat(el.dataset.id),
+  'blf-nouveau': el => ouvrirFormBLF('', el.dataset.affaire || ''),
+  'blf-ouvrir': el => ouvrirBLF(el.dataset.id),
+  'blf-modifier': el => ouvrirFormBLF(el.dataset.id),
+  'blf-supprimer': el => { const b = S.blf[el.dataset.id]; if (!b || b.achatId) return; if (el.dataset.sur !== '1') { el.dataset.sur = '1'; el.textContent = 'Confirmer la suppression'; return; } supprimerDoc('blf', b.id); fermerFenetre(); toast('Bon de livraison supprimé.'); rendre(true); },
+  'blf-regrouper': el => ouvrirRegroupement(el.dataset.id),
+  'blf-ligne': el => { const f = el.closest('form'), rows = f.querySelectorAll('.blf-l'), dernier = rows.length ? rows[rows.length - 1].querySelector('[name="aff"]').value : ''; f.querySelector('.blf-lignes').insertAdjacentHTML('beforeend', ligneFormBLF({ affaireId: dernier })); const n = f.querySelectorAll('.blf-l'); n[n.length - 1].querySelector('input').focus(); },
+  'blf-suppr': el => { const f = el.closest('form'); if (f.querySelectorAll('.blf-l').length > 1) el.closest('.blf-l').remove(); else el.closest('.blf-l').querySelectorAll('input').forEach(i => { if (i.name !== 'tva') i.value = ''; }); majTotalBLF(f); },
+  'blf-exemple': el => lirePhotoBLF(el, true),
+  'ordre-voir': el => ouvrirOrdre(el.dataset.id, el.dataset.o),
+  'ordre-annuler': el => { const x = S.achats[el.dataset.id]; if (!x) return; x.ordres = (x.ordres || []).filter(o => o.id !== el.dataset.o || o.etat !== 'prepare'); persist('achats', x); rendre(true); ouvrirAchat(x.id); },
+  'ordre-etat': el => {
+    const x = S.achats[el.dataset.id], o = x && (x.ordres || []).find(y => y.id === el.dataset.o); if (!o) return;
+    if (el.dataset.e === 'depose' && o.etat === 'prepare') { o.etat = 'depose'; o.depot = TODAY; toast('Ordre noté comme déposé à la banque.'); }
+    else if (el.dataset.e === 'debite' && o.etat === 'depose') {
+      const m = Math.min(Math.round(o.montant * 100), achReste(x)) / 100, a = S.affaires[x.affaireId];
+      o.etat = 'debite'; o.debit = TODAY;
+      if (m > 0) x.paiements = (x.paiements || []).concat([{ date: TODAY, montant: m, mode: 'Virement' }]);
+      log(a ? a.clientId : '', a ? a.id : '', 'systeme', `Virement de ${money(Math.round(m * 100))} à ${nomFournisseur(x.fournisseurId)} débité (${x.numero}).`);
+      toast(achReste(x) <= 0 ? `${x.numero} est payé.` : 'Virement noté comme débité.');
+    }
+    persist('achats', x); rendre(true); ouvrirAchat(x.id);
+  },
+  'ordre-pdf': el => {
+    const x = S.achats[el.dataset.id], o = x && (x.ordres || []).find(y => y.id === el.dataset.o); if (!o) return; const t = texteOrdre(x, o);
+    telechargerLettre(jsPDF => pdfLettre(jsPDF, { date: t.date, dest: t.banque, titre: 'Ordre de virement', intro: ['Par le débit de notre compte n° ' + t.compte + ', nous vous prions de bien vouloir effectuer le virement suivant :'], lignes: t.lignes }), `Ordre de virement ${nomFournisseur(x.fournisseurId)} ${x.refFacture || x.numero}.pdf`, el);
+  },
   'fournisseur-nouveau': () => ouvrirFournisseur(''),
   'fournisseur-ouvrir': el => ouvrirFournisseur(el.dataset.id),
   'heures-ouvrir': el => ouvrirHeures(el.dataset.id),
@@ -3367,22 +3939,35 @@ const FORMS = {
   },
   pointage: (fd, form) => {
     const emp = S.employes[form.dataset.id]; if (!emp) return;
-    const mois = UI.empMois || TODAY.slice(0, 7), ancien = pointageDe(emp.id, mois);
-    const p = Object.assign({ id: emp.id + '_' + mois, employeId: emp.id, mois, paye: null }, ancien || {}, { jours: Math.max(0, Math.min(31, Number(fd.get('jours')) || 0)), primes: Math.max(0, Number(fd.get('primes')) || 0), avances: Math.max(0, Number(fd.get('avances')) || 0), note: (fd.get('note') || '').trim() });
-    persist('pointages', p);
-    const d = DETAIL; fermerFenetre(); toast(`Jours de ${emp.nom} enregistrés.`); rendre(true);
+    const per = perCourante(), ancien = pointageDe(emp.id, per), pc = {}, n = (k, max) => Math.max(0, Math.min(max, Number(fd.get(k)) || 0));
+    for (const [k, v] of fd.entries()) if (k.startsWith('ch_') && Number(v) > 0) pc[k.slice(3)] = Math.min(16, Number(v));
+    if (Object.values(pc).reduce((t, v) => t + v, 0) > 16) { toast('Une quinzaine compte 16 jours au plus : vérifiez les jours saisis.'); return false; }
+    const p = Object.assign({ id: emp.id + '_' + per, employeId: emp.id, periode: per, paye: null }, ancien || {}, { parChantier: pc, primes: n('primes', 1e7), deplacements: n('deplacements', 1e7), avances: n('avances', 1e7), conges: n('conges', 16), note: (fd.get('note') || '').trim() });
+    delete p.jours; persist('pointages', p);
+    const d = DETAIL; fermerFenetre(); toast(`Quinzaine de ${emp.nom} enregistrée.`); rendre(true);
     if (d) ouvrirDetail(d.k, d.v);
+  },
+  'pointage-lot': fd => {
+    const per = perCourante(), aff = fd.get('aff') || 'autre'; let nbE = 0;
+    employesListe().forEach(e => {
+      const v = fd.get('j_' + e.id); if (v == null || v === '') return;
+      const j = Math.max(0, Math.min(16, Number(v) || 0)), ancien = pointageDe(e.id, per); if (ancien && ancien.paye) return;
+      const p = Object.assign({ id: e.id + '_' + per, employeId: e.id, periode: per, primes: 0, deplacements: 0, avances: 0, conges: 0, note: '', paye: null }, ancien || {});
+      p.parChantier = Object.assign({}, p.parChantier || {}); if (j > 0) p.parChantier[aff] = j; else delete p.parChantier[aff];
+      delete p.jours; persist('pointages', p); nbE++;
+    });
+    fermerFenetre(); toast(nbE ? `Pointage validé pour ${nb(nbE, 'employé')}.` : 'Rien n’a été changé.'); rendre(true);
   },
   'paie-versee': (fd, form) => {
     const emp = S.employes[form.dataset.id]; if (!emp) return;
-    const mois = UI.empMois || TODAY.slice(0, 7), p = pointageDe(emp.id, mois); if (!p) return;
+    const p = pointageDe(emp.id, perCourante()); if (!p) return;
     p.paye = { date: fd.get('date'), mode: fd.get('mode') }; persist('pointages', p);
     const d = DETAIL; fermerFenetre(); toast(`Paie de ${emp.nom} notée comme versée.`); rendre(true);
     if (d) ouvrirDetail(d.k, d.v);
   },
   employe: (fd, form) => {
     const id = form.dataset.id, e = id && S.employes[id] ? S.employes[id] : { id: uid('em') };
-    Object.assign(e, { nom: fd.get('nom').trim(), poste: (fd.get('poste') || '').trim(), paie: fd.get('paie') === 'mois' ? 'mois' : 'jour', taux: Math.max(0, Number(fd.get('taux')) || 0), tel: (fd.get('tel') || '').trim(), entree: fd.get('entree') || '', actif: fd.get('actif') === 'on' });
+    Object.assign(e, { nom: fd.get('nom').trim(), poste: (fd.get('poste') || '').trim(), paie: fd.get('paie') === 'mois' ? 'mois' : 'jour', taux: Math.max(0, Number(fd.get('taux')) || 0), tel: (fd.get('tel') || '').trim(), entree: fd.get('entree') || '', actif: fd.get('actif') === 'on', cin: (fd.get('cin') || '').trim(), cnss: (fd.get('cnss') || '').trim(), banque: (fd.get('banque') || '').trim(), rib: (fd.get('rib') || '').trim() });
     persist('employes', e); fermerFenetre(); toast('Employé enregistré.'); rendre(true);
   },
   achat: fd => {
@@ -3417,9 +4002,45 @@ const FORMS = {
     fermerFenetre(); toast(achReste(x) <= 0 ? `${x.numero} est payé.` : 'Paiement enregistré.'); rendre(true);
     if (d) ouvrirDetail(d.k, d.v);
   },
+  blf: (fd, form) => {
+    let foId = fd.get('fournisseurId');
+    if (foId === '__nouveau') {
+      const nom = (fd.get('nouveauNom') || '').trim(); if (!nom) { toast('Indiquez le nom du nouveau fournisseur.'); return false; }
+      const fo = { id: uid('fo'), nom, categorie: '', contact: '', tel: '', email: '', ice: '', delai: 60, attestation: '', banque: '', rib: '', creeLe: TODAY };
+      persist('fournisseurs', fo); foId = fo.id;
+    }
+    const des = fd.getAll('des'), qte = fd.getAll('qte'), pu = fd.getAll('pu'), tva = fd.getAll('tva'), aff = fd.getAll('aff');
+    const lignes = des.map((d, i) => ({ designation: d.trim().slice(0, 140), qte: Number(qte[i]) || 0, pu: Math.round((Number(pu[i]) || 0) * 100) / 100, tva: tva[i] === '' ? 20 : Number(tva[i]), affaireId: S.affaires[aff[i]] ? aff[i] : '' })).filter(l => l.designation && l.qte > 0);
+    if (!lignes.length) { toast('Ajoutez au moins une ligne, avec sa désignation et sa quantité.'); return false; }
+    const id = form.dataset.id, b = id && S.blf[id] ? S.blf[id] : { id: uid('bl'), achatId: '', creeLe: TODAY, auteur: PROFIL }, ref = (fd.get('ref') || '').trim();
+    const doublon = ref && blfListe().find(x => x.id !== b.id && x.fournisseurId === foId && norm(x.ref || '') === norm(ref));
+    if (doublon && form.dataset.confirme !== ref) { form.dataset.confirme = ref; toast(`Attention : le bon ${ref} de ce fournisseur est déjà enregistré (${fdate(doublon.date)}). Cliquez encore sur « Enregistrer le bon » pour le garder quand même.`); return false; }
+    Object.assign(b, { fournisseurId: foId, ref, date: fd.get('date') || TODAY, lignes }); persist('blf', b);
+    blParChantier([b]).forEach(([aid, c]) => { const a = S.affaires[aid]; if (a) log(a.clientId, a.id, 'systeme', `Bon de livraison ${ref || 'sans numéro'} de ${nomFournisseur(foId)} : ${money(c)} HT pour ce chantier.`); });
+    const h = haussesPrix(b).length;
+    fermerFenetre(); toast(h ? `Bon enregistré. Prix en hausse sur ${nb(h, 'ligne')} : ouvrez le bon pour voir.` : 'Bon de livraison enregistré.'); rendre(true);
+  },
+  'blf-regrouper': (fd, form) => {
+    const fo = S.fournisseurs[form.dataset.id]; if (!fo) return;
+    const { ids, ecart } = majControleRegroupement(form);
+    if (!ids.length) { toast('Cochez au moins un bon de livraison.'); return false; }
+    if (ecart !== 0 && form.dataset.confirme !== String(ecart)) { form.dataset.confirme = String(ecart); toast('Les deux totaux ne sont pas les mêmes. Vérifiez, ou cliquez encore sur « Créer la facture à payer » pour l’enregistrer avec cet écart.'); return false; }
+    const bs = ids.map(i => S.blf[i]), ht = bs.reduce((s, b) => s + blHT(b), 0), ttc = Math.round(Number(fd.get('ttc')) * 100);
+    const x = { id: uid('ac'), numero: nextNumero('CF', 'achats'), fournisseurId: fo.id, affaireId: '', libelle: `${nb(bs.length, 'bon')} de livraison (${bs.map(b => b.ref || 'sans numéro').join(', ')})`.slice(0, 160), ht: ht / 100, tva: 20, ttc: ttc / 100, ecart: ecart / 100,
+      statut: 'facture', date: fd.get('dateFacture'), refFacture: fd.get('refFacture').trim(), dateFacture: fd.get('dateFacture'), echeance: fd.get('echeance'), paiements: [], blIds: ids, creeLe: TODAY };
+    persist('achats', x); bs.forEach(b => { b.achatId = x.id; persist('blf', b); });
+    log('', '', 'systeme', `Facture ${x.refFacture} de ${fo.nom} : ${nb(bs.length, 'bon')} de livraison regroupé${bs.length > 1 ? 's' : ''} (${money(ttc)} TTC, échéance le ${fdate(x.echeance)}).`);
+    UI.achFiltre = 'toutes'; toast('Facture créée : elle est dans « À payer ».'); rendre(true); ouvrirAchat(x.id);
+  },
+  ordre: (fd, form) => {
+    const x = S.achats[form.dataset.id]; if (!x) return;
+    const m = Math.round(Number(fd.get('montant')) * 100) / 100; if (!(m > 0)) return false;
+    const o = { id: uid('ov'), date: fd.get('date') || TODAY, montant: m, etat: 'prepare', depot: '', debit: '' };
+    x.ordres = (x.ordres || []).concat([o]); persist('achats', x); rendre(true); ouvrirOrdre(x.id, o.id);
+  },
   fournisseur: (fd, form) => {
     const id = form.dataset.id, fo = id && S.fournisseurs[id] ? S.fournisseurs[id] : { id: uid('fo'), creeLe: TODAY };
-    Object.assign(fo, { nom: fd.get('nom').trim(), categorie: (fd.get('categorie') || '').trim(), contact: (fd.get('contact') || '').trim(), tel: (fd.get('tel') || '').trim(), email: (fd.get('email') || '').trim(), ice: (fd.get('ice') || '').trim(), delai: Number(fd.get('delai')) || 0 });
+    Object.assign(fo, { nom: fd.get('nom').trim(), categorie: (fd.get('categorie') || '').trim(), contact: (fd.get('contact') || '').trim(), tel: (fd.get('tel') || '').trim(), email: (fd.get('email') || '').trim(), ice: (fd.get('ice') || '').trim(), delai: Number(fd.get('delai')) || 0, attestation: fd.get('attestation') || '', banque: (fd.get('banque') || '').trim(), rib: (fd.get('rib') || '').trim() });
     persist('fournisseurs', fo); fermerFenetre(); toast('Fournisseur enregistré.'); rendre(true);
   },
   heures: (fd, form) => {
@@ -3445,11 +4066,13 @@ const FORMS = {
     const f = S.factures[form.dataset.id]; if (!f) return;
     const m = Math.round(Number(fd.get('montant')) * 100);
     if (!(m > 0) || m > factReste(f)) { toast('Montant invalide : il doit être positif et ne pas dépasser le reste dû.'); return false; }
-    f.paiements = (f.paiements || []).concat([{ date: fd.get('date'), mode: fd.get('mode'), montant: m / 100 }]);
+    const pay = { date: fd.get('date'), mode: fd.get('mode'), montant: m / 100 };
+    if (pay.mode === 'Chèque') { pay.cheque = { numero: (fd.get('chequeNum') || '').trim(), banque: (fd.get('chequeBanque') || '').trim() }; pay.remis = ''; }
+    f.paiements = (f.paiements || []).concat([pay]);
     persist('factures', f);
     log(f.clientId, f.affaireId, 'systeme', `Paiement de ${money(m)} reçu (${fd.get('mode')}) sur ${f.numero}.`);
     const d = DETAIL;
-    fermerFenetre(); toast(factReste(f) <= 0 ? `${f.numero} est soldée.` : 'Paiement enregistré.'); rendre(true);
+    fermerFenetre(); toast(pay.mode === 'Chèque' ? 'Chèque enregistré : il attend dans « Chèques à remettre en banque ».' : factReste(f) <= 0 ? `${f.numero} est soldée.` : 'Paiement enregistré.'); rendre(true);
     if (d) ouvrirDetail(d.k, d.v); /* on revient à la liste d'où l'on venait, à jour */
   },
   reglages: fd => {
@@ -3497,6 +4120,14 @@ document.addEventListener('submit', e => {
 });
 document.addEventListener('change', e => {
   const el = e.target;
+  const fb = el.closest && el.closest('form[data-form="blf"]');
+  if (fb) {
+    if (el.id === 'blf-photo') { lirePhotoBLF(el).then(() => { el.value = ''; }); return; }
+    if (el.name === 'fournisseurId') { const b = fb.querySelector('.nouveau-fo'); b.hidden = el.value !== '__nouveau'; b.querySelector('input').required = el.value === '__nouveau'; }
+    majTotalBLF(fb); return;
+  }
+  const fr = el.closest && el.closest('form[data-form="blf-regrouper"]'); if (fr) { fr.dataset.confirme = ''; majControleRegroupement(fr); return; }
+  if (el.id === 'pointage-photo') { lirePhotoPointage(el).then(() => { el.value = ''; }); return; }
   if (el.matches('[name="clientId"]')) { const b = $('.nouveau-cli'); if (b) b.hidden = el.value !== '__nouveau'; }
   const fa = el.closest && el.closest('form[data-form="achat"]');
   if (fa) {
@@ -3519,11 +4150,14 @@ document.addEventListener('change', e => {
   if (el.matches('select[data-champ="resp"]')) { const a = affaireCourante(); if (a) { a.resp = el.value; persist('affaires', a); log(a.clientId, a.id, 'systeme', `Affaire confiée à ${nomMembre(el.value)}.`); } }
   if (el.id === 'logo-fichier') { chargerLogo(el.files && el.files[0]); el.value = ''; }
   if (el.dataset.date) { const a = affaireCourante(); if (a) { a.dates = a.dates || {}; if (el.value) a.dates[el.dataset.date] = el.value; else delete a.dates[el.dataset.date]; persist('affaires', a); } }
+  if (el.matches('select[data-champ="delaiClient"]')) { const r = routeCourante(), c = r.vue === 'client' ? S.clients[r.id] : null; if (c) { c.delai = el.value === '' ? '' : Number(el.value); persist('clients', c); toast(el.value === '' ? 'Délai de paiement : 30 jours par défaut.' : 'Délai enregistré : il servira pour l’échéance des prochaines factures de solde.'); } }
   if (el.matches('input[data-champ="cmdClient"]')) { const a = affaireCourante(), v = el.value.trim(); if (a && (a.cmdClient || '') !== v) { a.cmdClient = v; persist('affaires', a); toast(v ? 'N° de commande enregistré : il sera repris sur les bons et les factures.' : 'N° de commande retiré.'); } }
   if (el.matches('textarea[data-champ="notes"]')) { const a = affaireCourante(); if (a && a.notes !== el.value) { a.notes = el.value; persist('affaires', a); } }
 });
 document.addEventListener('input', e => {
   const el = e.target;
+  const fbl = el.closest && el.closest('form[data-form="blf"]'); if (fbl) { if (el.name !== 'des') majTotalBLF(fbl); return; }
+  const frg = el.closest && el.closest('form[data-form="blf-regrouper"]'); if (frg) { majControleRegroupement(frg); return; }
   if (el.id === 'q-clients') return filtrerClients();
   if (el.id === 'msg-texte') return majLiensMessage();
   if (el.id === 'q-global') { $('#res-global').innerHTML = resultatsRecherche(el.value); return; }
@@ -3558,7 +4192,7 @@ document.addEventListener('keydown', e => {
 window.addEventListener('hashchange', () => { if (!$('#fenetre').hidden) fermerFenetre(); renduEnAttente = false; rendre(true); window.scrollTo(0, 0); });
 
 /* ---------- Base partagée ---------- */
-const COLLS = ['clients', 'affaires', 'factures', 'bons', 'catalogue', 'activites', 'taches', 'demandes', 'fournisseurs', 'achats', 'heures', 'employes', 'pointages', 'parametres'];
+const COLLS = ['clients', 'affaires', 'factures', 'bons', 'catalogue', 'activites', 'taches', 'demandes', 'fournisseurs', 'achats', 'heures', 'employes', 'pointages', 'blf', 'parametres'];
 function demarrerBase() {
   setSync('connexion');
   const premier = {}, tampon = {}; let bascule = false;
