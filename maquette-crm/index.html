@@ -285,29 +285,63 @@ dl.totaux .marge { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var
 .puces { margin: 0; padding-left: 20px; display: flex; flex-direction: column; gap: 4px; font-size: calc(14px * var(--k)); }
 
 /* Document */
+/* Documents (devis, bons, factures, avoirs) : mise en page reprise de la facture Ciel d'Electropack */
 .doc { position: relative; background: #fff; color: #161a26; border: 1px solid #d9dde6; border-radius: 6px; padding: 26px; font-size: calc(13px * var(--k)); overflow: hidden; }
 .doc-fil { position: absolute; top: 46%; left: -10%; right: -10%; text-align: center; transform: rotate(-18deg); font: 800 44px var(--font-display); color: rgba(190, 51, 40, 0.09); pointer-events: none; letter-spacing: 0.08em; }
-.doc-tete { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; border-bottom: 3px solid #F97316; padding-bottom: 14px; }
-.doc-marque { display: flex; gap: 10px; line-height: 1.45; color: #4b5162; }
-.doc-marque b { color: #161a26; font: 800 16px var(--font-display); letter-spacing: 0.04em; }
-.doc-logo { width: 38px; height: 38px; border-radius: 8px; background: #12294D; display: grid; place-items: center; flex: none; }
+.doc-tete { display: flex; justify-content: space-between; align-items: flex-start; gap: 18px; flex-wrap: wrap; }
+.doc-marque { width: min(212px, 100%); text-align: center; color: #5c6474; line-height: 1.35; }
+.doc-logo-img { max-height: 78px; max-width: 180px; object-fit: contain; display: block; margin: 0 auto 6px; }
+.doc-sans-logo { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 6px; }
+.doc-sans-logo b { color: #12294D; font: 800 20px var(--font-display); letter-spacing: 0.04em; }
+.doc-logo { width: 42px; height: 42px; border-radius: 8px; background: #12294D; display: grid; place-items: center; flex: none; }
 .doc-logo .bolt { fill: #F97316; }
-.doc-meta { text-align: right; }
-.doc-meta h3 { font: 800 20px var(--font-display); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 4px; color: #161a26; }
-.doc-client { margin: 16px 0 10px auto; width: min(320px, 100%); border: 1px solid #d9dde6; border-radius: 6px; padding: 10px 12px; line-height: 1.45; }
-.doc-client .lbl { display: block; font-size: calc(11px * var(--k)); color: #6b7182; text-transform: uppercase; letter-spacing: 0.05em; }
-.doc-objet { margin: 6px 0 12px; font-weight: 600; }
+.doc-act { font-size: calc(11px * var(--k)); }
+.doc-bande { margin-top: 5px; background: #12294D; color: #fff; border-radius: 4px; padding: 3px 6px; font-size: calc(9.5px * var(--k)); font-weight: 700; letter-spacing: 0.04em; white-space: nowrap; text-transform: uppercase; }
+.doc-site { margin-top: 5px; color: #12294D; font-weight: 700; font-size: calc(12px * var(--k)); }
+.doc-devise { font-size: calc(10px * var(--k)); letter-spacing: 0.12em; text-transform: uppercase; }
+.doc-droite { flex: 1 1 290px; max-width: 430px; margin-left: auto; display: flex; flex-direction: column; gap: 16px; }
+.doc-cases { display: grid; grid-template-columns: 1.35fr 1fr 0.9fr; gap: 8px; }
+.doc-cases div { border: 1.2px solid #2c303a; border-radius: 7px; overflow: hidden; text-align: center; }
+.doc-cases span { display: block; background: #ececec; border-bottom: 1.2px solid #2c303a; padding: 4px 6px; font-weight: 700; font-size: calc(12px * var(--k)); }
+.doc-cases b { display: block; padding: 5px 6px; font-size: calc(13px * var(--k)); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.doc-client { position: relative; margin-left: auto; width: min(330px, 100%); padding: 10px 16px 4px; line-height: 1.45; }
+.doc-client::before, .doc-client::after { content: ''; position: absolute; top: 0; width: 16px; height: 16px; border-top: 1.2px solid #2c303a; }
+.doc-client::before { left: 0; border-left: 1.2px solid #2c303a; }
+.doc-client::after { right: 0; border-right: 1.2px solid #2c303a; }
+.doc-client b { display: block; font-size: calc(14px * var(--k)); }
+.doc-client span { display: block; color: #5c6474; font-size: calc(12px * var(--k)); }
+.doc-refs { margin: 16px 0 10px; line-height: 1.5; }
+.doc-refs p:first-child { font-weight: 600; }
 .doc-scroll { overflow-x: auto; }
-.doc-table { width: 100%; border-collapse: collapse; min-width: 480px; }
-.doc-table th { background: #12294D; color: #fff; text-align: left; font-weight: 600; padding: 7px 8px; font-size: calc(12px * var(--k)); }
-.doc-table td { padding: 7px 8px; border-bottom: 1px solid #e6e9ef; vertical-align: top; }
+.doc-cadre { border: 1.2px solid #2c303a; border-radius: 10px; overflow: hidden; min-width: 540px; }
+.doc-table { width: 100%; border-collapse: collapse; }
+.doc-table th { background: #ececec; color: #161a26; text-align: center; font-weight: 700; padding: 6px 8px; font-size: calc(12px * var(--k)); border-bottom: 1.2px solid #2c303a; white-space: nowrap; }
+.doc-table th + th, .doc-table td + td { border-left: 1.2px solid #2c303a; }
+.doc-table td { padding: 6px 8px; vertical-align: top; }
+.doc-table td small { color: #5c6474; font-size: 0.86em; }
+.doc-table .ref { white-space: nowrap; font-variant-numeric: tabular-nums; }
 .doc-table .n { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
-.doc-tot { margin: 12px 0 0 auto; width: min(280px, 100%); display: flex; flex-direction: column; gap: 3px; }
-.doc-tot div { display: flex; justify-content: space-between; font-variant-numeric: tabular-nums; }
-.doc-tot dd { margin: 0; font-weight: 600; }
-.doc-tot .ttc { border-top: 2px solid #12294D; padding-top: 5px; font-weight: 800; font-size: calc(15px * var(--k)); }
+.doc-vide td { height: 96px; }
+.doc-bas { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; margin-top: 16px; }
+.doc-gauche { flex: 0 1 330px; }
+.doc-tva { border-collapse: separate; border-spacing: 0; border: 1.2px solid #2c303a; border-radius: 8px; overflow: hidden; width: 100%; font-variant-numeric: tabular-nums; }
+.doc-tva th { background: #ececec; font-weight: 700; padding: 6px 8px; font-size: calc(12px * var(--k)); border-bottom: 1.2px solid #2c303a; text-align: center; white-space: nowrap; }
+.doc-tva td { padding: 7px 8px; text-align: center; white-space: nowrap; }
+.doc-tva td.n { text-align: right; }
+.doc-tva th + th, .doc-tva td + td { border-left: 1.2px solid #2c303a; }
+.doc-banque { margin-top: 12px; font-weight: 700; line-height: 1.45; }
+.doc-tot { flex: 0 1 300px; margin: 0 0 0 auto; border: 1.2px solid #2c303a; border-radius: 8px; overflow: hidden; }
+.doc-tot div { display: grid; grid-template-columns: 44% 1fr; font-variant-numeric: tabular-nums; }
+.doc-tot dt { background: #ececec; padding: 6px 10px; }
+.doc-tot dd { margin: 0; padding: 6px 10px; text-align: right; white-space: nowrap; }
+.doc-tot .gras { font-weight: 800; }
+.doc-tot .trait dd { border-bottom: 1.2px solid #2c303a; }
 .doc-lettres { margin-top: 14px; font-size: calc(12.5px * var(--k)); }
-.doc-pied { margin-top: 20px; padding-top: 10px; border-top: 1px solid #e6e9ef; font-size: calc(11px * var(--k)); color: #6b7182; text-align: center; }
+.doc-cond { margin-top: 8px; font-size: calc(12px * var(--k)); color: #5c6474; }
+.doc-accord { margin: 14px 0 0 auto; width: min(300px, 100%); height: 104px; border: 1px solid #d9dde6; border-radius: 6px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: calc(12px * var(--k)); color: #6b7182; }
+.doc-accord b { color: #161a26; font-size: calc(13px * var(--k)); }
+.doc-pied { margin-top: 22px; text-align: center; color: #12294D; font-weight: 700; font-size: calc(11.5px * var(--k)); line-height: 1.5; }
+@media (max-width: 719px) { .doc-marque { margin: 0 auto; } .doc-droite { max-width: none; } .doc-cases { grid-template-columns: 1fr 1fr; } .doc-cases div:first-child { grid-column: 1 / -1; } .doc-tot { flex-basis: 100%; } .doc-gauche { flex-basis: 100%; } }
 
 /* Fenêtres et messages */
 #fenetre { position: fixed; inset: 0; z-index: 50; display: grid; grid-template: minmax(0, 1fr) / minmax(0, 1fr); place-items: center; padding: 16px; }
@@ -345,9 +379,6 @@ dl.totaux .marge { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var
 .case { display: flex; align-items: center; gap: 8px; font-size: calc(14px * var(--k)); grid-column: 1 / -1; }
 .case input { width: 18px; height: 18px; }
 .fen-pied-haut { justify-content: flex-start; padding: 0; }
-.doc-cond { margin-top: 8px; font-size: calc(12px * var(--k)); color: #6b7182; }
-.doc-accord { margin: 14px 0 0 auto; width: min(300px, 100%); height: 104px; border: 1px solid #d9dde6; border-radius: 6px; padding: 10px 12px; display: flex; flex-direction: column; gap: 6px; font-size: calc(12px * var(--k)); color: #6b7182; }
-.doc-accord b { color: #161a26; font-size: calc(13px * var(--k)); }
 
 /* v3 : recherche, pièces, planning, apparence, logo */
 .btn-rech { display: flex; align-items: center; gap: 8px; width: 100%; padding: 8px 10px; border: 1px solid var(--side-line); border-radius: var(--r-btn); background: var(--side-hover); color: var(--side-muted); cursor: pointer; font-size: calc(14px * var(--k)); }
@@ -407,7 +438,6 @@ dl.totaux .marge { margin-top: 6px; padding-top: 6px; border-top: 1px dashed var
 .logo-actions .carte-note { flex-basis: 100%; }
 label.btn { cursor: pointer; }
 .sr:focus-visible + .btn, label.btn:focus-within { outline: 2px solid var(--link); outline-offset: 2px; }
-.doc-logo-img { max-height: 56px; max-width: 120px; object-fit: contain; flex: none; }
 .ligne-form .champ { flex: 1 1 130px; }
 
 /* Téléphone et tablette */
@@ -619,6 +649,8 @@ label.btn { cursor: pointer; }
 .photo-etat.ok { color: var(--ok); }
 @media (max-width: 480px) { .mois-choix { justify-content: space-between; } .mois-choix .btn { min-height: 44px; min-width: 44px; } .photo-boutons .btn { flex: 1 1 auto; } }
 
+.champ-cmd { margin-top: 12px; }
+
 </style>
 </head>
 <body>
@@ -694,11 +726,12 @@ const DEFAULT_EQUIPE = {
     { id: 'maman', nom: 'Régine', role: 'Factures, paiements et relances' }
   ]
 };
-// Coordonnées reprises du site d'Electropack ; adresse, ICE, RC et IF repris des informations données pour l'appli de support (à vérifier sur une facture). Patente et RIB restent à compléter.
+// Coordonnées reprises du site d'Electropack ; adresse, patente, IF, RC, CNSS, ICE et fax repris d'une vraie facture. La banque et le RIB ne sont jamais écrits ici : ils se saisissent dans Réglages.
 const DEFAULT_SOCIETE = {
   nom: 'Electropack',
   activite: "Électricité générale, courants faibles, contrôle d'accès et vidéosurveillance",
-  adresse: 'Work Center, angle Ziraoui et Moulay Youssef, 6e étage, Casablanca',
+  adresse: '43 Avenue de Nice, Casablanca',
+  site: 'www.electro-pack.ma', slogan: 'Études · Réalisation · Maintenance', devise: 'Qualité · Sécurité · Fiabilité',
   tel: '05 22 36 97 14 / 05 22 36 97 15',
   email: 'electropack.installation@gmail.com',
   ice: '000019317000010', if: '40152192', rc: '174899', tp: '33151855', cnss: '8036982', fax: '05 22 36 97 16',
@@ -979,6 +1012,9 @@ function buildDemo(today) {
     PT('em05', moisAvant, 24, 0, 300, payeAvant), PT('em06', moisAvant, 23, 0, 0, { date: moisCourant + '-02', mode: 'Espèces' }), PT('em07', moisAvant, 26, 0, 0, payeAvant), PT('em08', moisAvant, 20, 0, 200, { date: moisCourant + '-02', mode: 'Espèces' }),
     PT('em01', moisCourant, 17, 0, 0), PT('em02', moisCourant, 17, 0, 500), PT('em03', moisCourant, 16, 0, 0), PT('em05', moisCourant, 17, 300, 0), PT('em07', moisCourant, 17, 0, 1000)
   ];
+  // N° de commande donnés par les clients (inventés), repris sur les bons et les factures
+  const CMD = { a02: '4500012873', a03: '20261187', a04: '20260942' };
+  affaires.forEach(a => { if (CMD[a.id]) a.cmdClient = CMD[a.id]; });
   return { catalogue, clients, affaires, factures, activites, bons, fournisseurs, achats, heures, employes, pointages, auto: JSON.parse(JSON.stringify(DEFAULT_AUTO)), societe: Object.assign({}, DEFAULT_SOCIETE), equipe: JSON.parse(JSON.stringify(DEFAULT_EQUIPE)) };
 }
 
@@ -1475,7 +1511,7 @@ function vueClient(id) {
   const hist = Object.values(S.activites).filter(h => h.clientId === id).sort((x, y) => y.date.localeCompare(x.date));
   const tel = (c.tel || '').replace(/\s/g, '');
   return `<a href="#clients" class="retour">← Clients</a>
-  <section class="page-tete"><div><p class="surtitre">${esc(TYPE_CLIENT[c.type] || '')} · fiche créée le ${fdate(c.creeLe)}</p><h1>${esc(c.nom)}</h1><p class="sous">${esc(c.contact || '')}</p></div>
+  <section class="page-tete"><div><p class="surtitre">${esc(TYPE_CLIENT[c.type] || '')} · code ${esc(codeClient(c))} · fiche créée le ${fdate(c.creeLe)}</p><h1>${esc(c.nom)}</h1><p class="sous">${esc(c.contact || '')}</p></div>
   <div class="actions-tete">${tel ? `<a class="btn" href="tel:${esc(tel)}">Appeler ${esc(c.tel)}</a>` : ''}<a class="btn" href="https://wa.me/?text=${encodeURIComponent('Bonjour ' + (c.contact || c.nom) + ',')}" target="_blank" rel="noopener">WhatsApp</a><button class="btn btn-primary" data-act="nouvelle-affaire" data-client="${c.id}">+ Nouvelle affaire</button></div></section>
   <div class="deux-col">
     <div class="pile">
@@ -1578,7 +1614,8 @@ function vueAffaire(id) {
       ${carteSuiviChantier(a)}
       <section class="carte"><header class="carte-tete"><h2>Pièces</h2><span class="compteur">${pieces.length}</span></header>
         ${pieces.length ? `<ul class="liste-simple">${pieces.map(p => p[1]).join('')}</ul>` : vide('Aucune pièce pour le moment.')}
-        ${pLiv === null ? '' : `<div class="progres"><span style="width:${pLiv}%"></span></div><p class="carte-note">Livré ou posé : ${pLiv} %</p>`}</section>
+        ${pLiv === null ? '' : `<div class="progres"><span style="width:${pLiv}%"></span></div><p class="carte-note">Livré ou posé : ${pLiv} %</p>`}
+        ${['accepte', 'chantier', 'termine'].includes(a.etape) ? `<label class="champ champ-cmd">N° de commande du client<input type="text" data-champ="cmdClient" value="${esc(a.cmdClient || '')}" maxlength="40" placeholder="Facultatif" autocomplete="off"></label>` : ''}</section>
       ${planning ? `<section class="carte"><header class="carte-tete"><h2>Planning</h2></header>${a.etape === 'chantier' && D.debut ? `<p class="carte-note">Chantier commencé le ${fdateLong(D.debut)}.</p>` : ''}<div class="ligne-form">${planning}</div></section>` : ''}
       <section class="carte"><header class="carte-tete"><h2>Notes internes</h2></header><textarea class="notes" data-champ="notes" rows="3" aria-label="Notes internes">${esc(a.notes || '')}</textarea></section>
       <section class="carte"><header class="carte-tete"><h2>Journal</h2></header>${hist.length ? `<ul class="acts">${hist.map(h => activiteItem(h, false)).join('')}</ul>` : vide('Rien pour le moment.')}</section>
@@ -1758,7 +1795,7 @@ function vueReglages() {
         <div class="logo-actions"><label class="btn btn-sm" for="logo-fichier">Choisir un logo…</label><input type="file" id="logo-fichier" accept="image/png,image/jpeg,image/webp" class="sr">${logo ? '<button type="button" class="btn btn-ghost btn-sm" data-act="logo-retirer">Retirer</button>' : ''}<p class="carte-note">PNG ou JPEG. Il apparaît dans le menu, sur les devis, les bons et les factures.</p></div></div>
       <div class="grille-champs">
       ${champ('nom', 'Raison sociale', s.nom, 'required')}${champ('activite', 'Activité', s.activite)}${champ('adresse', 'Adresse', s.adresse)}${champ('tel', 'Téléphone', s.tel)}${champ('email', 'E-mail', s.email, 'type="email"')}
-      ${champ('ice', 'ICE (15 chiffres)', s.ice)}${champ('if', 'Identifiant fiscal (IF)', s.if)}${champ('rc', 'Registre de commerce (RC)', s.rc)}${champ('tp', 'Patente (taxe professionnelle)', s.tp)}${champ('cnss', 'CNSS', s.cnss)}${champ('fax', 'Fax', s.fax)}
+      ${champ('ice', 'ICE (15 chiffres)', s.ice)}${champ('if', 'Identifiant fiscal (IF)', s.if)}${champ('rc', 'Registre de commerce (RC)', s.rc)}${champ('tp', 'Patente (taxe professionnelle)', s.tp)}${champ('cnss', 'CNSS', s.cnss)}${champ('fax', 'Fax', s.fax)}${champ('site', 'Site web', s.site)}
       ${champ('banque', 'Banque', s.banque)}${champ('rib', 'RIB (24 chiffres)', s.rib)}</div></section>
     <section class="carte"><header class="carte-tete"><h2>Devis et messages</h2></header><div class="grille-champs">
       ${champ('validite', 'Validité des devis (jours)', s.validite, 'type="number" min="1" max="365"')}${champ('signature', 'Signature des messages', s.signature)}
@@ -1850,112 +1887,210 @@ function chargerPdf() {
 }
 const pt = s => String(s == null ? '' : s).replace(/[   ]/g, ' ').replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/œ/g, 'oe').replace(/Œ/g, 'OE').replace(/…/g, '...').replace(/[–—]/g, '-').replace(/→/g, '->').replace(/−/g, '-').replace(/²/g, '2').replace(/ᵉ/g, 'e');
 const pm = c => pt(money(c));
-/* Pied des documents : seulement les mentions réellement renseignées. */
-const mentionsSociete = soc => [soc.nom].concat([['Patente', soc.tp], ['IF', soc.if], ['RC', soc.rc], ['CNSS', soc.cnss], ['ICE', soc.ice]].filter(([, v]) => v && !/compl[ée]ter/i.test(v)).map(([k, v]) => k + ' ' + v)).join(' · ');
+/* Pied des documents, comme sur les factures d'Electropack : seulement les mentions réellement renseignées. */
+const mentionsSociete = soc => [['Patente', soc.tp], ['IF', soc.if], ['RC', soc.rc], ['CNSS', soc.cnss], ['ICE', soc.ice]].filter(([, v]) => v && !/compl[ée]ter/i.test(v)).map(([k, v]) => k + ' ' + v);
+const piedSociete = soc => [
+  (soc.adresse ? ['Adresse ' + soc.adresse] : []).concat(mentionsSociete(soc)).join(' · ') || soc.nom,
+  [soc.tel ? 'Tél. ' + soc.tel : '', soc.fax ? 'Fax ' + soc.fax : ''].filter(Boolean).join(' · '),
+  [soc.email ? 'E-mail ' + soc.email : '', soc.site || ''].filter(Boolean).join(' · ')
+].filter(Boolean);
+const jma = iso => iso ? iso.slice(8, 10) + '/' + iso.slice(5, 7) + '/' + iso.slice(0, 4) : '';
+const nbr = c => (c / 100).toLocaleString('fr-FR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+const qte3 = q => (Number(q) || 0).toLocaleString('fr-FR', { minimumFractionDigits: 3, maximumFractionDigits: 3 });
+/* Code client à la façon de Ciel (CLI0001). Un code saisi sur la fiche passe avant le code calculé. */
+function codeClient(c) {
+  if (!c || !c.id) return '';
+  if (c.code) return c.code;
+  const num = x => { const m = /^c(\d{1,4})$/.exec(x.id || ''); return m ? +m[1] : 0; };
+  if (num(c)) return 'CLI' + String(num(c)).padStart(4, '0');
+  const tous = Object.values(S.clients), base = tous.reduce((m, x) => Math.max(m, num(x)), 0);
+  const autres = tous.filter(x => !num(x) && !x.code).sort((x, y) => (x.creeLe || '').localeCompare(y.creeLe || '') || x.id.localeCompare(y.id));
+  return 'CLI' + String(base + autres.findIndex(x => x.id === c.id) + 1).padStart(4, '0');
+}
+/* Référence de l'article d'une ligne : son code, sinon celui de la ligne du devis qu'elle reprend. */
+function refLigne(l, a) {
+  if (l.code) return l.code;
+  if (!a || !a.lignes) return '';
+  if (l.i != null && a.lignes[l.i]) return a.lignes[l.i].code || '';
+  const m = a.lignes.find(x => x.code && x.designation === l.designation && (x.unite || '') === (l.unite || ''));
+  return m ? m.code : '';
+}
+/* Lignes de référence d'une pièce : objet, commande du client, devis, bons de livraison, échéance, chantier. */
+function refsDoc(kind, obj, info) {
+  const a = info.a, out = [], r = [];
+  if (a) out.push('Objet : ' + a.titre);
+  if (a && a.cmdClient) r.push('Commande n° ' + a.cmdClient);
+  if (a && kind === 'facture') {
+    r.push('Devis ' + a.numero);
+    if (obj.type !== 'avoir' && obj.type !== 'acompte') {
+      const bl = affBons(a, 'livraison').filter(b => b.date <= obj.date);
+      if (bl.length) r.push((bl.length > 1 ? 'Bons de livraison ' : 'Bon de livraison ') + bl.map(b => b.numero).join(', ') + (bl.length === 1 ? ' du ' + jma(bl[0].date) : ''));
+    }
+  }
+  if (info.meta) r.push(info.meta);
+  if (r.length) out.push(r.join(' · '));
+  if (a && a.adresseChantier) out.push('Chantier : ' + a.adresseChantier);
+  return out;
+}
+/* Cadre des totaux : Total HT, remise éventuelle, Net HT, Total TVA, Total TTC, puis règlements. */
+function lignesTotaux(obj, info, t) {
+  const out = [{ lbl: 'Total HT', val: nbr(t.remise ? t.brut : t.ht) }];
+  if (t.remise) out.push({ lbl: 'Remise ' + String(obj.remise).replace('.', ',') + ' %', val: '− ' + nbr(t.remise) });
+  out.push({ lbl: 'Net HT', val: nbr(t.ht), gras: true, trait: true }, { lbl: 'Total TVA', val: nbr(t.tva) }, { lbl: 'Total TTC', val: nbr(t.ttc) + ' DH', gras: true });
+  if (info.reglement) {
+    const paye = factPaye(obj), avo = factAvoirs(obj), reste = factReste(obj);
+    if (paye > 0) out.push({ lbl: 'Déjà réglé', val: nbr(paye) });
+    if (avo > 0) out.push({ lbl: 'Avoirs', val: '− ' + nbr(avo) });
+    if (paye > 0 || avo > 0) out.push({ lbl: reste < 0 ? 'À rembourser' : 'Reste à payer', val: nbr(Math.abs(reste)) + ' DH', gras: true });
+  }
+  return out;
+}
+const blocBanque = (soc, info) => info.reglement && (soc.rib || soc.banque) ? ['RIB ' + (soc.nom || '').toUpperCase(), soc.banque || '', soc.rib ? 'RIB ' + soc.rib : ''].filter(Boolean) : [];
+/* PDF : même mise en page que la facture Ciel d'Electropack (cases N° / Date / Client, cadre du tableau, tableau de TVA, totaux, pied). */
 function construirePDF(jsPDF, kind, obj) {
-  const soc = S.params.societe, c = S.clients[obj.clientId] || {}, info = infosDoc(kind, obj), a = info.a;
+  const soc = S.params.societe, c = S.clients[obj.clientId] || {}, info = infosDoc(kind, obj);
   const lignes = obj.lignes || [], t = totaux(lignes, obj.remise), avecRemise = info.prix && lignes.some(l => l.remise);
   const doc = new jsPDF({ unit: 'mm', format: 'a4' });
-  const M = 15, R = 195, H = 297;
-  const INK = [18, 41, 77], MUTED = [92, 107, 122], VOLT = [249, 115, 22], LINE = [214, 218, 228];
+  const M = 15, R = 195, H = 297, W = R - M, RAY = 2.5;
+  const INK = [22, 26, 38], MUTED = [96, 104, 120], NAVY = [18, 41, 77], VOLT = [249, 115, 22], GRIS = [236, 236, 236], TRAIT = [44, 48, 58];
   const virg = v => String(v).replace('.', ',');
+  const trait = () => { doc.setDrawColor(...TRAIT); doc.setLineWidth(0.3); };
+  const bandeHaut = (x, y, w, h, r) => { doc.setFillColor(...GRIS); doc.roundedRect(x, y, w, h, r, r, 'F'); doc.rect(x, y + r, w, h - r, 'F'); };
   doc.setProperties({ title: pt(info.titre + ' ' + obj.numero), author: pt(soc.nom) });
-  // Logo de la société, ou éclair par défaut
-  const logo = S.params.logo || {};
-  let tx0 = M + 17, logoOk = false;
+  // Bloc logo à gauche, comme sur le papier à en-tête
+  const LW = 62, logo = S.params.logo || {};
+  let yl = 12, logoOk = false;
   if (logo.data && logo.w && logo.h) {
     try {
-      const k = Math.min(16 / logo.h, 44 / logo.w), w = logo.w * k, h = logo.h * k;
-      doc.addImage(logo.data, /^data:image\/png/.test(logo.data) ? 'PNG' : 'JPEG', M, 13 + (16 - h) / 2, w, h);
-      tx0 = M + w + 5; logoOk = true;
+      const k = Math.min(20 / logo.h, 52 / logo.w), w = logo.w * k, h = logo.h * k;
+      doc.addImage(logo.data, /^data:image\/png/.test(logo.data) ? 'PNG' : 'JPEG', M + (LW - w) / 2, yl, w, h);
+      yl += h + 4.5; logoOk = true;
     } catch (e) { logoOk = false; }
   }
   if (!logoOk) {
-    doc.setFillColor(...INK); doc.roundedRect(M, 14, 13, 13, 2, 2, 'F');
+    doc.setFillColor(...NAVY); doc.roundedRect(M, 13, 13, 13, 2, 2, 'F');
     const k = 13 / 24, P = [[13.5, 2], [4, 13.5], [10.2, 13.5], [9, 22], [19, 9.8], [12.6, 9.8]], segs = [];
     for (let i = 1; i < P.length; i++) segs.push([(P[i][0] - P[i - 1][0]) * k, (P[i][1] - P[i - 1][1]) * k]);
-    doc.setFillColor(...VOLT); doc.lines(segs, M + P[0][0] * k, 14 + P[0][1] * k, [1, 1], 'F', true);
+    doc.setFillColor(...VOLT); doc.lines(segs, M + P[0][0] * k, 13 + P[0][1] * k, [1, 1], 'F', true);
+    doc.setTextColor(...NAVY); doc.setFont('helvetica', 'bold'); doc.setFontSize(15); doc.text(pt(soc.nom), M + 17, 21.5);
+    yl = 31.5;
   }
-  doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(14); doc.text(pt(soc.nom), tx0, 19.5);
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(...MUTED);
-  doc.text([soc.activite, soc.adresse, 'Tél. ' + soc.tel + (soc.email ? ' · ' + soc.email : '')].map(pt), tx0, 24);
-  // Titre et références
-  doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(17); doc.text(pt(info.titre.toUpperCase()), R, 19.5, { align: 'right' });
-  doc.setFont('helvetica', 'normal'); doc.setFontSize(9.5);
-  doc.text(['N° ' + obj.numero, 'Date : ' + fdateLong(info.date), info.meta].filter(Boolean).map(pt), R, 25.5, { align: 'right' });
-  doc.setDrawColor(...VOLT); doc.setLineWidth(1); doc.line(M, 40, R, 40);
-  // Bloc client
-  const bx = 112, by = 46, bw = R - bx;
-  doc.setFontSize(9.5);
-  const corps = doc.splitTextToSize(pt(c.adresse || ''), bw - 8).concat([pt('ICE : ' + (c.ice || 'non communiqué'))]);
-  const bh = 14 + corps.length * 4.3;
-  doc.setDrawColor(...LINE); doc.setLineWidth(0.3); doc.roundedRect(bx, by, bw, bh, 1.5, 1.5, 'S');
-  doc.setFontSize(7.5); doc.setTextColor(...MUTED); doc.text('CLIENT', bx + 4, by + 5);
-  doc.setFontSize(9.5); doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.text(doc.splitTextToSize(pt(c.nom || ''), bw - 8)[0] || '', bx + 4, by + 10.5);
-  doc.setFont('helvetica', 'normal'); doc.text(corps, bx + 4, by + 15.3);
-  // Objet
-  let ly = by + 5;
-  doc.setFontSize(9); doc.setTextColor(...MUTED);
-  if (a && a.resp && nomMembre(a.resp)) { doc.text(pt('Affaire suivie par : ' + nomMembre(a.resp)), M, ly); ly += 5.5; }
-  if (a) {
-    doc.setTextColor(...INK); doc.setFont('helvetica', 'bold');
-    const ob = doc.splitTextToSize(pt('Objet : ' + a.titre + (kind === 'facture' ? ' (devis ' + a.numero + ')' : '')), 90);
-    doc.text(ob, M, ly); ly += ob.length * 4.2;
-    doc.setFont('helvetica', 'normal');
-    if (a.adresseChantier) { doc.setTextColor(...MUTED); const ch = doc.splitTextToSize(pt('Chantier : ' + a.adresseChantier), 90); doc.text(ch, M, ly + 0.8); ly += ch.length * 4.2; }
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(7.4); doc.setTextColor(...MUTED);
+  const act = soc.activite ? doc.splitTextToSize(pt(soc.activite), LW).slice(0, 2) : [];
+  if (act.length) { doc.text(act, M + LW / 2, yl, { align: 'center' }); yl += act.length * 3.2 + 1.6; }
+  if (soc.slogan) {
+    doc.setFillColor(...NAVY); doc.roundedRect(M, yl - 1.2, LW, 5.2, 1, 1, 'F');
+    doc.setTextColor(255, 255, 255); doc.setFont('helvetica', 'bold'); doc.setFontSize(6.8); doc.text(pt(soc.slogan.toUpperCase()), M + LW / 2, yl + 2.3, { align: 'center' });
+    yl += 8.3;
   }
-  // Lignes
-  const head = ['Désignation', 'Qté', 'U.'], droite = [1], colStyles = { 1: { halign: 'right', cellWidth: 16 }, 2: { cellWidth: 16 } };
-  if (info.prix) {
-    head.push('PU HT'); colStyles[3] = { halign: 'right', cellWidth: 27 }; droite.push(3);
-    if (avecRemise) { head.push('Remise'); colStyles[4] = { halign: 'right', cellWidth: 17 }; droite.push(4); }
-    head.push('Total HT'); colStyles[head.length - 1] = { halign: 'right', cellWidth: 29 }; droite.push(head.length - 1);
-  }
+  if (soc.site) { doc.setTextColor(...NAVY); doc.setFont('helvetica', 'bold'); doc.setFontSize(8); doc.text(pt(soc.site), M + LW / 2, yl, { align: 'center' }); yl += 3.7; }
+  if (soc.devise) { doc.setTextColor(...MUTED); doc.setFont('helvetica', 'normal'); doc.setFontSize(6.2); doc.text(pt(soc.devise.toUpperCase()), M + LW / 2, yl, { align: 'center' }); yl += 2.5; }
+  // Trois cases à droite : numéro, date, code client
+  const cases = [[info.titre + ' N°', obj.numero, 43], ['Date', jma(info.date), 35], ['Client', codeClient(c), 30]];
+  let cx = R - cases.reduce((s, x) => s + x[2], 0) - 3 * (cases.length - 1);
+  cases.forEach(([lbl, val, w]) => {
+    bandeHaut(cx, 12, w, 7, 1.6); trait(); doc.roundedRect(cx, 12, w, 14, 1.6, 1.6, 'S'); doc.line(cx, 19, cx + w, 19);
+    doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(8.6); doc.text(pt(lbl), cx + w / 2, 16.6, { align: 'center' });
+    doc.setFontSize(9.2); doc.text(pt(val || ''), cx + w / 2, 23.7, { align: 'center' });
+    cx += w + 3;
+  });
+  // Client : cadre à coins sous les cases (nom, adresse et ICE, mentions obligatoires)
+  const bx = 104, by = 34, bw = R - bx;
+  doc.setFont('helvetica', 'bold'); doc.setFontSize(10);
+  const nomL = doc.splitTextToSize(pt(c.nom || ''), bw - 10).slice(0, 2);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8.6);
+  const corps = (c.adresse ? doc.splitTextToSize(pt(c.adresse), bw - 10).slice(0, 3) : []).concat([pt('ICE : ' + (c.ice || 'non communiqué'))]);
+  const bh = 6 + nomL.length * 4.6 + corps.length * 3.9;
+  trait(); doc.line(bx, by + 5, bx, by); doc.line(bx, by, bx + 5, by); doc.line(R - 5, by, R, by); doc.line(R, by, R, by + 5);
+  doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(10); doc.text(nomL, bx + 5, by + 6);
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(8.6); doc.setTextColor(...MUTED); doc.text(corps, bx + 5, by + 6 + nomL.length * 4.6);
+  // Références
+  let y = Math.max(yl, by + bh) + 6;
+  doc.setFontSize(9); doc.setTextColor(...INK);
+  refsDoc(kind, obj, info).forEach((r, i) => { doc.setFont('helvetica', i === 0 ? 'bold' : 'normal'); const L = doc.splitTextToSize(pt(r), W); doc.text(L, M, y); y += L.length * 4.3; });
+  y += 1.5;
+  // Tableau des lignes dans un cadre arrondi, traits verticaux jusqu'en bas
+  const head = ['Référence', 'Désignation', 'Quantité'], larg = [24, 0, 27];
+  if (info.prix) { head.push('P.U. HT'); larg.push(26); if (avecRemise) { head.push('Remise'); larg.push(16); } head.push('Montant HT'); larg.push(30); }
+  larg[1] = W - larg.reduce((s, v) => s + v, 0);
+  const colStyles = {}, xs = [];
+  larg.forEach((w, i) => { colStyles[i] = { cellWidth: w, halign: i >= 2 ? 'right' : 'left' }; });
+  larg.reduce((x, w) => { xs.push(x + w); return x + w; }, M); xs.pop();
+  const pages = []; let hTete = 7;
   doc.autoTable({
-    startY: Math.max(by + bh, ly) + 7,
-    margin: { left: M, right: M, bottom: 24 },
+    startY: y, margin: { left: M, right: M, top: 18, bottom: 28 }, theme: 'plain',
     head: [head],
     body: lignes.map(l => {
-      const r = [pt(l.designation), pt(virg(l.qte)), pt(l.unite || '')];
-      if (info.prix) { r.push(pm(Math.round(Number(l.pu) * 100))); if (avecRemise) r.push(l.remise ? pt(virg(l.remise) + ' %') : ''); r.push(pm(ligneHT(l))); }
+      const r = [pt(refLigne(l, info.a)), pt(l.designation), pt(qte3(l.qte) + (l.unite ? ' ' + l.unite : ''))];
+      if (info.prix) { r.push(pt(nbr(Math.round(Number(l.pu) * 100)))); if (avecRemise) r.push(l.remise ? pt(virg(l.remise) + ' %') : ''); r.push(pt(nbr(ligneHT(l)))); }
       return r;
     }),
-    styles: { font: 'helvetica', fontSize: 8.8, cellPadding: 2, textColor: INK, lineColor: [226, 229, 236], lineWidth: 0.1, valign: 'top' },
-    headStyles: { fillColor: INK, textColor: 255, fontStyle: 'bold' },
-    alternateRowStyles: { fillColor: [248, 249, 251] },
+    styles: { font: 'helvetica', fontSize: 8.8, cellPadding: { top: 1.7, bottom: 1.7, left: 2, right: 2 }, textColor: INK, valign: 'top', overflow: 'linebreak' },
+    headStyles: { fontStyle: 'bold', halign: 'center', valign: 'middle', minCellHeight: 7, textColor: INK },
     columnStyles: colStyles,
-    didParseCell: d => { if (d.section === 'head' && droite.includes(d.column.index)) d.cell.styles.halign = 'right'; }
+    didParseCell: d => { if (d.section === 'head') d.cell.styles.halign = 'center'; },
+    willDrawCell: d => {
+      if (d.section !== 'head') return;
+      const x = d.cell.x, yy = d.cell.y, w = d.cell.width, h = d.cell.height, i = d.column.index;
+      hTete = h; doc.setFillColor(...GRIS);
+      if (i === 0) { doc.roundedRect(x, yy, w, h, RAY, RAY, 'F'); doc.rect(x + RAY, yy, w - RAY, h, 'F'); doc.rect(x, yy + RAY, w, h - RAY, 'F'); }
+      else if (i === head.length - 1) { doc.roundedRect(x, yy, w, h, RAY, RAY, 'F'); doc.rect(x, yy, w - RAY, h, 'F'); doc.rect(x, yy + RAY, w, h - RAY, 'F'); }
+      else doc.rect(x, yy, w, h, 'F');
+    },
+    didDrawPage: d => { pages.push({ n: doc.internal.getCurrentPageInfo().pageNumber, haut: d.pageNumber === 1 ? y : d.settings.margin.top, fin: d.cursor.y }); }
   });
-  let y = doc.lastAutoTable.finalY + 7;
-  const paye = info.reglement ? factPaye(obj) : 0, avo = info.reglement ? factAvoirs(obj) : 0;
-  const besoin = (info.prix ? 36 + (t.remise ? 11 : 0) + (paye > 0 ? 6 : 0) + (avo > 0 ? 6 : 0) + (paye > 0 || avo > 0 ? 7 : 0) : 0) + 16 + (info.signature ? 38 : 0);
-  if (y + besoin > H - 24) { doc.addPage(); y = 22; }
-  doc.setTextColor(...INK);
+  // Bloc du bas : tableau de TVA et banque à gauche, totaux à droite, puis mentions et signature
+  const tot = info.prix ? lignesTotaux(obj, info, t) : [], LT = 6.6, hTot = tot.length * LT + 2;
+  const banque = blocBanque(soc, info), hGauche = info.prix ? 15 + (banque.length ? 5 + banque.length * 4 : 0) : 0;
+  doc.setFont('helvetica', 'normal'); doc.setFontSize(9);
+  const mots = info.prix ? doc.splitTextToSize(pt(info.arrete + ' à la somme de : ' + enLettres(Math.abs(t.ttc)) + ' TTC.'), W) : [];
+  doc.setFontSize(8.4);
+  const cl = info.cond ? doc.splitTextToSize(pt(info.cond), info.signature ? W - 90 : W) : [];
+  const hFin = Math.max(cl.length * 3.8, info.signature ? 30 : 0);
+  const besoin = (info.prix ? Math.max(hTot, hGauche) + 6 + mots.length * 4.2 + 3 : 0) + hFin + 2;
+  const yPied = H - 22, dern = pages[pages.length - 1];
+  let yb = yPied - besoin;
+  if (dern.fin + 9 <= yb) dern.bas = yb - 5;
+  else { dern.bas = dern.fin + 1; if (dern.fin + 6 > yb) { doc.addPage(); yb = 20; } else yb = dern.fin + 6; }
+  pages.forEach(p => {
+    doc.setPage(p.n); trait();
+    const bas = p.bas || p.fin + 1;
+    doc.roundedRect(M, p.haut, W, bas - p.haut, RAY, RAY, 'S');
+    doc.line(M, p.haut + hTete, R, p.haut + hTete);
+    xs.forEach(x => doc.line(x, p.haut, x, bas));
+  });
+  doc.setPage(doc.getNumberOfPages());
+  let y2 = yb;
   if (info.prix) {
-    const tx = 122;
-    const ligneTot = (lbl, val, gras) => { doc.setFont('helvetica', gras ? 'bold' : 'normal'); doc.setFontSize(gras ? 11 : 9.5); doc.text(pt(lbl), tx, y); doc.text(val, R, y, { align: 'right' }); y += gras ? 7 : 5.5; };
-    if (t.remise) { ligneTot('Total brut HT', pm(t.brut)); ligneTot('Remise ' + virg(obj.remise) + ' %', '- ' + pm(t.remise)); }
-    ligneTot('Total HT', pm(t.ht)); ligneTot('TVA 20 %', pm(t.tva));
-    doc.setDrawColor(...INK); doc.setLineWidth(0.5); doc.line(tx, y - 3.2, R, y - 3.2); y += 2;
-    ligneTot('Total TTC', pm(t.ttc), true);
-    if (paye > 0) ligneTot('Déjà réglé', pm(paye));
-    if (avo > 0) ligneTot('Avoirs', '- ' + pm(avo));
-    if (paye > 0 || avo > 0) { const r = factReste(obj); ligneTot(r < 0 ? 'À rembourser' : 'Reste à payer', pm(Math.abs(r)), true); }
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...INK);
-    const mots = doc.splitTextToSize(pt(info.arrete + ' à la somme de : ' + enLettres(Math.abs(t.ttc)) + ' TTC.'), R - M);
-    y += 3; doc.text(mots, M, y); y += mots.length * 4.2 + 3;
+    const tw = [14, 26, 20, 26], TWT = 86, col = [];
+    bandeHaut(M, y2, TWT, 7, 2); trait(); doc.roundedRect(M, y2, TWT, 15, 2, 2, 'S'); doc.line(M, y2 + 7, M + TWT, y2 + 7);
+    tw.reduce((x, w, i) => { if (i) doc.line(x, y2, x, y2 + 15); col.push([x, w]); return x + w; }, M);
+    doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(8.2);
+    ['Code', 'Base HT', 'Taux TVA', 'Montant TVA'].forEach((l, i) => doc.text(l, col[i][0] + col[i][1] / 2, y2 + 4.6, { align: 'center' }));
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.8);
+    doc.text('01', col[0][0] + col[0][1] / 2, y2 + 12, { align: 'center' });
+    [nbr(t.ht), virg((TVA * 100).toFixed(2)), nbr(t.tva)].forEach((v, i) => doc.text(pt(v), col[i + 1][0] + col[i + 1][1] - 2, y2 + 12, { align: 'right' }));
+    if (banque.length) { doc.setFont('helvetica', 'bold'); doc.setFontSize(8.6); doc.text(banque.map(pt), M + 3, y2 + 21.5); }
+    const X0 = 118, LBL = 32;
+    doc.setFillColor(...GRIS); doc.roundedRect(X0, y2, LBL, hTot, 2, 2, 'F'); doc.rect(X0 + 2, y2, LBL - 2, hTot, 'F');
+    trait(); doc.roundedRect(X0, y2, R - X0, hTot, 2, 2, 'S');
+    tot.forEach((l, i) => {
+      const yy = y2 + 1 + i * LT + 4.5;
+      doc.setFont('helvetica', l.gras ? 'bold' : 'normal'); doc.setFontSize(l.gras ? 9.4 : 8.8); doc.setTextColor(...INK);
+      doc.text(pt(l.lbl), X0 + 2.5, yy); doc.text(pt(l.val), R - 2.5, yy, { align: 'right' });
+      if (l.trait) doc.line(X0 + LBL, y2 + 1 + (i + 1) * LT, R, y2 + 1 + (i + 1) * LT);
+    });
+    y2 += Math.max(hTot, hGauche) + 6;
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(9); doc.setTextColor(...INK); doc.text(mots, M, y2); y2 += mots.length * 4.2 + 3;
   }
-  if (info.cond) {
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(...MUTED);
-    const cl = doc.splitTextToSize(pt(info.cond), R - M); doc.text(cl, M, y); y += cl.length * 3.9 + 5;
-  }
+  if (cl.length) { doc.setFont('helvetica', 'normal'); doc.setFontSize(8.4); doc.setTextColor(...MUTED); doc.text(cl, M, y2 + 1); }
   if (info.signature) {
-    doc.setDrawColor(...LINE); doc.setLineWidth(0.3); doc.roundedRect(R - 86, y, 86, 32, 1.5, 1.5, 'S');
-    doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(9.5); doc.text(pt(info.signature[0]), R - 82, y + 6.5);
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.5); doc.setTextColor(...MUTED); doc.text(['Date :', '', pt(info.signature[1])], R - 82, y + 13);
+    trait(); doc.roundedRect(R - 84, y2 - 2, 84, 30, 2, 2, 'S');
+    doc.setTextColor(...INK); doc.setFont('helvetica', 'bold'); doc.setFontSize(9.4); doc.text(pt(info.signature[0]), R - 80, y2 + 4);
+    doc.setFont('helvetica', 'normal'); doc.setFontSize(8.4); doc.setTextColor(...MUTED); doc.text(['Date :', '', pt(info.signature[1])], R - 80, y2 + 10);
   }
-  // Pied de page et mention de test
-  const n = doc.getNumberOfPages();
+  // Pied de page (adresse, patente, IF, RC, CNSS, ICE, téléphone, e-mail) et mention de test
+  const n = doc.getNumberOfPages(), pied = piedSociete(soc).map(pt);
   for (let i = 1; i <= n; i++) {
     doc.setPage(i);
     if (soc.mentionTest) {
@@ -1965,10 +2100,9 @@ function construirePDF(jsPDF, kind, obj) {
       doc.text('DOCUMENT DE TEST', 105 - Math.cos(ang) * w / 2, 165 + Math.sin(ang) * w / 2, { angle: 28 });
       doc.restoreGraphicsState();
     }
-    doc.setDrawColor(226, 229, 236); doc.setLineWidth(0.3); doc.line(M, H - 17, R, H - 17);
-    doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(...MUTED);
-    doc.text(pt(mentionsSociete(soc)), M, H - 12);
-    doc.text(`${i} / ${n}`, R, H - 12, { align: 'right' });
+    doc.setFont('helvetica', 'bold'); doc.setTextColor(...NAVY);
+    pied.forEach((l, k) => { let fs = 8; doc.setFontSize(fs); while (doc.getTextWidth(l) > W && fs > 6) { fs -= 0.3; doc.setFontSize(fs); } doc.text(l, 105, H - 16 + k * 4, { align: 'center' }); });
+    if (n > 1) { doc.setFont('helvetica', 'normal'); doc.setFontSize(7.5); doc.setTextColor(...MUTED); doc.text(`${i} / ${n}`, R, H - 4.5, { align: 'right' }); }
   }
   return doc;
 }
@@ -1998,7 +2132,6 @@ async function telechargerPDF(kind, id, btn) {
 /* Ce qui change d'un type de pièce à l'autre : titre, colonnes de prix, mentions, signature. */
 function infosDoc(kind, obj) {
   const soc = S.params.societe, a = kind === 'devis' ? obj : S.affaires[obj.affaireId];
-  const rib = soc.rib ? ' RIB : ' + soc.rib + (soc.banque ? ' (' + soc.banque + ')' : '') + '.' : '';
   if (kind === 'devis') return { a, titre: 'Devis', date: (obj.dates || {}).envoi || TODAY, prix: true, meta: 'Validité : ' + (soc.validite || 30) + ' jours', arrete: 'Arrêté le présent devis', cond: soc.conditions || '', signature: ['Bon pour accord', 'Signature et cachet du client'] };
   if (kind === 'bon' && obj.type === 'commande') return { a, titre: 'Bon de commande', date: obj.date, prix: true, meta: a ? 'Selon devis ' + a.numero : '', arrete: 'Arrêté le présent bon de commande', cond: soc.conditions || '', signature: ['Bon pour commande', 'Signature et cachet du client'] };
   if (kind === 'bon') return { a, titre: 'Bon de livraison', date: obj.date, prix: false, meta: a ? 'Selon devis ' + a.numero : '', cond: 'Matériel et travaux reçus conformes, sauf réserves écrites ci-dessous.', signature: ['Reçu par le client', 'Nom et signature'] };
@@ -2006,25 +2139,30 @@ function infosDoc(kind, obj) {
     const fo = S.factures[obj.factureId];
     return { a, titre: 'Avoir', date: obj.date, prix: true, meta: fo ? 'Sur facture ' + fo.numero : '', arrete: 'Arrêté le présent avoir', cond: (obj.motif ? 'Motif : ' + obj.motif + '. ' : '') + 'Montant à déduire de la facture' + (fo ? ' ' + fo.numero : '') + ' ou à rembourser.' };
   }
-  return { a, titre: obj.type === 'acompte' ? "Facture d'acompte" : 'Facture', date: obj.date, prix: true, reglement: true, meta: 'Échéance : ' + fdateLong(obj.echeance), arrete: 'Arrêtée la présente facture', cond: 'Règlement par virement ou chèque avant le ' + fdateLong(obj.echeance) + '.' + rib };
+  return { a, titre: obj.type === 'acompte' ? "Facture d'acompte" : 'Facture', date: obj.date, prix: true, reglement: true, meta: 'Échéance : ' + fdateLong(obj.echeance), arrete: 'Arrêtée la présente facture', cond: 'Règlement par virement ou chèque avant le ' + fdateLong(obj.echeance) + '.' };
 }
 function documentHTML(kind, obj) {
-  const soc = S.params.societe, c = S.clients[obj.clientId] || {}, info = infosDoc(kind, obj), a = info.a;
+  const soc = S.params.societe, c = S.clients[obj.clientId] || {}, info = infosDoc(kind, obj);
   const lignes = obj.lignes || [], t = totaux(lignes, obj.remise), avecRemise = info.prix && lignes.some(l => l.remise);
   const logo = (S.params.logo || {}).data, virg = v => String(v).replace('.', ',');
-  const rows = lignes.map(l => `<tr><td>${esc(l.designation)}</td><td class="n">${esc(virg(l.qte))}</td><td>${esc(l.unite || '')}</td>${info.prix ? `<td class="n">${money(Math.round(l.pu * 100))}</td>${avecRemise ? `<td class="n">${l.remise ? esc(virg(l.remise)) + ' %' : ''}</td>` : ''}<td class="n">${money(ligneHT(l))}</td>` : ''}</tr>`).join('');
-  const paye = info.reglement ? factPaye(obj) : 0, avo = info.reglement ? factAvoirs(obj) : 0, reste = info.reglement ? factReste(obj) : 0;
+  const rows = lignes.map(l => `<tr><td class="ref">${esc(refLigne(l, info.a))}</td><td>${esc(l.designation)}</td><td class="n">${qte3(l.qte)}${l.unite ? ` <small>${esc(l.unite)}</small>` : ''}</td>${info.prix ? `<td class="n">${nbr(Math.round(l.pu * 100))}</td>${avecRemise ? `<td class="n">${l.remise ? esc(virg(l.remise)) + ' %' : ''}</td>` : ''}<td class="n">${nbr(ligneHT(l))}</td>` : ''}</tr>`).join('');
+  const nCol = 3 + (info.prix ? (avecRemise ? 3 : 2) : 0), refs = refsDoc(kind, obj, info), banque = blocBanque(soc, info);
   return `<article class="doc">${soc.mentionTest ? '<div class="doc-fil" aria-hidden="true">TEST · SANS VALEUR</div>' : ''}
-  <header class="doc-tete"><div class="doc-marque">${logo ? `<img class="doc-logo-img" src="${esc(logo)}" alt="">` : `<span class="doc-logo">${BOLT}</span>`}<div><b>${esc(soc.nom)}</b><br>${esc(soc.activite)}<br>${esc(soc.adresse)}<br>Tél. ${esc(soc.tel)}</div></div>
-  <div class="doc-meta"><h3>${esc(info.titre)}</h3><p>N° <b>${esc(obj.numero)}</b></p><p>Date : ${fdateLong(info.date)}</p>${info.meta ? `<p>${esc(info.meta)}</p>` : ''}</div></header>
-  <div class="doc-client"><p class="lbl">Client</p><b>${esc(c.nom)}</b><br>${esc(c.adresse || '')}<br>ICE : ${esc(c.ice || 'non communiqué')}</div>
-  ${a ? `<p class="doc-objet">Objet : ${esc(a.titre)}${kind === 'facture' ? ' · devis ' + esc(a.numero) : ''}</p>` : ''}
-  <div class="doc-scroll"><table class="doc-table"><thead><tr><th>Désignation</th><th class="n">Qté</th><th>U.</th>${info.prix ? `<th class="n">PU HT</th>${avecRemise ? '<th class="n">Remise</th>' : ''}<th class="n">Total HT</th>` : ''}</tr></thead><tbody>${rows}</tbody></table></div>
-  ${info.prix ? `<dl class="doc-tot">${t.remise ? `<div><dt>Total brut HT</dt><dd>${money(t.brut)}</dd></div><div><dt>Remise ${esc(virg(obj.remise))} %</dt><dd>− ${money(t.remise)}</dd></div>` : ''}<div><dt>Total HT</dt><dd>${money(t.ht)}</dd></div><div><dt>TVA 20 %</dt><dd>${money(t.tva)}</dd></div><div class="ttc"><dt>Total TTC</dt><dd>${money(t.ttc)}</dd></div>${paye > 0 ? `<div><dt>Déjà réglé</dt><dd>${money(paye)}</dd></div>` : ''}${avo > 0 ? `<div><dt>Avoirs</dt><dd>− ${money(avo)}</dd></div>` : ''}${paye > 0 || avo > 0 ? `<div class="ttc"><dt>${reste < 0 ? 'À rembourser' : 'Reste à payer'}</dt><dd>${money(Math.abs(reste))}</dd></div>` : ''}</dl>
+  <header class="doc-tete">
+    <div class="doc-marque">${logo ? `<img class="doc-logo-img" src="${esc(logo)}" alt="${esc(soc.nom)}">` : `<div class="doc-sans-logo"><span class="doc-logo">${BOLT}</span><b>${esc(soc.nom)}</b></div>`}
+      ${soc.activite ? `<p class="doc-act">${esc(soc.activite)}</p>` : ''}${soc.slogan ? `<p class="doc-bande">${esc(soc.slogan)}</p>` : ''}${soc.site ? `<p class="doc-site">${esc(soc.site)}</p>` : ''}${soc.devise ? `<p class="doc-devise">${esc(soc.devise)}</p>` : ''}</div>
+    <div class="doc-droite">
+      <div class="doc-cases"><div><span>${esc(info.titre)} N°</span><b>${esc(obj.numero)}</b></div><div><span>Date</span><b>${jma(info.date)}</b></div><div><span>Client</span><b>${esc(codeClient(c))}</b></div></div>
+      <div class="doc-client"><b>${esc(c.nom)}</b>${c.adresse ? `<span>${esc(c.adresse)}</span>` : ''}<span>ICE : ${esc(c.ice || 'non communiqué')}</span></div>
+    </div></header>
+  ${refs.length ? `<div class="doc-refs">${refs.map(r => `<p>${esc(r)}</p>`).join('')}</div>` : ''}
+  <div class="doc-scroll"><div class="doc-cadre"><table class="doc-table"><thead><tr><th>Référence</th><th>Désignation</th><th>Quantité</th>${info.prix ? `<th>P.U. HT</th>${avecRemise ? '<th>Remise</th>' : ''}<th>Montant HT</th>` : ''}</tr></thead><tbody>${rows}<tr class="doc-vide" aria-hidden="true">${'<td></td>'.repeat(nCol)}</tr></tbody></table></div></div>
+  ${info.prix ? `<div class="doc-bas"><div class="doc-gauche"><table class="doc-tva"><thead><tr><th>Code</th><th>Base HT</th><th>Taux TVA</th><th>Montant TVA</th></tr></thead><tbody><tr><td>01</td><td class="n">${nbr(t.ht)}</td><td class="n">${virg((TVA * 100).toFixed(2))}</td><td class="n">${nbr(t.tva)}</td></tr></tbody></table>${banque.length ? `<p class="doc-banque">${banque.map(esc).join('<br>')}</p>` : ''}</div>
+  <dl class="doc-tot">${lignesTotaux(obj, info, t).map(l => `<div class="${l.gras ? 'gras' : ''}${l.trait ? ' trait' : ''}"><dt>${esc(l.lbl)}</dt><dd>${esc(l.val)}</dd></div>`).join('')}</dl></div>
   <p class="doc-lettres">${info.arrete} à la somme de : <b>${enLettres(Math.abs(t.ttc))}</b> TTC.</p>` : ''}
   ${info.cond ? `<p class="doc-cond">${esc(info.cond)}</p>` : ''}
   ${info.signature ? `<div class="doc-accord"><b>${esc(info.signature[0])}</b><span>Date :</span><span>${esc(info.signature[1])}</span></div>` : ''}
-  <footer class="doc-pied">${esc(mentionsSociete(soc))}</footer></article>`;
+  <footer class="doc-pied">${piedSociete(soc).map(l => `<p>${esc(l)}</p>`).join('')}</footer></article>`;
 }
 
 /* ---------- Fenêtres ---------- */
@@ -2224,7 +2362,7 @@ function majNav() {
 }
 
 /* ---------- Aide : assistant, guide pas à pas et demandes pour Yoni ---------- */
-const APP_VERSION = '3.8';
+const APP_VERSION = '3.9';
 const ECRANS = { employes: 'Employés', chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
 const TYPES_DEMANDE = { anomalie: ['Problème', 'bad'], changement: ['Changement', 'warn'], ajout: ['Ajout', 'info'] };
 const STATUTS_DEMANDE = { nouvelle: 'Nouvelle', vue: 'Vue par Yoni', faite: 'Faite' };
@@ -2249,6 +2387,7 @@ const GUIDE = [
   { q: 'Le client accepte le devis', ecran: 'affaires', etapes: [
     'Ouvrez l’affaire et cliquez sur « Le client accepte ».',
     'Le logiciel propose le bon de commande et la facture d’acompte. Cochez ce que vous voulez, puis « Valider ».',
+    'Si le client a donné un numéro de commande, notez-le dans la même fenêtre : il sera repris sur les bons et les factures.',
     'Si vous cliquez sur « Plus tard », rien n’est créé : les deux reviennent dans « À faire ».',
     'Dans la carte « Planning », indiquez le début et la fin prévus.'] },
   { q: 'Faire un bon de livraison', ecran: 'affaires', etapes: [
@@ -2446,6 +2585,7 @@ function proposerSuiteAcceptation(a) {
     <p>Le devis ${esc(a.numero)} est accepté. Cochez ce que le logiciel doit créer. Rien n’est créé sans votre accord.</p>
     ${bc ? '<label class="radio"><input type="checkbox" name="bc" checked> Le bon de commande, copié du devis</label>' : ''}
     ${ac ? `<label class="radio"><input type="checkbox" name="acompte" checked> La facture d’acompte de ${pct} %, soit ${money(ttc)} TTC</label>` : ''}
+    <label class="champ">N° de commande du client, s’il en a donné un<input type="text" name="cmd" value="${esc(a.cmdClient || '')}" maxlength="40" autocomplete="off"></label>
     <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Plus tard</button><button class="btn btn-primary" type="submit">Valider</button></div></form>`);
 }
 
@@ -3206,6 +3346,8 @@ const FORMS = {
   },
   'suite-acceptation': (fd, form) => {
     const a = S.affaires[form.dataset.id]; if (!a) return;
+    const cmd = (fd.get('cmd') || '').trim().slice(0, 40);
+    if (cmd !== (a.cmdClient || '')) { a.cmdClient = cmd; persist('affaires', a); }
     const faits = [];
     if (fd.get('bc') && !affBons(a, 'commande').length) faits.push('bon de commande ' + creerBonCommande(a, false).numero);
     if (fd.get('acompte') && !affFacturesValides(a).length) faits.push("facture d'acompte " + creerAcompte(a, false).numero);
@@ -3312,7 +3454,7 @@ const FORMS = {
   },
   reglages: fd => {
     const soc = Object.assign({}, S.params.societe);
-    ['nom', 'activite', 'adresse', 'tel', 'fax', 'email', 'ice', 'if', 'rc', 'tp', 'cnss', 'banque', 'rib', 'signature', 'conditions'].forEach(k => { soc[k] = (fd.get(k) || '').trim(); });
+    ['nom', 'activite', 'adresse', 'tel', 'fax', 'site', 'email', 'ice', 'if', 'rc', 'tp', 'cnss', 'banque', 'rib', 'signature', 'conditions'].forEach(k => { soc[k] = (fd.get(k) || '').trim(); });
     soc.validite = Math.max(1, Math.round(Number(fd.get('validite')) || 30));
     soc.mentionTest = fd.get('mentionTest') === 'on';
     S.params.societe = soc;
@@ -3377,6 +3519,7 @@ document.addEventListener('change', e => {
   if (el.matches('select[data-champ="resp"]')) { const a = affaireCourante(); if (a) { a.resp = el.value; persist('affaires', a); log(a.clientId, a.id, 'systeme', `Affaire confiée à ${nomMembre(el.value)}.`); } }
   if (el.id === 'logo-fichier') { chargerLogo(el.files && el.files[0]); el.value = ''; }
   if (el.dataset.date) { const a = affaireCourante(); if (a) { a.dates = a.dates || {}; if (el.value) a.dates[el.dataset.date] = el.value; else delete a.dates[el.dataset.date]; persist('affaires', a); } }
+  if (el.matches('input[data-champ="cmdClient"]')) { const a = affaireCourante(), v = el.value.trim(); if (a && (a.cmdClient || '') !== v) { a.cmdClient = v; persist('affaires', a); toast(v ? 'N° de commande enregistré : il sera repris sur les bons et les factures.' : 'N° de commande retiré.'); } }
   if (el.matches('textarea[data-champ="notes"]')) { const a = affaireCourante(); if (a && a.notes !== el.value) { a.notes = el.value; persist('affaires', a); } }
 });
 document.addEventListener('input', e => {
