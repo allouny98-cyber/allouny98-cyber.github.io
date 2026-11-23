@@ -599,6 +599,26 @@ label.btn { cursor: pointer; }
 .suivi-dl dd { white-space: nowrap; }
 .suivi-dl dt small { display: block; font-size: calc(12.5px * var(--k)); }
 
+/* Employés, état de paie et saisie par photo */
+.mois-choix { display: flex; align-items: center; gap: 10px; margin: 0 0 14px; }
+.mois-choix b { min-width: 150px; text-align: center; font-family: var(--font-display); font-size: calc(17px * var(--k)); }
+.mois-choix .btn { min-width: 40px; justify-content: center; padding-left: 8px; padding-right: 8px; }
+.table-scroll { overflow-x: auto; margin: 0 -4px; padding: 0 4px; }
+.etat-paie { width: 100%; border-collapse: collapse; font-size: calc(13.5px * var(--k)); font-variant-numeric: tabular-nums; }
+.etat-paie th, .etat-paie td { padding: 7px 8px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.etat-paie th { color: var(--muted); font-weight: 600; font-size: calc(12.5px * var(--k)); }
+.etat-paie .num { text-align: right; }
+.etat-paie tr.total td { font-weight: 700; border-top: 2px solid var(--ink); border-bottom: 0; }
+.champ.case { flex-direction: row; align-items: center; gap: 8px; align-self: end; min-height: 44px; }
+.champ.case input { width: 18px; height: 18px; flex: none; }
+.photo-bloc { border: 1px dashed var(--line); border-radius: var(--r-btn); padding: 12px; background: var(--surface-2); display: flex; flex-direction: column; gap: 6px; }
+.photo-boutons { display: flex; gap: 8px; flex-wrap: wrap; }
+.photo-bloc .carte-note { margin: 0; }
+.photo-etat { margin: 0; font-size: calc(13.5px * var(--k)); font-weight: 600; color: var(--warn); }
+.photo-etat:empty { display: none; }
+.photo-etat.ok { color: var(--ok); }
+@media (max-width: 480px) { .mois-choix { justify-content: space-between; } .mois-choix .btn { min-height: 44px; min-width: 44px; } .photo-boutons .btn { flex: 1 1 auto; } }
+
 </style>
 </head>
 <body>
@@ -663,6 +683,7 @@ const DEFAULT_AUTO = {
   clientDormant: { actif: true, j: 180, resp: 'papa' },
   payerFournisseur: { actif: true, j: 7, resp: 'maman' },
   budgetChantier: { actif: true, pct: 90, resp: 'papa' },
+  paieMois: { actif: true, j: 20, resp: 'maman' },
   resumeLundi: { actif: true }
 };
 // Logo d'Electropack (version marine, pour fond clair et documents), 194 × 120 px
@@ -680,7 +701,7 @@ const DEFAULT_SOCIETE = {
   adresse: 'Work Center, angle Ziraoui et Moulay Youssef, 6e étage, Casablanca',
   tel: '05 22 36 97 14 / 05 22 36 97 15',
   email: 'electropack.installation@gmail.com',
-  ice: '000019317000010', if: '40152192', rc: '174899', tp: 'à compléter',
+  ice: '000019317000010', if: '40152192', rc: '174899', tp: '33151855', cnss: '8036982', fax: '05 22 36 97 16',
   banque: '', rib: '',
   validite: 30,
   conditions: 'Acompte de 30 % à la commande, solde à la fin des travaux. Règlement par virement ou chèque.',
@@ -941,7 +962,24 @@ function buildDemo(today) {
     HR('hr01', 'a03', -6, 6, 8), HR('hr02', 'a03', -5, 6, 8), HR('hr03', 'a03', -4, 6, 8), HR('hr04', 'a03', -3, 6, 8), HR('hr05', 'a03', -2, 3, 8),
     HR('hr06', 'a04', -20, 5, 8), HR('hr07', 'a04', -17, 6, 8), HR('hr08', 'a04', -13, 7, 8), HR('hr09', 'a04', -9, 6, 8), HR('hr10', 'a04', -5, 5, 9)
   ];
-  return { catalogue, clients, affaires, factures, activites, bons, fournisseurs, achats, heures, auto: JSON.parse(JSON.stringify(DEFAULT_AUTO)), societe: Object.assign({}, DEFAULT_SOCIETE), equipe: JSON.parse(JSON.stringify(DEFAULT_EQUIPE)) };
+  
+  // Employés et paie : tous fictifs (noms, taux et jours inventés).
+  const EM = (id, nom, poste, paie, taux, jEntree) => ({ id, nom, poste, paie, taux, tel: '06 00 00 01 ' + id.slice(-2), entree: d(jEntree), actif: true });
+  const employes = [
+    EM('em01', 'Hicham Ouardi', 'Chef d’équipe', 'mois', 8500, -2900), EM('em02', 'Saïd Benhaddou', 'Électricien', 'jour', 220, -2100),
+    EM('em03', 'Mustapha El Idrissi', 'Électricien', 'jour', 220, -1700), EM('em04', 'Khalid Tazi', 'Électricien', 'jour', 200, -1200),
+    EM('em05', 'Youssef Amrani', 'Électricien', 'jour', 200, -900), EM('em06', 'Omar Lahlou', 'Aide électricien', 'jour', 150, -400),
+    EM('em07', 'Rachid Bennis', 'Technicien courants faibles', 'mois', 7000, -1500), EM('em08', 'Abdelilah Chraïbi', 'Aide électricien', 'jour', 150, -150)
+  ];
+  const moisCourant = today.slice(0, 7), moisAvant = addDaysISO(moisCourant + '-01', -1).slice(0, 7);
+  const PT = (employeId, mois, jours, primes, avances, paye) => ({ id: employeId + '_' + mois, employeId, mois, jours, primes: primes || 0, avances: avances || 0, note: '', paye: paye || null });
+  const payeAvant = { date: moisCourant + '-02', mode: 'Virement' };
+  const pointages = [
+    PT('em01', moisAvant, 26, 500, 0, payeAvant), PT('em02', moisAvant, 24, 0, 500, payeAvant), PT('em03', moisAvant, 25, 0, 0, payeAvant), PT('em04', moisAvant, 22, 200, 0, payeAvant),
+    PT('em05', moisAvant, 24, 0, 300, payeAvant), PT('em06', moisAvant, 23, 0, 0, { date: moisCourant + '-02', mode: 'Espèces' }), PT('em07', moisAvant, 26, 0, 0, payeAvant), PT('em08', moisAvant, 20, 0, 200, { date: moisCourant + '-02', mode: 'Espèces' }),
+    PT('em01', moisCourant, 17, 0, 0), PT('em02', moisCourant, 17, 0, 500), PT('em03', moisCourant, 16, 0, 0), PT('em05', moisCourant, 17, 300, 0), PT('em07', moisCourant, 17, 0, 1000)
+  ];
+  return { catalogue, clients, affaires, factures, activites, bons, fournisseurs, achats, heures, employes, pointages, auto: JSON.parse(JSON.stringify(DEFAULT_AUTO)), societe: Object.assign({}, DEFAULT_SOCIETE), equipe: JSON.parse(JSON.stringify(DEFAULT_EQUIPE)) };
 }
 
 if (typeof module !== 'undefined') module.exports = { buildDemo, totaux, coutTotal, addDaysISO };
@@ -1002,15 +1040,15 @@ function enLettres(c) {
 }
 
 /* ---------- État ---------- */
-const S = { clients: {}, affaires: {}, factures: {}, bons: {}, catalogue: {}, activites: {}, taches: {}, demandes: {}, fournisseurs: {}, achats: {}, heures: {}, params: { auto: clone(DEFAULT_AUTO), societe: clone(DEFAULT_SOCIETE), equipe: clone(DEFAULT_EQUIPE), logo: clone(DEFAULT_LOGO) } };
+const S = { clients: {}, affaires: {}, factures: {}, bons: {}, catalogue: {}, activites: {}, taches: {}, demandes: {}, fournisseurs: {}, achats: {}, heures: {}, employes: {}, pointages: {}, params: { auto: clone(DEFAULT_AUTO), societe: clone(DEFAULT_SOCIETE), equipe: clone(DEFAULT_EQUIPE), logo: clone(DEFAULT_LOGO) } };
 /* Version des données d'exemple : quand elle change, le tableau de bord propose de charger les nouveaux exemples. */
-const EXEMPLES_VERSION = 3;
+const EXEMPLES_VERSION = 4;
 const DEFAUTS = { auto: DEFAULT_AUTO, societe: DEFAULT_SOCIETE, equipe: DEFAULT_EQUIPE, logo: DEFAULT_LOGO, exemples: { version: 1 } };
 function fusionParam(id, v) {
   if (id === 'auto') { const out = clone(DEFAULT_AUTO); Object.keys(v || {}).forEach(k => { out[k] = Object.assign({}, out[k] || {}, v[k]); }); return out; }
   return Object.assign(clone(DEFAUTS[id] || {}), v || {});
 }
-const UI = { achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes' };
+const UI = { empMois: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes' };
 let PROFIL = (() => { try { return localStorage.getItem('crm-profil') || 'papa'; } catch (e) { return 'papa'; } })();
 const membres = () => (S.params.equipe && Array.isArray(S.params.equipe.membres) && S.params.equipe.membres.length) ? S.params.equipe.membres : DEFAULT_EQUIPE.membres;
 const membre = id => membres().find(m => m.id === id);
@@ -1027,7 +1065,7 @@ function chargerDemo() {
   const D = buildDemo(TODAY);
   S.clients = byId(D.clients); S.affaires = byId(D.affaires); S.factures = byId(D.factures);
   S.catalogue = byId(D.catalogue); S.activites = byId(D.activites); S.bons = byId(D.bons); S.taches = {};
-  S.fournisseurs = byId(D.fournisseurs); S.achats = byId(D.achats); S.heures = byId(D.heures);
+  S.fournisseurs = byId(D.fournisseurs); S.achats = byId(D.achats); S.heures = byId(D.heures); S.employes = byId(D.employes); S.pointages = byId(D.pointages);
   S.params = { auto: D.auto, societe: D.societe, equipe: D.equipe, logo: clone(DEFAULT_LOGO), exemples: { version: EXEMPLES_VERSION } };
 }
 
@@ -1161,6 +1199,10 @@ function calculerTaches() {
     if (n < 0) add(Object.assign({ key: 'payer2_' + x.id, niveau: 3, detail: `${money(r)} en retard de ${-n} j` }, base));
     else if (n <= (Number(R.payerFournisseur.j) || 0)) add(Object.assign({ key: 'payer1_' + x.id, niveau: 2, detail: `${money(r)} à payer ${n === 0 ? "aujourd'hui" : 'dans ' + n + ' j'}` }, base));
   });
+  if (actif('paieMois') && +TODAY.slice(8, 10) >= (Number(R.paieMois.j) || 20)) {
+    const m = TODAY.slice(0, 7), manque = paieDuMois(m).filter(x => !x.saisi).length;
+    if (manque) add({ key: 'paie_' + m, regle: 'paieMois', niveau: 2, titre: 'Préparer la paie du mois', detail: `${nb(manque, 'employé')} sans jours saisis pour ${moisLong(m)}`, c: { id: '', nom: 'Employés', tel: '' }, quiHtml: '<a href="#employes">Employés</a>', actions: ['employes', 'fait'] });
+  }
   facturesListe().forEach(f => {
     if (factStatut(f) !== 'retard' || !actif('relanceFacture')) return;
     const c = S.clients[f.clientId]; if (!c) return;
@@ -1278,10 +1320,11 @@ function tacheItem(t) {
   if (t.actions.includes('solde')) btn.push(`<button class="btn btn-primary btn-sm" data-act="tache-solde" data-key="${t.key}">Créer la facture</button>`);
   if (t.actions.includes('ouvrir')) btn.push(`<a class="btn btn-primary btn-sm" href="#affaire-${t.a.id}">Fixer les dates</a>`);
   if (t.actions.includes('chantier')) btn.push(`<a class="btn btn-primary btn-sm" href="#affaire-${t.a.id}">${ico('cone')}Voir le suivi</a>`);
+  if (t.actions.includes('employes')) btn.push(`<a class="btn btn-primary btn-sm" href="#employes">${ico('personne')}Saisir les jours</a>`);
   if (t.actions.includes('payer')) btn.push(`<button class="btn btn-primary btn-sm" data-act="achat-ouvrir" data-id="${t.ach.id}">Enregistrer le paiement</button>`);
   if (t.actions.includes('appel')) btn.push(`<a class="btn btn-sm" href="tel:${esc((t.c.tel || '').replace(/\s/g, ''))}">Appeler ${esc(t.c.tel || '')}</a>`);
   if (t.actions.includes('fait')) btn.push(`<button class="btn btn-ghost btn-sm" data-act="tache-fait" data-key="${t.key}">Fait</button>`);
-  const qui = t.fo ? `<button class="lien" data-act="fournisseur-ouvrir" data-id="${esc(t.fo.id)}">${esc(t.fo.nom)}</button>` : `<a href="#client-${t.c.id}">${esc(t.c.nom)}</a>`;
+  const qui = t.quiHtml ? t.quiHtml : t.fo ? `<button class="lien" data-act="fournisseur-ouvrir" data-id="${esc(t.fo.id)}">${esc(t.fo.nom)}</button>` : `<a href="#client-${t.c.id}">${esc(t.c.nom)}</a>`;
   const lien = t.ach ? `<button class="lien" data-act="achat-ouvrir" data-id="${esc(t.ach.id)}">${esc(t.ach.numero)}</button>` : t.f ? `<button class="lien" data-act="ouvrir-facture" data-id="${t.f.id}">${esc(t.f.numero)}</button>` : t.a ? `<a href="#affaire-${t.a.id}">${esc(t.a.numero)}</a>` : '';
   return `<li class="tache niv-${t.niveau}"><span class="tache-ico">${ico(TACHE_ICO[t.key.split('_')[0]] || 'coche')}</span><div class="tache-corps"><p class="tache-titre">${esc(t.titre)}${t.resp && nomMembre(t.resp) ? ` <span class="resp resp-${t.resp === PROFIL ? 'moi' : 'autre'}">${esc(nomMembre(t.resp))}</span>` : ''}</p><p class="tache-detail">${qui} · ${esc(t.detail)}${lien ? ' · ' + lien : ''}</p></div><div class="tache-actions">${btn.join('')}</div></li>`;
 }
@@ -1349,8 +1392,8 @@ function vueAccueil() {
   const hist = Object.values(S.activites).sort((x, y) => y.date.localeCompare(x.date)).slice(0, 6);
   const aVenir = evenementsPlanning().filter(e => e.date >= TODAY).slice(0, 4);
   const vEx = (S.params.exemples || {}).version;
-  const bandeauExemples = mode !== 'db' || vEx === EXEMPLES_VERSION ? '' : vEx === 2
-    ? `<section class="carte bandeau-ex"><div><h2>Nouveau : achats et suivi de chantier</h2><p>Deux écrans sont arrivés : « Achats » (fournisseurs, factures à payer) et « Chantiers » (budget, dépenses, marge). Pour les essayer, ajoutez des exemples d’achats et d’heures. Vos clients, affaires et factures de test ne changent pas.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-ajouter">Ajouter les exemples d’achats</button><button class="btn" data-act="exemples-garder">Ne pas ajouter</button></div></section>`
+  const bandeauExemples = mode !== 'db' || vEx === EXEMPLES_VERSION ? '' : (vEx === 2 || vEx === 3)
+    ? `<section class="carte bandeau-ex"><div><h2>${vEx === 3 ? 'Nouveau : section Employés' : 'Nouveau : achats, chantiers et employés'}</h2><p>${vEx === 3 ? 'L’écran « Employés » est arrivé : jours travaillés, paie et état du mois pour le comptable.' : 'Trois écrans sont arrivés : « Achats », « Chantiers » et « Employés ».'} Pour les essayer, ajoutez les exemples, tous inventés. Vos clients, affaires et factures de test ne changent pas.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-ajouter">Ajouter les exemples</button><button class="btn" data-act="exemples-garder">Ne pas ajouter</button></div></section>`
     : `<section class="carte bandeau-ex"><div><h2>Nouveaux exemples disponibles</h2><p>Les exemples ressemblent maintenant aux chantiers d’Electropack : hôtels, banques, plateaux de bureaux, industrie, avec des achats et un suivi de chantier. Les charger remplace les clients, affaires, bons, factures et achats de test actuels. Vos réglages sont conservés.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-charger">Charger les nouveaux exemples</button><button class="btn" data-act="exemples-garder">Garder les données actuelles</button></div></section>`;
   return bandeauExemples + `
   <section class="page-tete">
@@ -1626,6 +1669,7 @@ const REGLES = [
   ['demandeSansSuite', 'Ne laisser aucune demande sans visite', 'Une demande sans visite prévue depuis {j} jours remonte dans « À faire ».', [['j', 'jours']]],
   ['payerFournisseur', 'Rappeler les factures de fournisseurs à payer', 'Une facture de fournisseur à payer dans {j} jours, ou déjà en retard, remonte dans « À faire ». Le logiciel ne paie rien : vous notez le paiement une fois fait.', [['j', 'jours avant l’échéance']]],
   ['budgetChantier', 'Surveiller le budget des chantiers', 'Quand les achats, les commandes et les heures d’un chantier atteignent {pct} % du coût prévu au devis, il remonte dans « À faire ».', [['pct', '% du budget']]],
+  ['paieMois', 'Rappeler la paie en fin de mois', 'À partir du {j} du mois, s’il manque des jours travaillés, « Préparer la paie du mois » remonte dans « À faire ». Le logiciel ne verse rien.', [['j', 'jour du mois']]],
   ['clientDormant', "Proposer l'entretien aux anciens clients", 'Un client sans intervention depuis {j} jours reçoit une proposition de visite de contrôle.', [['j', 'jours']]],
   ['resumeLundi', 'Résumé du lundi matin', 'Chaque lundi, le résumé ci-dessous est envoyé par e-mail (dans la vraie version).', []]
 ];
@@ -1714,7 +1758,7 @@ function vueReglages() {
         <div class="logo-actions"><label class="btn btn-sm" for="logo-fichier">Choisir un logo…</label><input type="file" id="logo-fichier" accept="image/png,image/jpeg,image/webp" class="sr">${logo ? '<button type="button" class="btn btn-ghost btn-sm" data-act="logo-retirer">Retirer</button>' : ''}<p class="carte-note">PNG ou JPEG. Il apparaît dans le menu, sur les devis, les bons et les factures.</p></div></div>
       <div class="grille-champs">
       ${champ('nom', 'Raison sociale', s.nom, 'required')}${champ('activite', 'Activité', s.activite)}${champ('adresse', 'Adresse', s.adresse)}${champ('tel', 'Téléphone', s.tel)}${champ('email', 'E-mail', s.email, 'type="email"')}
-      ${champ('ice', 'ICE (15 chiffres)', s.ice)}${champ('if', 'Identifiant fiscal (IF)', s.if)}${champ('rc', 'Registre de commerce (RC)', s.rc)}${champ('tp', 'Taxe professionnelle (TP)', s.tp)}
+      ${champ('ice', 'ICE (15 chiffres)', s.ice)}${champ('if', 'Identifiant fiscal (IF)', s.if)}${champ('rc', 'Registre de commerce (RC)', s.rc)}${champ('tp', 'Patente (taxe professionnelle)', s.tp)}${champ('cnss', 'CNSS', s.cnss)}${champ('fax', 'Fax', s.fax)}
       ${champ('banque', 'Banque', s.banque)}${champ('rib', 'RIB (24 chiffres)', s.rib)}</div></section>
     <section class="carte"><header class="carte-tete"><h2>Devis et messages</h2></header><div class="grille-champs">
       ${champ('validite', 'Validité des devis (jours)', s.validite, 'type="number" min="1" max="365"')}${champ('signature', 'Signature des messages', s.signature)}
@@ -1745,6 +1789,7 @@ function resultatsRecherche(q) {
   affairesListe().forEach(a => { if (norm([a.titre, a.numero, a.adresseChantier].join(' ')).includes(v)) ligne(`<span><b>${esc(a.titre)}</b><small>Affaire ${esc(a.numero)} · ${esc(nomClient(a.clientId))}</small></span><span class="droite">${pillEtape(etapeAffichee(a))}</span>`, '', '#affaire-' + a.id); });
   facturesListe().forEach(f => { if (norm(f.numero).includes(v)) ligne(`<span><b>${esc(f.numero)}</b><small>${typeFact(f)} · ${esc(nomClient(f.clientId))}</small></span><span class="droite"><small>${money(factTot(f).ttc)}</small></span>`, `data-act="ouvrir-facture" data-id="${esc(f.id)}"`); });
   bonsListe().forEach(b => { if (norm(b.numero).includes(v)) ligne(`<span><b>${esc(b.numero)}</b><small>${b.type === 'commande' ? 'Bon de commande' : 'Bon de livraison'} · ${esc(nomClient(b.clientId))}</small></span>`, `data-act="ouvrir-bon" data-id="${esc(b.id)}"`); });
+  employesListe().forEach(e => { if (norm([e.nom, e.poste].join(' ')).includes(v)) ligne(`<span><b>${esc(e.nom)}</b><small>Employé · ${esc(e.poste || '')}</small></span>`, `data-act="pointage-ouvrir" data-id="${esc(e.id)}"`); });
   fournisseursListe().forEach(fo => { if (norm([fo.nom, fo.categorie, fo.contact, fo.tel].join(' ')).includes(v)) ligne(`<span><b>${esc(fo.nom)}</b><small>Fournisseur · ${esc(fo.categorie || '')}</small></span>`, `data-act="fournisseur-ouvrir" data-id="${esc(fo.id)}"`); });
   achatsListe().forEach(x => { if (norm([x.numero, x.refFacture, x.libelle].join(' ')).includes(v)) ligne(`<span><b>${esc(x.libelle)}</b><small>Achat ${esc(x.numero)} · ${esc(nomFournisseur(x.fournisseurId))}</small></span><span class="droite"><small>${money(achTTC(x))}</small></span>`, `data-act="achat-ouvrir" data-id="${esc(x.id)}"`); });
   return out.length ? `<ul class="liste-simple">${out.slice(0, 14).join('')}</ul>${out.length > 14 ? `<p class="carte-note">${out.length - 14} autres résultats : précisez la recherche.</p>` : ''}` : vide('Aucun résultat.');
@@ -1763,7 +1808,7 @@ async function ecrireSur(path, data) {
   }
 }
 async function reinitialiserDemo(btn) {
-  const D = buildDemo(TODAY), COLL_DEMO = ['clients', 'affaires', 'factures', 'catalogue', 'activites', 'bons', 'fournisseurs', 'achats', 'heures'];
+  const D = buildDemo(TODAY), COLL_DEMO = ['clients', 'affaires', 'factures', 'catalogue', 'activites', 'bons', 'fournisseurs', 'achats', 'heures', 'employes', 'pointages'];
   const charger = () => { COLL_DEMO.forEach(k => { S[k] = byId(D[k]); }); S.taches = {}; };
   if (mode !== 'db') { charger(); fermerFenetre(); toast('Données d’exemple remises à neuf.'); rendre(true); return; }
   const ops = [];
@@ -1806,7 +1851,7 @@ function chargerPdf() {
 const pt = s => String(s == null ? '' : s).replace(/[   ]/g, ' ').replace(/[‘’]/g, "'").replace(/[“”]/g, '"').replace(/œ/g, 'oe').replace(/Œ/g, 'OE').replace(/…/g, '...').replace(/[–—]/g, '-').replace(/→/g, '->').replace(/−/g, '-').replace(/²/g, '2').replace(/ᵉ/g, 'e');
 const pm = c => pt(money(c));
 /* Pied des documents : seulement les mentions réellement renseignées. */
-const mentionsSociete = soc => [soc.nom].concat([['ICE', soc.ice], ['IF', soc.if], ['RC', soc.rc], ['TP', soc.tp]].filter(([, v]) => v && !/compl[ée]ter/i.test(v)).map(([k, v]) => k + ' ' + v)).join(' · ');
+const mentionsSociete = soc => [soc.nom].concat([['Patente', soc.tp], ['IF', soc.if], ['RC', soc.rc], ['CNSS', soc.cnss], ['ICE', soc.ice]].filter(([, v]) => v && !/compl[ée]ter/i.test(v)).map(([k, v]) => k + ' ' + v)).join(' · ');
 function construirePDF(jsPDF, kind, obj) {
   const soc = S.params.societe, c = S.clients[obj.clientId] || {}, info = infosDoc(kind, obj), a = info.a;
   const lignes = obj.lignes || [], t = totaux(lignes, obj.remise), avecRemise = info.prix && lignes.some(l => l.remise);
@@ -2123,24 +2168,25 @@ const ICONS = {
   recharger: '<path d="M4 11a8 8 0 0 1 14-4.3L20 9"/><path d="M20 4v5h-5"/><path d="M20 13a8 8 0 0 1-14 4.3L4 15"/><path d="M4 20v-5h5"/>',
   dossier: '<path d="M3 6h6l2 2.5h10V19H3z"/>',
   chevron: '<path d="m9 6 6 6-6 6"/>',
+  photo: '<path d="M4 8h3.2L8.8 6h6.4l1.6 2H20v11H4z"/><circle cx="12" cy="13.3" r="3.4"/>',
   panier: '<circle cx="9" cy="20" r="1.4"/><circle cx="17" cy="20" r="1.4"/><path d="M3 4h2.5l2.2 11h10.1l1.9-8H7"/>',
   cone: '<path d="M9.6 4h4.8l4.1 14h-13z"/><path d="M4 21h16"/><path d="M8.4 9.5h7.2"/><path d="M7.1 14h9.8"/>',
   gauche: '<path d="m15 6-6 6 6 6"/>',
   copier: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>'
 };
 const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
-const NAV_ICO = { accueil: 'accueil', affaires: 'affaires', planning: 'calendrier', clients: 'clients', factures: 'facture', catalogue: 'catalogue', automatisations: 'eclair', reglages: 'reglages', chantiers: 'cone', achats: 'panier' };
-const TACHE_ICO = { devis1: 'message', devis2: 'telephone', fact1: 'message', fact2: 'telephone', fact3: 'cloche', acompte: 'facture', bc: 'bon', planifier: 'calendrier', solde: 'facture', demande: 'lieu', dormant: 'outil', payer1: 'portefeuille', payer2: 'portefeuille', budget1: 'cone', budget2: 'cone' };
+const NAV_ICO = { accueil: 'accueil', affaires: 'affaires', planning: 'calendrier', clients: 'clients', factures: 'facture', catalogue: 'catalogue', automatisations: 'eclair', reglages: 'reglages', chantiers: 'cone', achats: 'panier', employes: 'personne' };
+const TACHE_ICO = { devis1: 'message', devis2: 'telephone', fact1: 'message', fact2: 'telephone', fact3: 'cloche', acompte: 'facture', bc: 'bon', planifier: 'calendrier', solde: 'facture', demande: 'lieu', dormant: 'outil', paie: 'personne', payer1: 'portefeuille', payer2: 'portefeuille', budget1: 'cone', budget2: 'cone' };
 /* Titres de cartes, indicateurs, boutons et journal : l'icône est choisie d'après le libellé ou l'action. */
-const TITRE_ICO = [[/^Chantiers en cours|^Suivi du chantier|budget des chantiers/, 'cone'], [/^Fournisseurs|fournisseurs à payer/, 'camion'], [/^Nouveau : achats/, 'panier'], [/^À faire/, 'coche'], [/^À venir/, 'calendrier'], [/^Facturé HT/, 'barres'], [/^Affaires en cours/, 'affaires'], [/^Activité récente|^Journal|^Historique/, 'horloge'], [/^Devis et messages/, 'message'],
+const TITRE_ICO = [[/^Chantiers en cours|^Suivi du chantier|budget des chantiers/, 'cone'], [/^Fournisseurs|fournisseurs à payer/, 'camion'], [/^Nouveau : /, 'panier'], [/^À faire/, 'coche'], [/^À venir/, 'calendrier'], [/^Facturé HT/, 'barres'], [/^Affaires en cours/, 'affaires'], [/^Activité récente|^Journal|^Historique/, 'horloge'], [/^Devis et messages/, 'message'],
   [/^Devis/, 'facture'], [/^Pièces/, 'dossier'], [/^Planning/, 'calendrier'], [/^Notes/, 'note'], [/^Apparence/, 'soleil'], [/^Société/, 'immeuble'], [/^Équipe/, 'clients'], [/^Demandes pour Yoni/, 'boite'],
   [/^Données d'exemple/, 'recharger'], [/^Coordonnées|^Contact/, 'personne'], [/^Factures/, 'facture'], [/^Affaires/, 'affaires'], [/^Relancer les devis/, 'message'], [/bon de commande/i, 'bon'], [/facture d'acompte/i, 'facture'],
   [/^Planifier/, 'calendrier'], [/^Relancer les factures/, 'cloche'], [/^Facturer le solde/, 'facture'], [/aucune demande sans visite/i, 'lieu'], [/entretien/i, 'outil'], [/^Résumé|^Aperçu du résumé/, 'courriel'],
   [/^Rien ne se fait/, 'coche'], [/^Nouveaux exemples/, 'recharger'], [/vraie version/, 'eclair'], [/^Aujourd|^Cette semaine|^Plus tard|^Semaine/, 'calendrier']];
-const KPI_ICO = [[/^À payer aux/, 'portefeuille', 'warn'], [/^Fournisseurs en retard/, 'cloche', 'bad'], [/^À payer sous/, 'calendrier', 'info'], [/^Payé ce mois/, 'fait', 'ok'], [/^Chantiers en cours/, 'cone', 'accent'], [/^Reste à facturer/, 'facture', 'info'], [/^Dépensé/, 'panier', 'warn'], [/^Budgets à surveiller/, 'cloche', 'ok'], [/^Facturé/, 'hausse', 'accent'], [/^Reste à encaisser/, 'portefeuille', 'warn'], [/^Devis en attente/, 'sablier', 'info'], [/^Taux de signature/, 'stylo', 'ok'], [/^En retard/, 'cloche', 'bad'], [/^Attendu/, 'calendrier', 'info'], [/^Encaissé/, 'fait', 'ok']];
+const KPI_ICO = [[/^Employés/, 'personne', 'accent'], [/^Jours travaillés/, 'calendrier', 'info'], [/^Paie du mois/, 'portefeuille', 'accent'], [/^Reste à verser/, 'sablier', 'warn'], [/^À payer aux/, 'portefeuille', 'warn'], [/^Fournisseurs en retard/, 'cloche', 'bad'], [/^À payer sous/, 'calendrier', 'info'], [/^Payé ce mois/, 'fait', 'ok'], [/^Chantiers en cours/, 'cone', 'accent'], [/^Reste à facturer/, 'facture', 'info'], [/^Dépensé/, 'panier', 'warn'], [/^Budgets à surveiller/, 'cloche', 'ok'], [/^Facturé/, 'hausse', 'accent'], [/^Reste à encaisser/, 'portefeuille', 'warn'], [/^Devis en attente/, 'sablier', 'info'], [/^Taux de signature/, 'stylo', 'ok'], [/^En retard/, 'cloche', 'bad'], [/^Attendu/, 'calendrier', 'info'], [/^Encaissé/, 'fait', 'ok']];
 const BTN_ICO = { 'tache-message': 'message', 'tache-visite': 'lieu', 'tache-bc': 'bon', 'tache-acompte': 'facture', 'tache-solde': 'facture', 'tache-fait': 'fait', pdf: 'telecharger', 'apercu-devis': 'oeil', 'envoyer-devis': 'envoyer',
   'relancer-devis': 'message', 'relancer-facture': 'message', 'creer-solde': 'facture', 'creer-acompte': 'facture', 'creer-bc': 'bon', 'nouveau-bl': 'camion', avoir: 'retour', 'msg-copier': 'copier', 'msg-envoye': 'fait',
-  'demande-ouvrir': 'boite', 'demandes-copier': 'copier', 'reset-demander': 'recharger', 'exemples-charger': 'recharger', 'exemples-ajouter': 'recharger', 'aide-aller': 'oeil', 'achat-nouveau': 'panier', 'fournisseur-nouveau': 'camion', 'heures-ouvrir': 'horloge', 'achat-ouvrir': 'portefeuille' };
+  'demande-ouvrir': 'boite', 'demandes-copier': 'copier', 'reset-demander': 'recharger', 'exemples-charger': 'recharger', 'exemples-ajouter': 'recharger', 'aide-aller': 'oeil', 'achat-nouveau': 'panier', 'employe-nouveau': 'personne', 'etat-paie': 'facture', 'etat-paie-copier': 'copier', 'etat-paie-csv': 'telecharger', 'photo-exemple': 'oeil', 'fournisseur-nouveau': 'camion', 'heures-ouvrir': 'horloge', 'achat-ouvrir': 'portefeuille' };
 const ACT_ICO = { appel: 'telephone', visite: 'lieu', email: 'courriel', whatsapp: 'message', note: 'note', systeme: 'fait', auto: 'eclair' };
 const PIECE_ICO = [[/^Devis/, 'facture'], [/^Bon de commande/, 'bon'], [/^Bon de livraison/, 'camion'], [/^Avoir/, 'retour'], [/^Facture/, 'facture']];
 function decorer(racine) {
@@ -2178,8 +2224,8 @@ function majNav() {
 }
 
 /* ---------- Aide : assistant, guide pas à pas et demandes pour Yoni ---------- */
-const APP_VERSION = '3.7';
-const ECRANS = { chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
+const APP_VERSION = '3.8';
+const ECRANS = { employes: 'Employés', chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
 const TYPES_DEMANDE = { anomalie: ['Problème', 'bad'], changement: ['Changement', 'warn'], ajout: ['Ajout', 'info'] };
 const STATUTS_DEMANDE = { nouvelle: 'Nouvelle', vue: 'Vue par Yoni', faite: 'Faite' };
 /* Le guide sert deux fois : affiché tel quel quand l'assistant n'est pas disponible, et donné à l'assistant comme seule source. */
@@ -2248,13 +2294,20 @@ const GUIDE = [
     'Ouvrez « Achats » dans le menu, puis cliquez sur « + Nouvel achat ».',
     'Choisissez le fournisseur et le chantier concerné (ou « Frais généraux »), puis écrivez l’objet et le montant HT.',
     'Si la facture n’est pas encore arrivée, cochez « Commande passée, facture à venir ». Quand elle arrive, ouvrez l’achat et remplissez « Facture reçue ».',
+    'Pour aller plus vite, cliquez sur « Remplir avec une photo » : photographiez la facture ou le bon, les cases se remplissent, vous vérifiez puis vous enregistrez.',
     'Pour noter un paiement, ouvrez l’achat et remplissez « Enregistrer un paiement ». Le logiciel ne paie rien lui-même.',
     'Une facture de fournisseur à payer bientôt, ou en retard, remonte toute seule dans « À faire ».'] },
   { q: 'Suivre le budget et la marge d’un chantier', ecran: 'chantiers', etapes: [
     'Ouvrez « Chantiers » : chaque chantier montre ce qui est vendu, le budget, ce qui est dépensé et la marge.',
     'Cliquez sur un chantier : sur sa fiche, la carte « Suivi du chantier » détaille les achats et la main-d’œuvre.',
     'Ajoutez un achat avec « + Achat » et les heures de l’équipe avec « Heures passées ».',
-    'Le budget est le coût prévu au devis. Quand les dépenses s’en approchent, le chantier remonte dans « À faire ».'] }
+    'Le budget est le coût prévu au devis. Quand les dépenses s’en approchent, le chantier remonte dans « À faire ».'] },
+  { q: 'Saisir les jours des employés et préparer la paie', ecran: 'employes', etapes: [
+    'Ouvrez « Employés » dans le menu. Pour ajouter quelqu’un, cliquez sur « Nouvel employé » et indiquez s’il est payé à la journée ou au mois.',
+    'Cliquez sur un employé pour saisir ses jours travaillés du mois, ses primes et les avances déjà versées.',
+    'Le logiciel calcule la paie convenue et le reste à verser. Il ne verse rien : quand c’est fait, cliquez sur « Marquer comme versé ».',
+    'En fin de mois, « État du mois pour le comptable » donne le tableau complet : « Copier le tableau » ou « Télécharger pour Excel ».',
+    'Les montants sont ceux convenus, avant cotisations : les bulletins de paie restent faits par le comptable.'] }
 ];
 const ASSIST = { ouvert: false, vue: 'chat', msgs: [], enCours: false, sujet: null };
 /* Le sujet du guide resté ouvert survit aux réaffichages du panneau. */
@@ -2495,6 +2548,20 @@ function contenuDetail(k, v) {
     return { titre: v === 'retard' ? 'Fournisseurs en retard' : v === 'sous7' ? 'À payer sous 7 jours' : 'À payer aux fournisseurs', corps: resume(txt) + liste(sel.map(row), '') +
       (sel.length ? '<p class="carte-note">Ouvrez un achat pour noter son paiement.</p>' : '') + pied(`<button class="btn" data-act="aller-achats" data-v="${v === 'retard' ? 'retard' : 'payer'}">Voir dans l’écran Achats</button>`) };
   }
+  if (k === 'paie') {
+    const mois = UI.empMois || TODAY.slice(0, 7), xs = paieDuMois(mois), saisis = xs.filter(x => x.saisi);
+    const sel = v === 'reste' ? saisis.filter(x => !x.paye) : v === 'brut' ? saisis : xs;
+    const row = x => { const st = STATUT_PAIE[x.statut];
+      const droite = v === 'employes' ? `<small>${libelleTaux(x.emp)}</small>` : v === 'jours' ? `<b>${x.saisi ? nbJ(x.jours) + ' j' : '—'}</b>${pill(st[0], st[1])}`
+        : v === 'reste' ? `<b>${money(x.reste)}</b><small>${x.avances ? 'après ' + money(x.avances) + ' d’avance' : 'aucune avance'}</small>` : `<b>${money(x.brut)}</b><small>${x.primes ? 'dont ' + money(x.primes) + ' de primes' : nbJ(x.jours) + ' j'}</small>`;
+      return `<li><button data-act="pointage-ouvrir" data-id="${esc(x.emp.id)}">${ligneIco('personne')}<span><b>${esc(x.emp.nom)}</b><small>${esc(x.emp.poste || 'Employé')}</small></span><span class="droite">${droite}</span></button></li>`; };
+    const som = (l, c) => l.reduce((t, x) => t + x[c], 0), M = moisLong(mois);
+    const txt = v === 'employes' ? `<b>${nb(xs.length, 'employé')}</b> suivis en ${M}.`
+      : v === 'jours' ? `<b>${nbJ(som(saisis, 'jours'))} jours</b> travaillés en ${M}, saisis pour ${saisis.length} employé${saisis.length > 1 ? 's' : ''} sur ${xs.length}.`
+      : v === 'reste' ? (sel.length ? `<b>${money(som(sel, 'reste'))}</b> restent à verser pour ${M}, une fois les avances retirées.` : `Plus rien à verser pour ${M}.`)
+      : (sel.length ? `<b>${money(som(sel, 'brut'))}</b> de paie pour ${M}, primes comprises.` : `Aucun jour saisi pour ${M}.`);
+    return { titre: v === 'employes' ? 'Employés' : v === 'jours' ? 'Jours travaillés' : v === 'reste' ? 'Reste à verser' : 'Paie du mois', corps: resume(txt) + liste(sel.map(row), '') + pied(`<button class="btn" data-act="etat-paie">État du mois pour le comptable</button>`) };
+  }
   if (k === 'achats-payes') {
     const m = TODAY.slice(0, 7), pays = paiementsFournisseursDuMois(m), tot = pays.reduce((s, y) => s + centimes(y.p), 0);
     const row = ({ x, p }) => `<li><button data-act="achat-ouvrir" data-id="${esc(x.id)}">${ligneIco('fait')}<span><b>${esc(nomFournisseur(x.fournisseurId))}</b><small>${esc(p.mode)} · ${fdate(p.date)} · ${esc(x.libelle)}</small></span><span class="droite"><b>${money(centimes(p))}</b></span></button></li>`;
@@ -2663,6 +2730,8 @@ function ouvrirNouvelAchat(affaireId) {
   const chs = affairesListe().filter(a => estChantier(a) || a.id === affaireId).sort((x, y) => (x.etape === 'chantier' ? 0 : 1) - (y.etape === 'chantier' ? 0 : 1) || (y.numero || '').localeCompare(x.numero || ''));
   const delai0 = fos.length && fos[0].delai !== '' && fos[0].delai != null ? Number(fos[0].delai) : 60;
   ouvrirFenetre('Nouvel achat', `<form data-form="achat" class="form">
+    <div class="photo-bloc"><div class="photo-boutons"><label class="btn" for="achat-photo">${ico('photo')}Remplir avec une photo</label><input type="file" id="achat-photo" accept="image/*" class="sr"><button type="button" class="btn btn-ghost" data-act="photo-exemple">Voir un exemple</button></div>
+      <p class="carte-note">Photographiez la facture ou le bon du fournisseur : les cases se remplissent. Vous vérifiez, puis vous enregistrez.</p><p class="photo-etat" role="status"></p></div>
     <label class="champ">Fournisseur<select name="fournisseurId" required>${fos.map(f => `<option value="${esc(f.id)}">${esc(f.nom)}</option>`).join('')}<option value="__nouveau"${fos.length ? '' : ' selected'}>+ Nouveau fournisseur…</option></select></label>
     <label class="champ nouveau-fo"${fos.length ? ' hidden' : ''}>Nom du nouveau fournisseur<input name="nouveauNom"></label>
     <label class="champ">Chantier concerné<select name="affaireId"><option value="">Frais généraux (aucun chantier)</option>${chs.map(a => `<option value="${esc(a.id)}"${a.id === affaireId ? ' selected' : ''}>${esc(a.numero)} · ${esc(a.titre)}</option>`).join('')}</select></label>
@@ -2763,9 +2832,168 @@ function vueChantiers() {
   <p class="carte-note">Le budget est le coût prévu au devis. « Dépensé et commandé » additionne les achats, les commandes en cours et les heures de l’équipe.</p>`;
 }
 
+/* ---------- Employés : jours travaillés, paie et état du mois pour le comptable ---------- */
+/* Le logiciel note des montants convenus (jours × taux, ou salaire du mois). Il ne calcule aucune cotisation : les bulletins restent faits par le comptable. */
+const employesListe = () => Object.values(S.employes).sort((x, y) => x.nom.localeCompare(y.nom));
+const pointageDe = (empId, mois) => S.pointages[empId + '_' + mois] || null;
+const moisDecale = (m, n) => { const d = new Date(Date.UTC(+m.slice(0, 4), +m.slice(5, 7) - 1 + n, 1)); return d.toISOString().slice(0, 7); };
+const nbJ = n => String(n).replace('.', ',');
+function paie(emp, mois) {
+  const p = pointageDe(emp.id, mois), saisi = !!p && p.jours !== '' && p.jours != null;
+  const jours = saisi ? Number(p.jours) || 0 : 0, taux = Math.round((Number(emp.taux) || 0) * 100);
+  const base = !saisi ? 0 : emp.paie === 'mois' ? taux : Math.round(jours * taux);
+  const primes = saisi ? Math.round((Number(p.primes) || 0) * 100) : 0, avances = saisi ? Math.round((Number(p.avances) || 0) * 100) : 0;
+  const brut = base + primes, paye = saisi && p.paye ? p.paye : null;
+  return { emp, p, saisi, jours, base, primes, avances, brut, reste: brut - avances, paye, statut: !saisi ? 'saisir' : paye ? 'paye' : 'payer' };
+}
+const STATUT_PAIE = { saisir: ['À saisir', 'warn'], payer: ['À verser', 'info'], paye: ['Versé', 'ok'] };
+const paieDuMois = mois => employesListe().filter(e => e.actif !== false || pointageDe(e.id, mois)).map(e => paie(e, mois));
+const libelleTaux = e => e.paie === 'mois' ? `au mois · ${money(Math.round(e.taux * 100))}` : `à la journée · ${money(Math.round(e.taux * 100))} par jour`;
+function lignePaie(x) {
+  const st = STATUT_PAIE[x.statut];
+  return `<li><button class="ligne-fact" data-act="pointage-ouvrir" data-id="${esc(x.emp.id)}">
+    <span class="lf-num"><b>${x.saisi ? nbJ(x.jours) + ' j' : '—'}</b><small>jours travaillés</small></span>
+    <span class="lf-cli">${esc(x.emp.nom)}<small>${esc(x.emp.poste || 'Employé')} · ${libelleTaux(x.emp)}</small></span>
+    <span class="lf-mt"><span class="lbl">Paie</span>${x.saisi ? money(x.brut) : '—'}</span>
+    <span class="lf-mt"><span class="lbl">Reste à verser</span>${x.saisi && !x.paye ? money(x.reste) : '—'}</span>
+    <span class="lf-st">${pill(st[0], st[1])}</span></button></li>`;
+}
+function vueEmployes() {
+  const mois = UI.empMois || TODAY.slice(0, 7), xs = paieDuMois(mois), saisis = xs.filter(x => x.saisi);
+  const aVerser = saisis.filter(x => !x.paye);
+  const actifs = employesListe().filter(e => e.actif !== false), auJour = actifs.filter(e => e.paie !== 'mois').length;
+  return `<section class="page-tete"><div><p class="surtitre">Jours travaillés, paie et état du mois pour le comptable</p><h1>Employés</h1></div>
+    <div class="tete-boutons"><button class="btn" data-act="employe-nouveau">Nouvel employé</button><button class="btn btn-primary" data-act="etat-paie">État du mois pour le comptable</button></div></section>
+  <div class="mois-choix"><button class="btn btn-sm" data-act="emp-mois" data-v="-1" aria-label="Mois précédent">${ico('gauche')}</button><b>${moisLong(mois).replace(/^./, c => c.toUpperCase())}</b><button class="btn btn-sm" data-act="emp-mois" data-v="1" aria-label="Mois suivant"${mois >= TODAY.slice(0, 7) ? ' disabled' : ''}>${ico('chevron')}</button></div>
+  <section class="kpis">
+    ${kpi('paie', 'Employés', String(actifs.length), `${auJour} à la journée, ${actifs.length - auJour} au mois`, { v: 'employes' })}
+    ${kpi('paie', 'Jours travaillés', nbJ(saisis.reduce((s, x) => s + x.jours, 0)), `${saisis.length} saisi${saisis.length > 1 ? 's' : ''} sur ${xs.length}`, { v: 'jours', alerte: 0 })}
+    ${kpi('paie', 'Paie du mois', moneyRond(saisis.reduce((s, x) => s + x.brut, 0)), `dont primes : ${moneyRond(saisis.reduce((s, x) => s + x.primes, 0))}`, { v: 'brut' })}
+    ${kpi('paie', 'Reste à verser', moneyRond(aVerser.reduce((s, x) => s + x.reste, 0)), `avances déjà versées : ${moneyRond(aVerser.reduce((s, x) => s + x.avances, 0))}`, { v: 'reste' })}</section>
+  ${xs.length ? `<ul class="liste-fact">${xs.map(lignePaie).join('')}</ul>` : vide('Aucun employé. Commencez par « Nouvel employé ».')}
+  <p class="carte-note">Cliquez sur un employé pour saisir ses jours du mois, ses primes et ses avances. Les montants sont ceux convenus avec lui, avant cotisations : les bulletins de paie restent faits par le comptable.</p>`;
+}
+function ouvrirPointage(empId) {
+  const emp = S.employes[empId]; if (!emp) return;
+  const mois = UI.empMois || TODAY.slice(0, 7), x = paie(emp, mois), p = x.p || {};
+  const st = STATUT_PAIE[x.statut];
+  ouvrirFenetre(`${emp.nom} · ${moisLong(mois)}`, retourDetail() + `
+    <div class="fact-entete">${pill(st[0], st[1])}<span>${x.saisi ? `Paie du mois : <b>${money(x.brut)}</b>${x.avances ? `, reste à verser <b>${money(x.reste)}</b>` : ''}` : 'Jours du mois pas encore saisis'}</span></div>
+    <p class="carte-note">${esc(emp.poste || 'Employé')} · ${libelleTaux(emp)} · <button class="lien" data-act="employe-ouvrir" data-id="${esc(emp.id)}">Modifier la fiche</button></p>
+    ${x.paye ? `<p class="detail-resume">Versé le ${fdate(x.paye.date)} (${esc(x.paye.mode)}).</p>` : ''}
+    <form class="form" data-form="pointage" data-id="${esc(emp.id)}">
+      <div class="ligne-form"><label class="champ">Jours travaillés<input name="jours" type="number" inputmode="decimal" min="0" max="31" step="0.5" value="${x.saisi ? esc(x.jours) : ''}" required></label>
+      <label class="champ">Primes (DH)<input name="primes" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.primes || 0)}"></label>
+      <label class="champ">Avances déjà versées (DH)<input name="avances" type="number" inputmode="decimal" min="0" step="0.01" value="${esc(p.avances || 0)}"></label></div>
+      <label class="champ">Note pour le comptable (facultatif)<input name="note" value="${esc(p.note || '')}" placeholder="Ex. 2 jours de congé, heures du samedi"></label>
+      <p class="carte-note">${emp.paie === 'mois' ? 'Payé au mois : la paie est le salaire du mois, plus les primes. Les jours servent au comptable.' : 'Payé à la journée : jours × taux, plus les primes.'} Le reste à verser retire les avances.</p>
+      <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Enregistrer</button></div></form>
+    ${x.saisi && !x.paye ? `<form class="form-paie" data-form="paie-versee" data-id="${esc(emp.id)}"><h3 class="h3">Noter le versement</h3>
+      <p class="carte-note">Le logiciel ne verse rien : notez ici le paiement une fois fait (${money(x.reste)}).</p>
+      <div class="ligne-form"><label class="champ">Date<input name="date" type="date" value="${TODAY}" required></label>
+      <label class="champ">Mode<select name="mode"><option>Virement</option><option>Espèces</option><option>Chèque</option></select></label></div>
+      <button class="btn btn-primary" type="submit">Marquer comme versé</button></form>` : ''}`);
+}
+function ouvrirEmploye(id) {
+  const e = S.employes[id] || { id: '', nom: '', poste: 'Électricien', paie: 'jour', taux: '', tel: '', entree: TODAY, actif: true };
+  const v = k => esc(e[k] == null ? '' : e[k]);
+  ouvrirFenetre(id ? e.nom : 'Nouvel employé', `<form data-form="employe" data-id="${esc(id || '')}" class="form">
+    <label class="champ">Nom et prénom<input name="nom" required value="${v('nom')}"></label>
+    <label class="champ">Poste<input name="poste" value="${v('poste')}" placeholder="Ex. électricien, chef d’équipe, aide"></label>
+    <fieldset class="choix"><legend>Comment est-il payé ?</legend>
+      <label><input type="radio" name="paie" value="jour"${e.paie !== 'mois' ? ' checked' : ''}> À la journée</label>
+      <label><input type="radio" name="paie" value="mois"${e.paie === 'mois' ? ' checked' : ''}> Au mois</label></fieldset>
+    <div class="ligne-form"><label class="champ">Montant convenu (DH, par jour ou par mois)<input name="taux" type="number" inputmode="decimal" min="0" step="0.01" value="${v('taux')}" required></label>
+    <label class="champ">Téléphone<input name="tel" inputmode="tel" value="${v('tel')}"></label></div>
+    <div class="ligne-form"><label class="champ">Date d’entrée<input name="entree" type="date" value="${v('entree')}"></label>
+    <label class="champ case"><input type="checkbox" name="actif"${e.actif !== false ? ' checked' : ''}> Travaille encore chez Electropack</label></div>
+    <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Enregistrer</button></div></form>`);
+}
+function lignesEtatPaie(mois) {
+  const xs = paieDuMois(mois).filter(x => x.saisi);
+  const tete = ['Employé', 'Poste', 'Payé', 'Jours', 'Base (DH)', 'Primes (DH)', 'Total (DH)', 'Avances (DH)', 'Reste à verser (DH)', 'Versé le', 'Note'];
+  const n = c => (c / 100).toFixed(2).replace('.', ',');
+  const rows = xs.map(x => [x.emp.nom, x.emp.poste || '', x.emp.paie === 'mois' ? 'au mois' : 'à la journée', nbJ(x.jours), n(x.base), n(x.primes), n(x.brut), n(x.avances), n(x.paye ? 0 : x.reste), x.paye ? fdate(x.paye.date) : '', (x.p && x.p.note) || '']);
+  const tot = k => xs.reduce((s, x) => s + x[k], 0);
+  rows.push(['Total', '', '', nbJ(xs.reduce((s, x) => s + x.jours, 0)), n(tot('base')), n(tot('primes')), n(tot('brut')), n(tot('avances')), n(xs.reduce((s, x) => s + (x.paye ? 0 : x.reste), 0)), '', '']);
+  return { tete, rows, xs };
+}
+function ouvrirEtatPaie() {
+  const mois = UI.empMois || TODAY.slice(0, 7), { tete, rows, xs } = lignesEtatPaie(mois), manque = paieDuMois(mois).length - xs.length;
+  const milliers = v => String(v).replace(/\B(?=(\d{3})+(?!\d))/g, '\u202f');
+  const cel = (v, i, tag) => `<${tag}${i >= 3 && i <= 8 ? ' class="num"' : ''}>${esc(tag === 'td' && i >= 4 && i <= 8 ? milliers(v) : v)}</${tag}>`;
+  const som = c => xs.reduce((t, x) => t + x[c], 0);
+  ouvrirFenetre(`État de paie · ${moisLong(mois)}`, `
+    <p class="detail-resume">${xs.length ? `<b>${money(som('brut'))}</b> de paie pour ${nb(xs.length, 'employé')}. Reste à verser : ${money(xs.filter(x => !x.paye).reduce((t, x) => t + x.reste, 0))}.` : 'Aucun jour saisi pour ce mois.'}${manque ? ` <span class="rouge">${nb(manque, 'employé')} sans jours saisis.</span>` : ''}</p>
+    ${xs.length ? `<div class="table-scroll"><table class="table etat-paie"><thead><tr>${tete.map((t, i) => cel(t, i, 'th')).join('')}</tr></thead><tbody>${rows.map((r, j) => `<tr${j === rows.length - 1 ? ' class="total"' : ''}>${r.map((v, i) => cel(v, i, 'td')).join('')}</tr>`).join('')}</tbody></table></div>` : ''}
+    <p class="carte-note">Montants convenus, avant cotisations. Les bulletins de paie et les déclarations restent faits par le comptable.</p>
+    <div class="fen-pied"><button class="btn" data-act="etat-paie-copier">Copier le tableau</button><button class="btn btn-primary" data-act="etat-paie-csv">Télécharger pour Excel</button></div>`, true);
+}
+const tsvEtatPaie = (mois, sep) => { const { tete, rows } = lignesEtatPaie(mois); return [tete].concat(rows).map(r => r.map(v => sep === ';' ? '"' + String(v).replace(/"/g, '""') + '"' : String(v).replace(/[\t\n]/g, ' ')).join(sep)).join('\n'); };
+
+/* ---------- Saisie par photo : la photo d'une facture ou d'un bon de fournisseur remplit le formulaire d'achat ---------- */
+const INVITE_PHOTO = `Tu lis la photo d'un document reçu d'un fournisseur par une entreprise d'électricité marocaine (facture, bon de commande, devis ou bon de livraison).
+Réponds uniquement par un objet JSON, sans texte autour, avec exactement ces clés :
+{"type": "facture" | "commande" | "livraison" | "autre", "fournisseur": "nom du fournisseur qui a émis le document", "objet": "résumé en moins de 8 mots de ce qui est acheté", "numero": "numéro du document", "date": "AAAA-MM-JJ", "ht": nombre (total hors taxes en dirhams), "tva": nombre (taux de TVA en %), "lisible": true | false}
+Règles : ne devine jamais. Si une information n'est pas lisible sur la photo, mets "" pour un texte et null pour un nombre. Si la photo n'est pas un document de ce genre, mets "lisible": false.`;
+const EXEMPLE_PHOTO = { type: 'facture', fournisseur: 'Comptoir Électrique Atlas', objet: 'Disjoncteurs et interrupteurs différentiels', numero: 'F26-10533', date: '', ht: 18450, tva: 20, lisible: true };
+function reduireImage(fichier, maxi) {
+  return new Promise((ok, ko) => {
+    const url = URL.createObjectURL(fichier), img = new Image();
+    img.onload = () => {
+      const k = Math.min(1, maxi / Math.max(img.naturalWidth, img.naturalHeight)), c = document.createElement('canvas');
+      c.width = Math.round(img.naturalWidth * k); c.height = Math.round(img.naturalHeight * k);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height); URL.revokeObjectURL(url);
+      c.toBlob(b => b ? ok(b) : ko(new Error('image')), 'image/jpeg', 0.86);
+    };
+    img.onerror = () => { URL.revokeObjectURL(url); ko(new Error('image')); };
+    img.src = url;
+  });
+}
+function remplirAchat(form, r) {
+  const el = form.elements, txt = v => (typeof v === 'string' ? v : '').trim().slice(0, 120), remplis = [];
+  const nomFo = txt(r.fournisseur);
+  if (nomFo) {
+    const trouve = fournisseursListe().find(f => norm(f.nom) === norm(nomFo) || norm(f.nom).includes(norm(nomFo)) || norm(nomFo).includes(norm(f.nom)));
+    el.fournisseurId.value = trouve ? trouve.id : '__nouveau';
+    const b = form.querySelector('.nouveau-fo'); b.hidden = !!trouve; b.querySelector('input').required = !trouve; if (!trouve) el.nouveauNom.value = nomFo;
+    remplis.push('fournisseur');
+  }
+  if (txt(r.objet)) { el.libelle.value = txt(r.objet); remplis.push('objet'); }
+  if (typeof r.ht === 'number' && isFinite(r.ht) && r.ht > 0) { el.ht.value = (Math.round(r.ht * 100) / 100).toFixed(2); remplis.push('montant'); }
+  if (typeof r.tva === 'number' && isFinite(r.tva) && r.tva >= 0 && r.tva <= 100) el.tva.value = r.tva;
+  const cmd = r.type === 'commande';
+  form.querySelector(`[name="statut"][value="${cmd ? 'commande' : 'facture'}"]`).checked = true; form.querySelector('.bloc-facture').hidden = cmd;
+  if (!cmd) {
+    if (txt(r.numero)) { el.refFacture.value = txt(r.numero).slice(0, 40); remplis.push('numéro'); }
+    if (/^\d{4}-\d{2}-\d{2}$/.test(r.date || '') && r.date <= TODAY) { el.dateFacture.value = r.date; remplis.push('date'); }
+    const fo = S.fournisseurs[el.fournisseurId.value];
+    if (!el.echeance.dataset.manuel) el.echeance.value = addDaysISO(el.dateFacture.value || TODAY, fo && fo.delai !== '' && fo.delai != null ? Number(fo.delai) : 60);
+  }
+  return remplis;
+}
+async function lirePhotoAchat(input, exemple) {
+  const form = input.closest('form'), etat = form.querySelector('.photo-etat'), f = input.files && input.files[0];
+  const dire = (t, cls) => { etat.textContent = t; etat.className = 'photo-etat' + (cls ? ' ' + cls : ''); };
+  if (exemple) { const r = remplirAchat(form, Object.assign({}, EXEMPLE_PHOTO, { date: addDaysISO(TODAY, -3) })); return dire(`Exemple : voilà ce qu’une photo remplit (${r.join(', ')}). Vérifiez, puis enregistrez.`, 'ok'); }
+  if (!f) return;
+  if (!ia) return dire('La lecture de photo marche quand la maquette est ouverte dans Claude. Ici, essayez « Voir un exemple ».');
+  dire('Lecture de la photo…');
+  try {
+    const lim = typeof ia.limits === 'function' ? await ia.limits() : {};
+    if (!lim || !lim.images) return dire('La lecture de photo n’est pas disponible ici. Remplissez les cases à la main, ou essayez « Voir un exemple ».');
+    const r = await ia.json(INVITE_PHOTO, { images: [await reduireImage(f, 1800)], modelTier: 'default', cache: false });
+    if (!r || typeof r !== 'object' || r.lisible === false) return dire('Je n’ai pas reconnu de facture ni de bon sur cette photo. Reprenez-la bien à plat, ou remplissez à la main.');
+    const remplis = remplirAchat(form, r);
+    dire(remplis.length ? `Cases remplies d’après la photo : ${remplis.join(', ')}. Vérifiez chaque case avant d’enregistrer.` : 'Rien de lisible sur cette photo. Remplissez les cases à la main.', remplis.length ? 'ok' : '');
+  } catch (e) {
+    dire(e && e.code === 'rate_limited' ? 'Trop de demandes d’un coup. Réessayez dans une minute.' : e && e.code === 'not_granted' ? 'La lecture de photo a été refusée. Remplissez les cases à la main.' : 'La photo n’a pas pu être lue. Remplissez les cases à la main.');
+  }
+}
+
 /* ---------- Routage et rendu ---------- */
 let renduEnAttente = false;
-const NAV = [['accueil', 'Tableau de bord'], ['affaires', 'Affaires'], ['chantiers', 'Chantiers'], ['planning', 'Planning'], ['clients', 'Clients'], ['factures', 'Factures'], ['achats', 'Achats'], ['catalogue', 'Catalogue'], ['automatisations', 'Automatisations'], ['reglages', 'Réglages']];
+const NAV = [['accueil', 'Tableau de bord'], ['affaires', 'Affaires'], ['chantiers', 'Chantiers'], ['planning', 'Planning'], ['clients', 'Clients'], ['factures', 'Factures'], ['achats', 'Achats'], ['employes', 'Employés'], ['catalogue', 'Catalogue'], ['automatisations', 'Automatisations'], ['reglages', 'Réglages']];
 function routeCourante() {
   const h = location.hash.slice(1);
   const m = /^(client|affaire)-([A-Za-z0-9]+)$/.exec(h);
@@ -2781,7 +3009,7 @@ function rendre(force) {
   const section = r.vue === 'client' ? 'clients' : r.vue === 'affaire' ? 'affaires' : r.vue;
   document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('on', a.dataset.v === section));
   const html = r.vue === 'client' ? vueClient(r.id) : r.vue === 'affaire' ? vueAffaire(r.id) :
-    ({ accueil: vueAccueil, clients: vueClients, affaires: vueAffaires, factures: vueFactures, catalogue: vueCatalogue, automatisations: vueAutomatisations, reglages: vueReglages, planning: vuePlanning, chantiers: vueChantiers, achats: vueAchats }[r.vue])();
+    ({ accueil: vueAccueil, clients: vueClients, affaires: vueAffaires, factures: vueFactures, catalogue: vueCatalogue, automatisations: vueAutomatisations, reglages: vueReglages, planning: vuePlanning, chantiers: vueChantiers, achats: vueAchats, employes: vueEmployes }[r.vue])();
   main.innerHTML = html;
   decorer(main);
   if (r.vue === 'clients') filtrerClients();
@@ -2907,14 +3135,29 @@ Object.assign(ACTIONS, {
   'exemples-charger': el => reinitialiserDemo(el),
   'exemples-ajouter': async el => {
     const D = buildDemo(TODAY), ops = [];
-    ['fournisseurs', 'achats', 'heures'].forEach(k => D[k].forEach(o => { if (!S[k][o.id]) ops.push([k, o]); }));
+    ['fournisseurs', 'achats', 'heures', 'employes', 'pointages'].forEach(k => D[k].forEach(o => { if (!S[k][o.id]) ops.push([k, o]); }));
     el.disabled = true; enReset = true; let n = 0;
     try {
       for (const [k, o] of ops) { if (mode === 'db') await ecrireSur(k + '/' + o.id, clone(o)); S[k][o.id] = o; n++; if (el.isConnected) el.textContent = `Ajout… ${n} / ${ops.length}`; }
-      S.params.exemples = { version: EXEMPLES_VERSION }; persistParam('exemples'); toast('Exemples d’achats et d’heures ajoutés.');
+      S.params.exemples = { version: EXEMPLES_VERSION }; persistParam('exemples'); toast('Exemples ajoutés.');
     } catch (e) { toast(`Ajout interrompu (${n} sur ${ops.length}). Réessayez dans une minute.`); }
     enReset = false; rendre(true);
   },
+  'emp-mois': el => { UI.empMois = moisDecale(UI.empMois || TODAY.slice(0, 7), Number(el.dataset.v)); if (UI.empMois > TODAY.slice(0, 7)) UI.empMois = TODAY.slice(0, 7); rendre(true); },
+  'employe-nouveau': () => ouvrirEmploye(''),
+  'employe-ouvrir': el => ouvrirEmploye(el.dataset.id),
+  'pointage-ouvrir': el => ouvrirPointage(el.dataset.id),
+  'etat-paie': () => ouvrirEtatPaie(),
+  'etat-paie-copier': async () => { try { await navigator.clipboard.writeText(tsvEtatPaie(UI.empMois || TODAY.slice(0, 7), '\t')); toast('Tableau copié : collez-le dans Excel ou dans un e-mail.'); } catch (e) { toast('Copie impossible ici. Utilisez « Télécharger pour Excel ».'); } },
+  'etat-paie-csv': async () => {
+    const mois = UI.empMois || TODAY.slice(0, 7), nom = `etat-paie-${mois}.csv`, blob = new Blob(['\ufeff' + tsvEtatPaie(mois, ';')], { type: 'text/csv;charset=utf-8' });
+    try {
+      if (dl) await dl.save({ filename: nom, data: blob });
+      else { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = nom; document.body.appendChild(a); a.click(); a.remove(); setTimeout(() => URL.revokeObjectURL(a.href), 2000); }
+      toast('Fichier prêt : ' + nom);
+    } catch (e) { toast('Téléchargement impossible ici. Utilisez « Copier le tableau ».'); }
+  },
+  'photo-exemple': el => lirePhotoAchat(el, true),
   'filtre-ach': el => { UI.achFiltre = el.dataset.v; rendre(true); },
   'filtre-ch': el => { UI.chFiltre = el.dataset.v; rendre(true); },
   'aller-achats': el => { UI.achFiltre = el.dataset.v || 'toutes'; fermerFenetre(); if (location.hash === '#achats') { rendre(true); window.scrollTo(0, 0); } else location.hash = 'achats'; },
@@ -2979,6 +3222,26 @@ const FORMS = {
     persist('affaires', a);
     log(clientId, a.id, 'note', `Demande reçue (${fd.get('origine')}) : ${a.titre}.`);
     fermerFenetre(); location.hash = 'affaire-' + a.id;
+  },
+  pointage: (fd, form) => {
+    const emp = S.employes[form.dataset.id]; if (!emp) return;
+    const mois = UI.empMois || TODAY.slice(0, 7), ancien = pointageDe(emp.id, mois);
+    const p = Object.assign({ id: emp.id + '_' + mois, employeId: emp.id, mois, paye: null }, ancien || {}, { jours: Math.max(0, Math.min(31, Number(fd.get('jours')) || 0)), primes: Math.max(0, Number(fd.get('primes')) || 0), avances: Math.max(0, Number(fd.get('avances')) || 0), note: (fd.get('note') || '').trim() });
+    persist('pointages', p);
+    const d = DETAIL; fermerFenetre(); toast(`Jours de ${emp.nom} enregistrés.`); rendre(true);
+    if (d) ouvrirDetail(d.k, d.v);
+  },
+  'paie-versee': (fd, form) => {
+    const emp = S.employes[form.dataset.id]; if (!emp) return;
+    const mois = UI.empMois || TODAY.slice(0, 7), p = pointageDe(emp.id, mois); if (!p) return;
+    p.paye = { date: fd.get('date'), mode: fd.get('mode') }; persist('pointages', p);
+    const d = DETAIL; fermerFenetre(); toast(`Paie de ${emp.nom} notée comme versée.`); rendre(true);
+    if (d) ouvrirDetail(d.k, d.v);
+  },
+  employe: (fd, form) => {
+    const id = form.dataset.id, e = id && S.employes[id] ? S.employes[id] : { id: uid('em') };
+    Object.assign(e, { nom: fd.get('nom').trim(), poste: (fd.get('poste') || '').trim(), paie: fd.get('paie') === 'mois' ? 'mois' : 'jour', taux: Math.max(0, Number(fd.get('taux')) || 0), tel: (fd.get('tel') || '').trim(), entree: fd.get('entree') || '', actif: fd.get('actif') === 'on' });
+    persist('employes', e); fermerFenetre(); toast('Employé enregistré.'); rendre(true);
   },
   achat: fd => {
     let foId = fd.get('fournisseurId');
@@ -3049,7 +3312,7 @@ const FORMS = {
   },
   reglages: fd => {
     const soc = Object.assign({}, S.params.societe);
-    ['nom', 'activite', 'adresse', 'tel', 'email', 'ice', 'if', 'rc', 'tp', 'banque', 'rib', 'signature', 'conditions'].forEach(k => { soc[k] = (fd.get(k) || '').trim(); });
+    ['nom', 'activite', 'adresse', 'tel', 'fax', 'email', 'ice', 'if', 'rc', 'tp', 'cnss', 'banque', 'rib', 'signature', 'conditions'].forEach(k => { soc[k] = (fd.get(k) || '').trim(); });
     soc.validite = Math.max(1, Math.round(Number(fd.get('validite')) || 30));
     soc.mentionTest = fd.get('mentionTest') === 'on';
     S.params.societe = soc;
@@ -3095,6 +3358,7 @@ document.addEventListener('change', e => {
   if (el.matches('[name="clientId"]')) { const b = $('.nouveau-cli'); if (b) b.hidden = el.value !== '__nouveau'; }
   const fa = el.closest && el.closest('form[data-form="achat"]');
   if (fa) {
+    if (el.id === 'achat-photo') { lirePhotoAchat(el).then(() => { el.value = ''; }); return; }
     if (el.name === 'fournisseurId') { const b = fa.querySelector('.nouveau-fo'); b.hidden = el.value !== '__nouveau'; b.querySelector('input').required = el.value === '__nouveau'; }
     if (el.name === 'statut') fa.querySelector('.bloc-facture').hidden = el.value !== 'facture';
     if (el.name === 'echeance') el.dataset.manuel = '1';
@@ -3151,7 +3415,7 @@ document.addEventListener('keydown', e => {
 window.addEventListener('hashchange', () => { if (!$('#fenetre').hidden) fermerFenetre(); renduEnAttente = false; rendre(true); window.scrollTo(0, 0); });
 
 /* ---------- Base partagée ---------- */
-const COLLS = ['clients', 'affaires', 'factures', 'bons', 'catalogue', 'activites', 'taches', 'demandes', 'fournisseurs', 'achats', 'heures', 'parametres'];
+const COLLS = ['clients', 'affaires', 'factures', 'bons', 'catalogue', 'activites', 'taches', 'demandes', 'fournisseurs', 'achats', 'heures', 'employes', 'pointages', 'parametres'];
 function demarrerBase() {
   setSync('connexion');
   const premier = {}, tampon = {}; let bascule = false;
