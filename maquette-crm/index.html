@@ -709,6 +709,30 @@ label.btn { cursor: pointer; }
 .photo-boutons .btn { white-space: normal; text-align: left; }
 .liste-simple small.rouge { color: var(--bad); font-weight: 600; }
 
+/* Connexion et comptes */
+body.hors-session .cote, body.hors-session .aide-btn { display: none; }
+body.hors-session .app { display: block; }
+.connexion { min-height: 100vh; display: grid; place-items: center; padding: 24px 16px; }
+.connexion-carte { width: min(560px, 100%); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-card, 14px); padding: 28px; display: grid; gap: 18px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06); }
+.connexion-marque { display: flex; align-items: center; gap: 12px; }
+.connexion-marque b { display: block; font: 800 22px var(--font-display); letter-spacing: 0.02em; }
+.connexion-marque small { color: var(--muted); }
+.connexion h1 { font-size: calc(24px * var(--k)); margin: 0; }
+.comptes { display: grid; gap: 10px; }
+.compte { display: grid; grid-template-columns: auto 1fr auto; gap: 14px; align-items: center; text-align: left; min-height: 64px; padding: 14px 16px; border: 1px solid var(--line); border-radius: var(--r-btn, 10px); background: var(--surface); color: inherit; cursor: pointer; font: inherit; }
+.compte:hover, .compte:focus-visible { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 18%, transparent); outline: none; }
+.compte .profil-init { width: 42px; height: 42px; border-radius: 50%; display: grid; place-items: center; background: var(--accent); color: #fff; font-weight: 800; font-size: 18px; }
+.compte-txt b { display: block; font-size: calc(16px * var(--k)); }
+.compte-txt small { display: block; color: var(--muted); line-height: 1.4; }
+.compte-txt .compte-ecrans { margin-top: 4px; color: inherit; opacity: 0.82; }
+.compte > .ico { color: var(--muted); }
+.nav-sep { display: block; margin: 10px 8px 2px; font-size: calc(11px * var(--k)); letter-spacing: 0.08em; text-transform: uppercase; color: var(--side-muted); }
+.nav-tout { display: flex; align-items: center; width: 100%; margin-top: 6px; padding: 9px 10px; border: 1px dashed var(--side-line); border-radius: var(--r-btn, 10px); background: transparent; color: var(--side-muted); font: inherit; cursor: pointer; text-align: left; }
+.nav-tout:hover, .nav-tout:focus-visible { color: var(--side-ink); background: var(--side-hover); outline: none; }
+.table-acces select { min-height: 40px; max-width: 100%; }
+.table-acces td, .table-acces th { white-space: nowrap; }
+@media (max-width: 899px) { .nav-sep { display: none; } .nav-tout { width: auto; margin-top: 0; white-space: nowrap; flex: none; } }
+
 </style>
 </head>
 <body>
@@ -727,7 +751,7 @@ label.btn { cursor: pointer; }
       <a href="#reglages" data-v="reglages">Réglages</a>
     </nav>
     <div class="cote-pied">
-      <button class="profil" data-act="profil" aria-label="Changer de profil"><span class="profil-init" id="profil-init">J</span><span class="profil-txt"><small>Profil</small><b id="profil-nom">Jacqui</b></span></button>
+      <button class="profil" data-act="profil" aria-label="Changer de compte" title="Changer de compte"><span class="profil-init" id="profil-init">J</span><span class="profil-txt"><small>Connecté · changer</small><b id="profil-nom">Jacqui</b></span></button>
       <span class="test-pill">Version de test · données fictives</span>
       <span class="sync" id="sync" aria-live="polite"></span>
     </div>
@@ -1164,26 +1188,53 @@ function enLettres(c) {
   return cap(s);
 }
 
+/* ---------- Comptes et accès ---------- */
+/* Un seul logiciel, une seule base. Chacun se connecte à son nom et voit son menu.
+   Pour chaque écran : 'menu' (dans son menu), 'plus' (visible avec « Tout voir »), 'non' (pas d'accès). L'administrateur voit tout. */
+const ECRANS_ACCES = ['accueil', 'affaires', 'chantiers', 'planning', 'clients', 'factures', 'achats', 'employes', 'catalogue'];
+const DEFAULT_ACCES = {
+  papa: { accueil: 'menu', affaires: 'menu', chantiers: 'menu', planning: 'menu', clients: 'menu', factures: 'menu', achats: 'plus', employes: 'non', catalogue: 'plus' },
+  maman: { accueil: 'menu', factures: 'menu', achats: 'menu', employes: 'menu', chantiers: 'menu', clients: 'menu', catalogue: 'menu', affaires: 'plus', planning: 'plus' }
+};
+const ADMIN = { id: 'admin', nom: 'Yoni', role: 'Administrateur : tout voir, réglages, automatisations, comptes et accès' };
 /* ---------- État ---------- */
-const S = { clients: {}, affaires: {}, factures: {}, bons: {}, catalogue: {}, activites: {}, taches: {}, demandes: {}, fournisseurs: {}, achats: {}, heures: {}, employes: {}, pointages: {}, blf: {}, params: { auto: clone(DEFAULT_AUTO), societe: clone(DEFAULT_SOCIETE), equipe: clone(DEFAULT_EQUIPE), logo: clone(DEFAULT_LOGO) } };
+const S = { clients: {}, affaires: {}, factures: {}, bons: {}, catalogue: {}, activites: {}, taches: {}, demandes: {}, fournisseurs: {}, achats: {}, heures: {}, employes: {}, pointages: {}, blf: {}, params: { auto: clone(DEFAULT_AUTO), societe: clone(DEFAULT_SOCIETE), equipe: clone(DEFAULT_EQUIPE), logo: clone(DEFAULT_LOGO), acces: clone(DEFAULT_ACCES) } };
 /* Version des données d'exemple : quand elle change, le tableau de bord propose de charger les nouveaux exemples. */
 const EXEMPLES_VERSION = 5;
-const DEFAUTS = { auto: DEFAULT_AUTO, societe: DEFAULT_SOCIETE, equipe: DEFAULT_EQUIPE, logo: DEFAULT_LOGO, exemples: { version: 1 } };
+const DEFAUTS = { auto: DEFAULT_AUTO, societe: DEFAULT_SOCIETE, equipe: DEFAULT_EQUIPE, logo: DEFAULT_LOGO, exemples: { version: 1 }, acces: DEFAULT_ACCES };
 function fusionParam(id, v) {
-  if (id === 'auto') { const out = clone(DEFAULT_AUTO); Object.keys(v || {}).forEach(k => { out[k] = Object.assign({}, out[k] || {}, v[k]); }); return out; }
+  if (id === 'auto' || id === 'acces') { const out = clone(DEFAUTS[id]); Object.keys(v || {}).forEach(k => { out[k] = Object.assign({}, out[k] || {}, v[k]); }); return out; }
   return Object.assign(clone(DEFAUTS[id] || {}), v || {});
 }
-const UI = { empPer: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes' };
-let PROFIL = (() => { try { return localStorage.getItem('crm-profil') || 'papa'; } catch (e) { return 'papa'; } })();
+const UI = { empPer: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes', toutVoir: false };
+/* Compte connecté : 'papa', 'maman', 'admin', ou '' tant que personne n'est connecté. Dans la maquette, pas de mot de passe : on choisit son nom. */
+let PROFIL = (() => { try { return new URLSearchParams(location.search).get('compte') || localStorage.getItem('crm-compte') || ''; } catch (e) { return ''; } })();
+if (PROFIL && PROFIL !== 'admin') UI.tachesFiltre = 'miennes';
 const membres = () => (S.params.equipe && Array.isArray(S.params.equipe.membres) && S.params.equipe.membres.length) ? S.params.equipe.membres : DEFAULT_EQUIPE.membres;
-const membre = id => membres().find(m => m.id === id);
+const membre = id => id === 'admin' ? ADMIN : membres().find(m => m.id === id);
+const comptes = () => membres().concat([ADMIN]);
+const estAdmin = () => PROFIL === 'admin';
+const connecte = () => !!membre(PROFIL);
 const nomMembre = id => (membre(id) || {}).nom || '';
 function majProfil() {
-  if (!membre(PROFIL)) PROFIL = membres()[0].id;
   const m = membre(PROFIL);
+  document.body.classList.toggle('hors-session', !m);
+  if (!m) return;
   $('#profil-nom').textContent = m.nom; $('#profil-init').textContent = (m.nom || '?').charAt(0).toUpperCase();
 }
-function choisirProfil(id) { PROFIL = id; try { localStorage.setItem('crm-profil', id); } catch (e) { /* préférence non gardée */ } majProfil(); }
+function choisirProfil(id) {
+  PROFIL = id || '';
+  try { if (PROFIL) localStorage.setItem('crm-compte', PROFIL); else localStorage.removeItem('crm-compte'); } catch (e) { /* préférence non gardée */ }
+  UI.toutVoir = false; UI.tachesFiltre = PROFIL && PROFIL !== 'admin' ? 'miennes' : 'toutes';
+  majProfil(); majNav();
+}
+/* Ce que le compte connecté peut voir d'un écran. */
+function acces(vue) {
+  if (estAdmin()) return 'menu';
+  if (vue === 'automatisations') return 'non';
+  if (vue === 'reglages' || vue === 'accueil') return 'menu';
+  return ((S.params.acces || {})[PROFIL] || {})[vue] || 'non';
+}
 let mode = 'demo', db = null, ia = null, dl = null, syncEtat = 'demo';
 const byId = arr => Object.fromEntries(arr.map(o => [o.id, o]));
 function chargerDemo() {
@@ -1191,7 +1242,7 @@ function chargerDemo() {
   S.clients = byId(D.clients); S.affaires = byId(D.affaires); S.factures = byId(D.factures);
   S.catalogue = byId(D.catalogue); S.activites = byId(D.activites); S.bons = byId(D.bons); S.taches = {};
   S.fournisseurs = byId(D.fournisseurs); S.achats = byId(D.achats); S.heures = byId(D.heures); S.employes = byId(D.employes); S.pointages = byId(D.pointages); S.blf = byId(D.blf || []);
-  S.params = { auto: D.auto, societe: D.societe, equipe: D.equipe, logo: clone(DEFAULT_LOGO), exemples: { version: EXEMPLES_VERSION } };
+  S.params = { auto: D.auto, societe: D.societe, equipe: D.equipe, logo: clone(DEFAULT_LOGO), exemples: { version: EXEMPLES_VERSION }, acces: (S.params && S.params.acces) || clone(DEFAULT_ACCES) };
 }
 
 /* ---------- Enregistrement ---------- */
@@ -1520,6 +1571,23 @@ function vuePlanning() {
     </div>
   </div>`;
 }
+/* Écran de connexion de la maquette : on choisit son nom. Le vrai logiciel demandera l'e-mail et le mot de passe. */
+function vueConnexion() {
+  const soc = S.params.societe, A = S.params.acces || {};
+  const ecrans = id => id === 'admin' ? 'tous les écrans, plus « Automatisations » et « Réglages »' : navDe(id).filter(n => n[0] === 'accueil' || (A[id] || {})[n[0]] === 'menu').map(n => n[1]).join(', ');
+  return `<section class="connexion"><div class="connexion-carte">
+    <div class="connexion-marque"><span class="doc-logo">${BOLT}</span><div><b>${esc(soc.nom)}</b><small>Gestion commerciale · maquette de test</small></div></div>
+    <h1>Qui se connecte ?</h1>
+    <div class="comptes">${comptes().map(m => `<button class="compte" data-act="connexion" data-id="${esc(m.id)}"><span class="profil-init">${esc((m.nom || '?').charAt(0).toUpperCase())}</span><span class="compte-txt"><b>${esc(m.nom)}${m.id === 'admin' ? ' · administrateur' : ''}</b><small>${esc(m.role || '')}</small><small class="compte-ecrans">Son menu : ${esc(ecrans(m.id))}</small></span>${ico('chevron')}</button>`).join('')}</div>
+    <p class="carte-note">Dans le vrai logiciel, chacun entrera son adresse e-mail et son mot de passe la première fois sur son ordinateur, puis restera connecté. Ici, c’est une maquette : choisissez simplement votre nom.</p>
+  </div></section>`;
+}
+function vueReserve(vue) {
+  const A = S.params.acces || {}, qui = membres().filter(m => m.id !== PROFIL && (A[m.id] || {})[vue] && A[m.id][vue] !== 'non').map(m => m.nom);
+  return `<section class="page-tete"><div><p class="surtitre">Hors de votre espace</p><h1>${esc(ECRANS[vue] || 'Écran')}</h1></div></section>
+  <section class="carte"><p>${qui.length ? `Cet écran fait partie de l’espace de ${esc(qui.join(' et '))}.` : 'Cet écran est réservé à l’administrateur.'} Si vous en avez besoin, dites-le à Yoni avec le bouton « Aide » : c’est lui qui règle les accès.</p>
+    <div class="carte-boutons"><a class="btn btn-primary" href="#accueil">Retour au tableau de bord</a></div></section>`;
+}
 function vueAccueil() {
   const taches = calculerTaches();
   const miennes = taches.filter(t => t.resp === PROFIL);
@@ -1544,16 +1612,23 @@ function vueAccueil() {
   const bandeauExemples = mode !== 'db' || vEx === EXEMPLES_VERSION ? '' : (vEx >= 2 && vEx <= 4)
     ? `<section class="carte bandeau-ex"><div><h2>Nouveau : bons de livraison, paie par quinzaine, chèques</h2><p>Les achats se saisissent maintenant bon de livraison par bon de livraison, la paie se fait par quinzaine et par chantier, et chaque fournisseur a son attestation fiscale. Pour les essayer, ajoutez les exemples, tous inventés. Vos clients, affaires et factures de test ne changent pas.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-ajouter">Ajouter les exemples</button><button class="btn" data-act="exemples-garder">Ne pas ajouter</button></div></section>`
     : `<section class="carte bandeau-ex"><div><h2>Nouveaux exemples disponibles</h2><p>Les exemples ressemblent maintenant aux chantiers d’Electropack : hôtels, banques, plateaux de bureaux, industrie, avec des achats et un suivi de chantier. Les charger remplace les clients, affaires, bons, factures et achats de test actuels. Vos réglages sont conservés.</p></div><div class="bandeau-ex-actions"><button class="btn btn-primary" data-act="exemples-charger">Charger les nouveaux exemples</button><button class="btn" data-act="exemples-garder">Garder les données actuelles</button></div></section>`;
+  /* Quatre chiffres par personne : Jacqui suit les devis et les chantiers, Régine l'argent qui rentre et qui sort. */
+  const K = {
+    facture: () => kpi('facture-mois', 'Facturé ce mois (HT)', moneyRond(factureMois), `Encaissé ce mois : ${moneyRond(encaisseMois)}`),
+    encaisser: () => kpi('encaisser', 'Reste à encaisser (TTC)', moneyRond(aEnc), retard.length ? `dont ${moneyRond(enRetard)} en retard (${retard.length})` : 'Aucune facture en retard', { alerte: retard.length }),
+    devis: () => kpi('devis-attente', 'Devis en attente (TTC)', moneyRond(attente), `${envoyes.length} devis envoyés sans réponse`),
+    taux: () => kpi('taux', 'Taux de signature', taux + ' %', `${signes} acceptés sur ${decides} décidés (6 mois)`),
+    chantiers: () => { const enC = chantiersTous().filter(chEnCours); return kpi('chantiers', 'Chantiers en cours', String(enC.length), `${moneyRond(enC.reduce((t, x) => t + x.ch.vendu, 0))} HT vendus`, { v: 'encours' }); },
+    fournisseurs: () => { const dus = achatsListe().filter(x => achReste(x) > 0); return kpi('achats', 'À payer aux fournisseurs', moneyRond(dus.reduce((t, x) => t + achReste(x), 0)), nb(dus.length, 'facture')); },
+    paie: () => { const av = paieDeLaPeriode(perCourante()).filter(x => x.saisi && !x.paye); return kpi('paie', 'Reste à verser (paie)', moneyRond(av.reduce((t, x) => t + x.reste, 0)), `${perLong(perCourante())} · avances : ${moneyRond(av.reduce((t, x) => t + x.avances, 0))}`, { v: 'reste' }); }
+  };
   return bandeauExemples + `
   <section class="page-tete">
     <div><p class="surtitre">${cap(JOURS[d.getDay()])} ${fdateLong(TODAY)}</p><h1>Bonjour ${esc(nomMembre(PROFIL))}</h1></div>
-    <button class="btn btn-primary" data-act="nouvelle-affaire">+ Nouvelle demande</button>
+    ${PROFIL === 'maman' ? '<button class="btn btn-primary" data-act="blf-nouveau">+ Bon de livraison</button>' : '<button class="btn btn-primary" data-act="nouvelle-affaire">+ Nouvelle demande</button>'}
   </section>
   <section class="kpis">
-    ${kpi('facture-mois', 'Facturé ce mois (HT)', moneyRond(factureMois), `Encaissé ce mois : ${moneyRond(encaisseMois)}`)}
-    ${kpi('encaisser', 'Reste à encaisser (TTC)', moneyRond(aEnc), retard.length ? `dont ${moneyRond(enRetard)} en retard (${retard.length})` : 'Aucune facture en retard', { alerte: retard.length })}
-    ${kpi('devis-attente', 'Devis en attente (TTC)', moneyRond(attente), `${envoyes.length} devis envoyés sans réponse`)}
-    ${kpi('taux', 'Taux de signature', taux + ' %', `${signes} acceptés sur ${decides} décidés (6 mois)`)}
+    ${({ papa: ['devis', 'taux', 'chantiers', 'encaisser'], maman: ['encaisser', 'facture', 'fournisseurs', 'paie'] }[PROFIL] || ['facture', 'encaisser', 'devis', 'taux']).map(k => K[k]()).join('\n    ')}
   </section>
   <div class="deux-col">
     <section class="carte">
@@ -1922,7 +1997,22 @@ async function chargerLogo(file) {
   } catch (e) { toast('Image illisible : choisissez un fichier PNG ou JPEG.'); }
   finally { if (url) URL.revokeObjectURL(url); }
 }
+function carteAcces() {
+  const A = S.params.acces || {}, eq = membres();
+  const opt = cur => [['menu', 'Dans son menu'], ['plus', 'Avec « Tout voir »'], ['non', 'Pas d’accès']].map(([k, l]) => `<option value="${k}"${cur === k ? ' selected' : ''}>${l}</option>`).join('');
+  return `<section class="carte"><header class="carte-tete"><h2>Comptes et accès</h2></header>
+    <p class="carte-note">Chacun se connecte à son nom et voit son menu. « Tout voir » lui montre aussi les écrans réglés sur « Avec Tout voir ». L’administrateur voit tout ; « Automatisations » et « Réglages » lui sont réservés.</p>
+    <div class="table-scroll"><table class="table table-acces"><thead><tr><th>Écran</th>${eq.map(m => `<th>${esc(m.nom)}</th>`).join('')}</tr></thead><tbody>
+    ${ECRANS_ACCES.map(v => `<tr><td>${esc(ECRANS[v])}</td>${eq.map(m => `<td>${v === 'accueil' ? 'Dans son menu' : `<select data-acces="${esc(m.id)}:${v}" aria-label="${esc(ECRANS[v])} pour ${esc(m.nom)}">${opt((A[m.id] || {})[v] || 'non')}</select>`}</td>`).join('')}</tr>`).join('')}</tbody></table></div>
+    <div class="carte-boutons"><button type="button" class="btn btn-sm" data-act="acces-defaut">Revenir à la répartition proposée</button></div></section>`;
+}
 function vueReglages() {
+  const html = vueReglagesComplet();
+  if (estAdmin()) return html;
+  const i = html.indexOf('<section class="carte"><header class="carte-tete"><h2>Apparence</h2>'), j = html.indexOf('<form class="pile" data-form="reglages">');
+  return `<section class="page-tete"><div><p class="surtitre">Présentation de l’écran, gardée sur cet appareil</p><h1>Affichage</h1></div></section>` + (i >= 0 && j > i ? html.slice(i, j) : '') + `<p class="carte-note">Les autres réglages (société, automatisations, accès) sont faits par Yoni.</p>`;
+}
+function vueReglagesComplet() {
   const s = S.params.societe, eq = membres(), logo = (S.params.logo || {}).data;
   const champ = (n, l, v, attrs) => `<label class="champ">${esc(l)}<input name="${n}" value="${esc(v == null ? '' : v)}" ${attrs || ''}></label>`;
   return `<section class="page-tete"><div><p class="surtitre">Présentation, société, équipe</p><h1>Réglages</h1></div></section>
@@ -1947,6 +2037,7 @@ function vueReglages() {
     <div class="fen-pied"><button class="btn btn-primary" type="submit">Enregistrer les réglages</button></div>
   </form>
   ${carteDemandes()}
+  ${carteAcces()}
   <section class="carte"><header class="carte-tete"><h2>Données d'exemple</h2></header>
     <p class="carte-note">Avant une présentation, remettez à neuf les clients, affaires, bons et factures d'exemple, avec des dates recalculées à partir d'aujourd'hui. La société, le logo, l'équipe et les automatisations sont conservés.</p>
     <div><button type="button" class="btn" data-act="reset-demander">Remettre les données d'exemple</button></div></section>`;
@@ -1955,6 +2046,7 @@ function vueReglages() {
 /* ---------- Recherche ---------- */
 const norm = s => String(s || '').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '');
 function ouvrirRecherche() {
+  if (!connecte()) return;
   ouvrirFenetre('Rechercher', `<input type="search" id="q-global" placeholder="Client, fournisseur, affaire, n° de devis, de bon, de facture ou d’achat…" aria-label="Rechercher" autocomplete="off"><div id="res-global">${vide('Tapez au moins 2 lettres.')}</div>`);
   setTimeout(() => { const i = $('#q-global'); if (i) i.focus(); }, 30);
 }
@@ -2499,11 +2591,19 @@ function decorer(racine) {
 }
 function majNav() {
   const nav = $('.nav'); if (!nav) return;
-  nav.innerHTML = NAV.map(([v, l]) => `<a href="#${v}" data-v="${v}"><span class="nav-lbl">${ico(NAV_ICO[v])}<span>${esc(l)}</span></span>${v === 'accueil' ? '<span class="badge" id="badge-taches" hidden></span>' : ''}</a>`).join('');
+  const lien = ([v, l]) => `<a href="#${v}" data-v="${v}"><span class="nav-lbl">${ico(NAV_ICO[v])}<span>${v === 'reglages' && !estAdmin() ? 'Affichage' : esc(l)}</span></span>${v === 'accueil' ? '<span class="badge" id="badge-taches" hidden></span>' : ''}</a>`;
+  const menu = navDe(PROFIL).filter(n => acces(n[0]) === 'menu' && n[0] !== 'reglages'), plus = navDe(PROFIL).filter(n => acces(n[0]) === 'plus'), regl = NAV.filter(n => n[0] === 'reglages');
+  nav.innerHTML = menu.map(lien).join('') + (plus.length && UI.toutVoir ? '<span class="nav-sep">Le reste du logiciel</span>' + plus.map(lien).join('') : '') + regl.map(lien).join('') + (plus.length ? `<button type="button" class="nav-tout" data-act="tout-voir" aria-pressed="${!!UI.toutVoir}"><span class="nav-lbl">${ico(UI.toutVoir ? 'gauche' : 'chevron')}<span>${UI.toutVoir ? 'Mon menu seulement' : 'Tout voir'}</span></span></button>` : '');
+}
+/* Le menu de chacun suit l'ordre de son travail (celui de la répartition proposée), pas l'ordre général. */
+function navDe(id) {
+  const ordre = Object.keys(DEFAULT_ACCES[id] || {}); if (!ordre.length) return NAV;
+  const rang = v => { const i = ordre.indexOf(v); return i < 0 ? 99 : i; };
+  return NAV.slice().sort((x, y) => rang(x[0]) - rang(y[0]));
 }
 
 /* ---------- Aide : assistant, guide pas à pas et demandes pour Yoni ---------- */
-const APP_VERSION = '4.0';
+const APP_VERSION = '4.1';
 const ECRANS = { employes: 'Employés', chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
 const TYPES_DEMANDE = { anomalie: ['Problème', 'bad'], changement: ['Changement', 'warn'], ajout: ['Ajout', 'info'] };
 const STATUTS_DEMANDE = { nouvelle: 'Nouvelle', vue: 'Vue par Yoni', faite: 'Faite' };
@@ -2577,6 +2677,12 @@ const GUIDE = [
     'Pour aller plus vite, cliquez sur « Remplir avec une photo » : photographiez la facture ou le bon, les cases se remplissent, vous vérifiez puis vous enregistrez.',
     'Pour noter un paiement, ouvrez l’achat et remplissez « Enregistrer un paiement ». Le logiciel ne paie rien lui-même.',
     'Une facture de fournisseur à payer bientôt, ou en retard, remonte toute seule dans « À faire ».'] },
+  { q: 'Se connecter et trouver ses écrans', ecran: 'accueil', etapes: [
+    'À l’ouverture, cliquez sur votre nom : vous arrivez dans votre espace, avec votre menu et vos tâches.',
+    'Le tableau de bord montre d’abord ce qui est « À faire » pour vous. Le bouton « Toutes » montre aussi les tâches de l’autre.',
+    '« Tout voir », en bas du menu, affiche les autres écrans du logiciel. « Mon menu seulement » les range.',
+    'Pour changer de personne, cliquez sur votre nom, en bas du menu.',
+    'Si un écran vous manque, dites-le à Yoni avec « Une demande pour Yoni » : c’est lui qui règle les accès.'] },
   { q: 'Encaisser un chèque et le remettre en banque', ecran: 'factures', etapes: [
     'Ouvrez la facture, puis « Enregistrer un paiement » : choisissez « Chèque » et notez son numéro et sa banque.',
     'Le chèque attend dans la carte « Chèques à remettre en banque », en haut de « Factures ».',
@@ -3651,16 +3757,20 @@ function rendre(force) {
   if (!force && ae && main.contains(ae) && /INPUT|TEXTAREA|SELECT/.test(ae.tagName) && ae.type !== 'checkbox') { renduEnAttente = true; return; }
   if (!force && !$('#fenetre').hidden) { renduEnAttente = true; return; }
   renduEnAttente = false;
+  if (!connecte()) { majProfil(); main.innerHTML = vueConnexion(); decorer(main); return; }
   const r = routeCourante();
   const section = r.vue === 'client' ? 'clients' : r.vue === 'affaire' ? 'affaires' : r.vue;
+  const acc = acces(section);
+  if (acc === 'plus') UI.toutVoir = true;
+  majNav();
   document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('on', a.dataset.v === section));
-  const html = r.vue === 'client' ? vueClient(r.id) : r.vue === 'affaire' ? vueAffaire(r.id) :
+  const html = acc === 'non' ? vueReserve(section) : r.vue === 'client' ? vueClient(r.id) : r.vue === 'affaire' ? vueAffaire(r.id) :
     ({ accueil: vueAccueil, clients: vueClients, affaires: vueAffaires, factures: vueFactures, catalogue: vueCatalogue, automatisations: vueAutomatisations, reglages: vueReglages, planning: vuePlanning, chantiers: vueChantiers, achats: vueAchats, employes: vueEmployes }[r.vue])();
   main.innerHTML = html;
   decorer(main);
   if (r.vue === 'clients') filtrerClients();
-  const nb = calculerTaches().length;
-  const b = $('#badge-taches'); b.textContent = nb; b.hidden = !nb;
+  const nb = calculerTaches().filter(t => estAdmin() || t.resp === PROFIL).length;
+  const b = $('#badge-taches'); if (b) { b.textContent = nb; b.hidden = !nb; }
 }
 function planifierRendu() { if (planifierRendu.t) return; planifierRendu.t = requestAnimationFrame(() => { planifierRendu.t = null; rendre(); }); }
 function filtrerClients() {
@@ -3746,8 +3856,11 @@ Object.assign(ACTIONS, {
   },
   'filtre-fact': el => { UI.factFiltre = el.dataset.v; rendre(true); },
   'filtre-taches': el => { UI.tachesFiltre = el.dataset.v; rendre(true); },
-  'profil': () => ouvrirFenetre('Qui utilise l’appli ?', `<p class="carte-note">Le choix est gardé sur cet appareil. Chaque action est notée à ce nom dans l’historique.</p><div class="choix-profil">${membres().map(m => `<button class="btn ${m.id === PROFIL ? 'btn-primary' : ''}" data-act="choisir-profil" data-id="${esc(m.id)}"><b>${esc(m.nom)}</b><small>${esc(m.role || '')}</small></button>`).join('')}</div>`),
-  'choisir-profil': el => { choisirProfil(el.dataset.id); fermerFenetre(); toast('Bonjour ' + nomMembre(PROFIL) + '.'); rendre(true); },
+  'profil': () => { fermerFenetre(); choisirProfil(''); if (location.hash && location.hash !== '#accueil') location.hash = 'accueil'; rendre(true); },
+  'connexion': el => { choisirProfil(el.dataset.id); toast('Bonjour ' + nomMembre(PROFIL) + '.'); rendre(true); },
+  'tout-voir': () => { UI.toutVoir = !UI.toutVoir; if (!UI.toutVoir && acces(routeCourante().vue === 'client' ? 'clients' : routeCourante().vue === 'affaire' ? 'affaires' : routeCourante().vue) === 'plus') location.hash = 'accueil'; majNav(); rendre(true); },
+  'acces-defaut': () => { S.params.acces = clone(DEFAULT_ACCES); persistParam('acces'); toast('Répartition proposée remise.'); rendre(true); },
+  'choisir-profil': el => { choisirProfil(el.dataset.id); toast('Bonjour ' + nomMembre(PROFIL) + '.'); rendre(true); },
   'pdf': el => telechargerPDF(el.dataset.kind, el.dataset.id, el),
   'filtre-cli': el => { UI.cliFiltre = el.dataset.v; document.querySelectorAll('[data-act="filtre-cli"]').forEach(b => b.classList.toggle('on', b === el)); filtrerClients(); },
   'vue-aff': el => { UI.affVue = el.dataset.v; rendre(true); },
@@ -4150,6 +4263,7 @@ document.addEventListener('change', e => {
   if (el.matches('select[data-champ="resp"]')) { const a = affaireCourante(); if (a) { a.resp = el.value; persist('affaires', a); log(a.clientId, a.id, 'systeme', `Affaire confiée à ${nomMembre(el.value)}.`); } }
   if (el.id === 'logo-fichier') { chargerLogo(el.files && el.files[0]); el.value = ''; }
   if (el.dataset.date) { const a = affaireCourante(); if (a) { a.dates = a.dates || {}; if (el.value) a.dates[el.dataset.date] = el.value; else delete a.dates[el.dataset.date]; persist('affaires', a); } }
+  if (el.matches('select[data-acces]')) { const [id, vue] = el.dataset.acces.split(':'); S.params.acces = S.params.acces || clone(DEFAULT_ACCES); (S.params.acces[id] = S.params.acces[id] || {})[vue] = el.value; persistParam('acces'); toast('Accès enregistré.'); return; }
   if (el.matches('select[data-champ="delaiClient"]')) { const r = routeCourante(), c = r.vue === 'client' ? S.clients[r.id] : null; if (c) { c.delai = el.value === '' ? '' : Number(el.value); persist('clients', c); toast(el.value === '' ? 'Délai de paiement : 30 jours par défaut.' : 'Délai enregistré : il servira pour l’échéance des prochaines factures de solde.'); } }
   if (el.matches('input[data-champ="cmdClient"]')) { const a = affaireCourante(), v = el.value.trim(); if (a && (a.cmdClient || '') !== v) { a.cmdClient = v; persist('affaires', a); toast(v ? 'N° de commande enregistré : il sera repris sur les bons et les factures.' : 'N° de commande retiré.'); } }
   if (el.matches('textarea[data-champ="notes"]')) { const a = affaireCourante(); if (a && a.notes !== el.value) { a.notes = el.value; persist('affaires', a); } }
@@ -4204,7 +4318,7 @@ function demarrerBase() {
         if (COLLS.every(k => premier[k])) {
           bascule = true; clearTimeout(minuteur); mode = 'db';
           COLLS.filter(k => k !== 'parametres').forEach(k => { S[k] = tampon[k]; });
-          S.params = { auto: fusionParam('auto', tampon.parametres.auto), societe: fusionParam('societe', tampon.parametres.societe), equipe: fusionParam('equipe', tampon.parametres.equipe), logo: fusionParam('logo', tampon.parametres.logo), exemples: fusionParam('exemples', tampon.parametres.exemples) };
+          S.params = { auto: fusionParam('auto', tampon.parametres.auto), societe: fusionParam('societe', tampon.parametres.societe), equipe: fusionParam('equipe', tampon.parametres.equipe), logo: fusionParam('logo', tampon.parametres.logo), acces: fusionParam('acces', tampon.parametres.acces), exemples: fusionParam('exemples', tampon.parametres.exemples) };
           majProfil(); majMarque();
           setSync(Object.keys(S.clients).length ? 'ok' : 'vide');
           planifierRendu();
