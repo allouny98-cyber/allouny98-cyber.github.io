@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta name="robots" content="noindex, nofollow">
 <meta charset="utf-8">
+<meta name="robots" content="noindex, nofollow">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>CRM Electropack (test)</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -925,6 +925,70 @@ dl.totaux .marge + .marge { margin-top: 0; padding-top: 0; border-top: 0; }
 .promesse { font-size: calc(13px * var(--k)); color: var(--muted); flex: 1 1 100%; }
 @media (max-width: 860px) { .rv { grid-template-columns: minmax(0, 1fr); } }
 
+/* ---------- Version 4.7 : écran « Pièces », transfert, saisie par code ---------- */
+.onglets { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 12px; }
+.onglets .chip { min-height: 44px; padding: 8px 14px; }
+.pc-rappel { display: flex; align-items: center; gap: 12px; width: 100%; min-height: 44px; text-align: left; padding: 12px 16px; margin-bottom: 12px; background: var(--surface); border: 1px solid var(--card-line); border-left: 4px solid var(--warn); border-radius: var(--r); box-shadow: var(--shadow); cursor: pointer; color: var(--ink); font: inherit; }
+.pc-rappel.on { border-left-color: var(--accent); background: var(--accent-soft); }
+.pc-rappel > .ico { flex: none; width: 22px; height: 22px; color: var(--warn); }
+.pc-rappel small { display: block; color: var(--muted); font-size: calc(13px * var(--k)); }
+.pc-filtres select { flex: 1 1 150px; max-width: 250px; min-height: 44px; }
+.pc-filtres input[type=search] { min-height: 44px; }
+#pc-outils { position: sticky; top: 0; z-index: 2; display: flex; align-items: center; min-height: 58px; margin: 12px 0 8px; padding: 8px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r); }
+.pc-aide { margin: 0; color: var(--muted); font-size: calc(13.5px * var(--k)); }
+.pc-outils-in { display: flex; gap: 8px 16px; flex-wrap: wrap; align-items: center; justify-content: space-between; width: 100%; }
+.pc-cadre { overflow-x: auto; background: var(--surface); border: 1px solid var(--card-line); border-radius: var(--r); box-shadow: var(--shadow); }
+.tab-pieces { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; font-size: calc(13.5px * var(--k)); }
+.tab-pieces th, .tab-pieces td { padding: 8px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: middle; white-space: nowrap; }
+.tab-pieces .pc-c-tiers { white-space: normal; min-width: 160px; max-width: 230px; }
+.tab-pieces td.pc-c-ch { width: 26%; max-width: 0; min-width: 110px; overflow: hidden; text-overflow: ellipsis; }
+.tab-pieces thead th { padding: 0; background: var(--surface-2); }
+.pc-th { display: block; width: 100%; min-height: 44px; padding: 10px; border: 0; background: none; text-align: inherit; font: inherit; font-weight: 600; font-size: calc(12.5px * var(--k)); color: var(--muted); line-height: 24px; }
+button.pc-th { cursor: pointer; }
+button.pc-th:hover { color: var(--ink); }
+.tab-pieces .num { text-align: right; }
+.pc-fleche { display: inline-block; margin-left: 6px; border: 4px solid transparent; vertical-align: middle; }
+.pc-fleche.haut { border-bottom-color: currentColor; margin-bottom: 4px; }
+.pc-fleche.bas { border-top-color: currentColor; margin-top: 4px; }
+.pc-l { cursor: pointer; }
+.pc-l:hover { background: var(--surface-2); }
+.pc-l.sel, .pc-l.sel:hover { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.pc-num { font-weight: 650; }
+.tab-pieces small { display: block; color: var(--muted); font-size: calc(12px * var(--k)); }
+.tab-pieces small.pc-mob { display: none; }
+.tab-pieces .pill + .pill { margin-left: 4px; }
+.tab-pieces tfoot th, .tab-pieces tfoot td { font-weight: 700; border-bottom: 0; background: var(--surface-2); }
+.liste-simple.compact li { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0; }
+.transfert { display: grid; gap: 6px; margin: 12px 0; padding: 0; border: 0; }
+.transfert legend { padding: 0; margin-bottom: 6px; font-weight: 650; }
+.transfert-o { display: grid; grid-template-columns: auto 1fr; gap: 10px; align-items: center; min-height: 44px; padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r); cursor: pointer; }
+.transfert-o input { width: 20px; height: 20px; }
+.transfert-o small { display: block; color: var(--muted); }
+.transfert-o small.orange { color: var(--warn); font-weight: 600; }
+.saisie-code { display: flex; gap: 8px; flex-wrap: wrap; align-items: flex-end; margin-top: 12px; padding: 10px 12px; background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--r); }
+.saisie-code .champ { margin: 0; flex: 1 1 220px; }
+.saisie-code .saisie-q { flex: 0 0 96px; }
+.saisie-etat { flex: 1 1 100%; margin: 0; font-size: calc(13px * var(--k)); color: var(--muted); }
+.saisie-etat.ok { color: var(--ok); font-weight: 600; }
+@media (max-width: 720px) {
+  #pc-outils { position: static; }
+  .pc-filtres select { max-width: none; flex-basis: 45%; }
+  .pc-num { display: inline-flex; align-items: center; min-height: 44px; }
+  .tab-pieces thead, .tab-pieces .pc-opt, .tab-pieces .pc-c-date, .tab-pieces .pc-c-type, .tab-pieces .pc-desk, .tab-pieces .pc-rien, .tab-pieces tfoot td:empty { display: none; }
+  .tab-pieces, .tab-pieces tbody, .tab-pieces tfoot { display: block; }
+  .tab-pieces tr { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 12px; align-items: center; padding: 8px 12px; border-bottom: 1px solid var(--line); }
+  .tab-pieces td, .tab-pieces tfoot th { display: block; padding: 0; border: 0; white-space: normal; background: none; }
+  .tab-pieces small.pc-mob { display: block; }
+  .tab-pieces .pc-c-num { grid-column: 1; grid-row: 1; }
+  .tab-pieces .pc-c-st { grid-column: 2; grid-row: 1; justify-self: end; }
+  .tab-pieces .pc-c-tiers { grid-column: 1; grid-row: 2 / span 2; max-width: none; align-self: start; }
+  .tab-pieces .pc-c-ttc { grid-column: 2; grid-row: 2; }
+  .tab-pieces .pc-c-reste { grid-column: 2; grid-row: 3; }
+  .tab-pieces td[data-l]::before { content: attr(data-l) " "; font-weight: 400; color: var(--muted); font-size: 0.88em; }
+  .tab-pieces tfoot tr { border-bottom: 0; background: var(--surface-2); }
+  .tab-pieces tfoot th { grid-column: 1; grid-row: 1 / span 3; }
+}
+
 </style>
 </head>
 <body>
@@ -1494,10 +1558,10 @@ function enLettres(c) {
 /* ---------- Comptes et accès ---------- */
 /* Un seul logiciel, une seule base. Chacun se connecte à son nom et voit son menu.
    Pour chaque écran : 'menu' (dans son menu), 'plus' (visible avec « Tout voir »), 'non' (pas d'accès). L'administrateur voit tout. */
-const ECRANS_ACCES = ['accueil', 'documents', 'affaires', 'chantiers', 'planning', 'clients', 'factures', 'achats', 'employes', 'banque', 'catalogue'];
+const ECRANS_ACCES = ['accueil', 'documents', 'pieces', 'affaires', 'chantiers', 'planning', 'clients', 'factures', 'achats', 'employes', 'banque', 'catalogue'];
 const DEFAULT_ACCES = {
-  papa: { accueil: 'menu', affaires: 'menu', chantiers: 'menu', catalogue: 'menu', planning: 'menu', clients: 'menu', factures: 'menu', achats: 'plus', documents: 'plus', banque: 'plus', employes: 'non' },
-  maman: { accueil: 'menu', documents: 'menu', factures: 'menu', achats: 'menu', employes: 'menu', banque: 'menu', chantiers: 'menu', clients: 'menu', catalogue: 'menu', affaires: 'plus', planning: 'plus' }
+  papa: { accueil: 'menu', affaires: 'menu', chantiers: 'menu', catalogue: 'menu', planning: 'menu', clients: 'menu', factures: 'menu', pieces: 'plus', achats: 'plus', documents: 'plus', banque: 'plus', employes: 'non' },
+  maman: { accueil: 'menu', documents: 'menu', pieces: 'menu', factures: 'menu', achats: 'menu', employes: 'menu', banque: 'menu', chantiers: 'menu', clients: 'menu', catalogue: 'menu', affaires: 'plus', planning: 'plus' }
 };
 const ADMIN = { id: 'admin', nom: 'Yoni', role: 'Administrateur : tout voir, réglages, automatisations, comptes et accès' };
 /* ---------- État ---------- */
@@ -1509,7 +1573,7 @@ function fusionParam(id, v) {
   if (id === 'auto' || id === 'acces') { const out = clone(DEFAUTS[id]); Object.keys(v || {}).forEach(k => { out[k] = Object.assign({}, out[k] || {}, v[k]); }); return out; }
   return Object.assign(clone(DEFAUTS[id] || {}), v || {});
 }
-const UI = { catQ: '', catFiltre: 'tous', dv: null, rv: null, docsEtat: '', docEnCours: '', banqueVue: 'mois', banqueCompte: '', empPer: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes', toutVoir: false };
+const UI = { pc: null, catQ: '', catFiltre: 'tous', dv: null, rv: null, docsEtat: '', docEnCours: '', banqueVue: 'mois', banqueCompte: '', empPer: '', achFiltre: 'toutes', chFiltre: 'encours', factFiltre: 'toutes', cliFiltre: 'tous', affVue: 'tableau', refuses: false, tachesFiltre: 'toutes', toutVoir: false };
 /* Compte connecté : 'papa', 'maman', 'admin', ou '' tant que personne n'est connecté. Dans la maquette, pas de mot de passe : on choisit son nom. */
 let PROFIL = (() => { try { return new URLSearchParams(location.search).get('compte') || localStorage.getItem('crm-compte') || ''; } catch (e) { return ''; } })();
 if (PROFIL && PROFIL !== 'admin') UI.tachesFiltre = 'miennes';
@@ -1767,11 +1831,7 @@ function creerAcompte(a, auto) {
 /* Échéance d'une facture de solde : le délai convenu avec le client (60, 90 ou 120 jours), sinon 30 jours. La loi 69-21 plafonne à 120 jours. */
 const delaiClient = id => { const c = S.clients[id]; return c && c.delai !== '' && c.delai != null ? Number(c.delai) : 30; };
 function creerSolde(a) {
-  const lignes = copieLignes(a.lignes);
-  affFacturesValides(a).filter(f => f.type === 'acompte').forEach(f => {
-    const net = factTot(f).ht - avoirsDe(f).reduce((s, x) => s + factTot(x).ht, 0);
-    if (net > 0) lignes.push({ designation: 'Déduction acompte ' + f.numero, unite: 'forfait', qte: 1, pu: -net / 100, horsRemise: true });
-  });
+  const lignes = lignesSolde(a);
   const f = { id: uid('f'), numero: nextNumero('FA', 'factures'), affaireId: a.id, clientId: a.clientId, type: 'solde', date: TODAY, echeance: addDaysISO(TODAY, delaiClient(a.clientId)), lignes, remise: Number(a.remise) || 0, paiements: [], creeLe: nowISO() };
   persist('factures', f);
   log(a.clientId, a.id, 'systeme', `Facture de solde ${f.numero} créée (${money(factTot(f).ttc)} TTC).`);
@@ -2175,7 +2235,7 @@ function editeurLignes(a, modifiable) {
       <p class="lg-marge">${margeLigneHTML(l, i, true)}</p></div>`
     : `<div class="lg lg-fige"><p class="lg-des-txt">${esc(l.designation)}</p><div class="lg-nums"><span>${esc(String(l.qte).replace('.', ','))} ${esc(l.unite || '')} × ${money(Math.round(l.pu * 100))}${l.remise ? ' · remise ' + esc(String(l.remise).replace('.', ',')) + ' %' : ''}</span><output class="lg-tot">${money(ligneHT(l))}</output></div><p class="lg-marge">${margeLigneHTML(l, i, false)}</p></div>`).join('');
   return `<div class="lignes" id="lignes">${lignes || vide('Aucune ligne. Ajoutez des ouvrages depuis le catalogue.')}</div>
-    ${modifiable ? `<div class="ajout"><select id="sel-cat" aria-label="Ouvrage du catalogue">${optionsCatalogue()}</select><button class="btn btn-sm" data-act="ligne-ajout">Ajouter</button><button class="btn btn-ghost btn-sm" data-act="ligne-libre">Ligne libre</button></div>
+    ${modifiable ? `${blocSaisieCode()}<div class="ajout"><select id="sel-cat" aria-label="Ouvrage du catalogue">${optionsCatalogue()}</select><button class="btn btn-sm" data-act="ligne-ajout">Ajouter</button><button class="btn btn-ghost btn-sm" data-act="ligne-libre">Ligne libre</button></div>
     <label class="remise-glob" for="remise-glob">Remise sur l'ensemble du devis (%)<input type="number" id="remise-glob" inputmode="decimal" min="0" max="100" step="0.5" value="${esc(a.remise || '')}" placeholder="0"></label>${blocUnites(a)}` : ''}
     <dl class="totaux" id="totaux-bloc">${totauxHTML(a)}</dl>`;
 }
@@ -3025,10 +3085,12 @@ const ICONS = {
   gauche: '<path d="m15 6-6 6 6 6"/>',
   banque: '<path d="M3 10 12 4l9 6"/><path d="M5.5 10v8M10 10v8M14 10v8M18.5 10v8"/><path d="M3 20h18"/>',
   copier: '<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V6a2 2 0 0 0-2-2H6a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2"/>',
-  plan: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 11h7v10"/><path d="M14 3v8h7"/><path d="M14 16h3"/>'
+  plan: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 11h7v10"/><path d="M14 3v8h7"/><path d="M14 16h3"/>',
+  pieces: '<rect x="4" y="3" width="13" height="16" rx="2"/><path d="M8 8h5M8 12h5"/><path d="M20 7v12a2 2 0 0 1-2 2H9"/>',
+  transfert: '<path d="M5 4h7l3 3v4"/><path d="M5 4v16h6"/><path d="M13 17h8"/><path d="m18 14 3 3-3 3"/>'
 };
 const ico = n => `<svg class="ico" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
-const NAV_ICO = { accueil: 'accueil', affaires: 'affaires', planning: 'calendrier', clients: 'clients', factures: 'facture', catalogue: 'catalogue', automatisations: 'eclair', reglages: 'reglages', chantiers: 'cone', achats: 'panier', employes: 'personne', banque: 'banque', documents: 'dossier' };
+const NAV_ICO = { accueil: 'accueil', affaires: 'affaires', planning: 'calendrier', clients: 'clients', factures: 'facture', catalogue: 'catalogue', automatisations: 'eclair', reglages: 'reglages', chantiers: 'cone', achats: 'panier', employes: 'personne', banque: 'banque', documents: 'dossier', pieces: 'pieces' };
 const TACHE_ICO = { devis1: 'message', devis2: 'telephone', fact1: 'message', fact2: 'telephone', fact3: 'cloche', acompte: 'facture', bc: 'bon', planifier: 'calendrier', solde: 'facture', demande: 'lieu', dormant: 'outil', paie: 'personne', payer1: 'portefeuille', payer2: 'portefeuille', budget1: 'cone', budget2: 'cone', att: 'cloche', attexp: 'cloche', regroup: 'bon', cheques: 'portefeuille', paieq: 'personne', verser: 'personne', ordredep: 'envoyer', ordredeb: 'oeil', charge: 'banque', docs: 'dossier' };
 /* Titres de cartes, indicateurs, boutons et journal : l'icône est choisie d'après le libellé ou l'action. */
 const TITRE_ICO = [[/^Plan AutoCAD|^Prompt pour AutoCAD|^Comptage du plan/, 'plan'], [/^Réserves types/, 'note'], [/^Discussion/, 'message'], [/^Devis en cours de revue/, 'facture'], [/^Prix de vente/, 'etiquette'], [/^Proposition à corriger/, 'coche'], [/^Ouvrages types/, 'catalogue'], [/^Vendu/, 'facture'], [/^Matériel/, 'panier'], [/^Main-d’œuvre/, 'personne'], [/^Autres dépenses/, 'portefeuille'], [/^Chantiers en cours|^Suivi du chantier|budget des chantiers/, 'cone'], [/^Fournisseurs|fournisseurs à payer/, 'camion'], [/^Nouveau : /, 'panier'], [/^À faire/, 'coche'], [/^À venir|^Échéances à venir|^Échéancier|^Grille de la quinzaine/, 'calendrier'], [/^En attente à la banque|^Solde/, 'banque'], [/^Charges qui reviennent/, 'recharger'], [/^Relevés de banque/, 'facture'], [/^À valider/, 'coche'], [/^Classés/, 'dossier'], [/^Ordres de virement/, 'envoyer'], [/^Facturé HT/, 'barres'], [/^Affaires en cours/, 'affaires'], [/^Activité récente|^Journal|^Historique/, 'horloge'], [/^Devis et messages/, 'message'],
@@ -3037,7 +3099,7 @@ const TITRE_ICO = [[/^Plan AutoCAD|^Prompt pour AutoCAD|^Comptage du plan/, 'pla
   [/^Planifier/, 'calendrier'], [/^Relancer les factures/, 'cloche'], [/^Facturer le solde/, 'facture'], [/aucune demande sans visite/i, 'lieu'], [/entretien/i, 'outil'], [/^Résumé|^Aperçu du résumé/, 'courriel'],
   [/^Rien ne se fait/, 'coche'], [/^Nouveaux exemples/, 'recharger'], [/vraie version/, 'eclair'], [/^Aujourd|^Cette semaine|^Plus tard|^Semaine/, 'calendrier']];
 const KPI_ICO = [[/^Solde du jour/, 'banque', 'accent'], [/^Encaissements attendus/, 'hausse', 'ok'], [/^Sorties prévues/, 'portefeuille', 'warn'], [/^Reste en fin de mois/, 'sablier', 'info'], [/^Employés/, 'personne', 'accent'], [/^Jours travaillés/, 'calendrier', 'info'], [/^Paie de la quinzaine/, 'portefeuille', 'accent'], [/^Reste à verser/, 'sablier', 'warn'], [/^À payer aux/, 'portefeuille', 'warn'], [/^Fournisseurs en retard/, 'cloche', 'bad'], [/^À payer sous/, 'calendrier', 'info'], [/^Payé ce mois/, 'fait', 'ok'], [/^Chantiers terminés/, 'trophee', 'ok'], [/^Chantiers en cours/, 'cone', 'accent'], [/^Reste à facturer/, 'facture', 'info'], [/^Dépensé/, 'panier', 'warn'], [/^Budgets à surveiller/, 'cloche', 'ok'], [/^Facturé/, 'hausse', 'accent'], [/^Reste à encaisser/, 'portefeuille', 'warn'], [/^Devis en attente/, 'sablier', 'info'], [/^Taux de signature/, 'stylo', 'ok'], [/^En retard/, 'cloche', 'bad'], [/^Attendu/, 'calendrier', 'info'], [/^Encaissé/, 'fait', 'ok']];
-const BTN_ICO = { 'prompt-plan': 'plan', 'prompt-copier': 'copier', 'prompt-revoir': 'oeil', 'tache-message': 'message', 'tache-visite': 'lieu', 'tache-bc': 'bon', 'tache-acompte': 'facture', 'tache-solde': 'facture', 'tache-fait': 'fait', pdf: 'telecharger', 'apercu-devis': 'oeil', 'envoyer-devis': 'envoyer',
+const BTN_ICO = { 'blf-regrouper': 'transfert', 'pc-ouvrir': 'oeil', transferer: 'transfert', 'devis-dupliquer': 'copier', 'saisie-ajout': 'coche', 'pc-effacer': 'recharger', 'prompt-plan': 'plan', 'prompt-copier': 'copier', 'prompt-revoir': 'oeil', 'tache-message': 'message', 'tache-visite': 'lieu', 'tache-bc': 'bon', 'tache-acompte': 'facture', 'tache-solde': 'facture', 'tache-fait': 'fait', pdf: 'telecharger', 'apercu-devis': 'oeil', 'envoyer-devis': 'envoyer',
   'relancer-devis': 'message', 'relancer-facture': 'message', 'creer-solde': 'facture', 'creer-acompte': 'facture', 'creer-bc': 'bon', 'nouveau-bl': 'camion', avoir: 'retour', 'msg-copier': 'copier', 'msg-envoye': 'fait',
   'demande-ouvrir': 'boite', 'demandes-copier': 'copier', 'reset-demander': 'recharger', 'exemples-charger': 'recharger', 'exemples-ajouter': 'recharger', 'aide-aller': 'oeil', 'achat-nouveau': 'panier', 'employe-nouveau': 'personne', 'etat-paie': 'facture', 'etat-paie-copier': 'copier', 'etat-paie-csv': 'telecharger', 'photo-exemple': 'oeil', 'fournisseur-nouveau': 'camion', 'heures-ouvrir': 'horloge', 'achat-ouvrir': 'portefeuille', 'pointage-brahim': 'courriel', 'feries-ouvrir': 'calendrier', 'quinzaine-valider': 'fait', 'grille-remplir': 'stylo', 'virements-paie': 'banque', 'solde-ouvrir': 'stylo', 'charge-nouvelle': 'recharger', 'charge-facture': 'photo', 'releve-importer': 'telecharger', 'releve-pdf': 'telecharger', 'releve-debit': 'fait', 'attente-passe': 'fait', 'docs-exemple': 'oeil', 'doc-valider': 'fait', 'dv-ouvrir': 'stylo', 'dv-proposer': 'eclair', 'dv-exemple': 'oeil', 'dv-valider': 'fait', 'dv-libre': 'stylo', 'tarifs-ouvrir': 'etiquette', 'reserves-ouvrir': 'note', 'dv-dxf-valider': 'fait', 'dv-dxf-ia': 'eclair', 'rv-valider': 'fait', 'rv-defaire': 'recharger', 'promesse-ouvrir': 'telephone', 'aller-chantiers': 'cone' };
 const ACT_ICO = { appel: 'telephone', visite: 'lieu', email: 'courriel', whatsapp: 'message', note: 'note', systeme: 'fait', auto: 'eclair' };
@@ -3085,8 +3147,8 @@ function navDe(id) {
 }
 
 /* ---------- Aide : assistant, guide pas à pas et demandes pour Yoni ---------- */
-const APP_VERSION = '4.6';
-const ECRANS = { documents: 'Documents', banque: 'Banque', employes: 'Employés', chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
+const APP_VERSION = '4.7';
+const ECRANS = { documents: 'Documents', pieces: 'Pièces', banque: 'Banque', employes: 'Employés', chantiers: 'Chantiers', achats: 'Achats', accueil: 'Tableau de bord', affaires: 'Affaires', planning: 'Planning', clients: 'Clients', factures: 'Factures', catalogue: 'Catalogue', automatisations: 'Automatisations', reglages: 'Réglages' };
 const TYPES_DEMANDE = { anomalie: ['Problème', 'bad'], changement: ['Changement', 'warn'], ajout: ['Ajout', 'info'] };
 const STATUTS_DEMANDE = { nouvelle: 'Nouvelle', vue: 'Vue par Yoni', faite: 'Faite' };
 /* Le guide sert deux fois : affiché tel quel quand l'assistant n'est pas disponible, et donné à l'assistant comme seule source. */
@@ -3291,6 +3353,33 @@ const GUIDE = [
     'En face d’une ligne « À expliquer », écrivez une note (le fournisseur d’un chèque, par exemple).',
     'Pour un virement déposé à la banque, cliquez sur « Confirmer le débit » : le paiement est enregistré.',
     '« Télécharger le relevé annoté » donne la feuille à agrafer au relevé de la banque. Le PDF de la banque reste intact.'] },
+  { q: 'Retrouver une pièce comme dans Ciel : l’écran « Pièces »', ecran: 'pieces', etapes: [
+    'Ouvrez « Pièces » dans le menu : toutes les pièces sont dans une seule liste. En haut, choisissez « Pièces clients (ventes) » ou « Pièces fournisseurs (achats) ».',
+    'Filtrez par type, par date, par client ou fournisseur, par chantier et par statut. La case de recherche trouve un numéro, un nom ou un chantier.',
+    'Cliquez sur le titre d’une colonne pour trier la liste. Un second clic inverse le tri.',
+    'Cliquez sur une ligne pour la sélectionner : ses boutons apparaissent au-dessus (« Ouvrir », « Transférer », « Dupliquer », « PDF », « Voir l’affaire »). Un double-clic, ou un clic sur le numéro, ouvre la pièce.',
+    'Quand un seul type est choisi, le bas de la liste donne le nombre de pièces et les totaux.'] },
+  { q: 'Transférer un devis en facture', ecran: 'pieces', etapes: [
+    'Dans « Pièces », le bandeau « devis acceptés à facturer » compte les devis signés qui ne sont pas encore entièrement facturés. Cliquez dessus pour les voir.',
+    'Sélectionnez le devis, puis cliquez sur « Transférer ».',
+    'Choisissez : facture d’acompte, facture de solde (acomptes déduits), bon de commande ou bon de livraison. Le montant est affiché avant de valider.',
+    'Cliquez sur « Transférer » : la pièce est créée avec les lignes du devis, sans ressaisie, puis elle s’ouvre. Rien n’est créé avant ce clic.',
+    'Pour un fournisseur : sélectionnez un bon de livraison « À facturer », puis « Transférer en facture », ou « Transfert groupé en facture » s’il a plusieurs bons. Vous cochez les bons et recopiez le total de sa facture.',
+    '« Dupliquer » crée un nouveau devis en brouillon avec les mêmes lignes. L’ancien devis n’est pas touché.'] },
+  { q: 'Saisir une ligne de devis par son code, au clavier', ecran: 'affaires', etapes: [
+    'Dans la carte « Devis » d’une affaire, placez-vous dans « Code ou début du nom ».',
+    'Tapez le code de l’ouvrage (exemple : DISJ-01) ou le début de son nom. Le logiciel affiche l’ouvrage trouvé et son prix.',
+    'Touche Tab, tapez la quantité, puis Entrée : la ligne s’ajoute et le curseur revient sur le code pour la ligne suivante.',
+    'Si plusieurs ouvrages correspondent, tapez quelques lettres de plus ou choisissez dans la liste proposée.',
+    'Dans un bon de livraison de fournisseur, Entrée passe à la ligne suivante et en ajoute une au besoin. Seul « Enregistrer le bon » enregistre.'] },
+  { q: 'Dans Ciel, c’était… : les mots de Ciel et ceux du logiciel', ecran: 'pieces', etapes: [
+    '« Pièces clients » et « Pièces fournisseurs » de Ciel : ici, l’écran « Pièces », avec ses deux onglets.',
+    '« Transférer » un devis en facture : ici, le bouton « Transférer » de l’écran « Pièces ». Le « transfert groupé » de Ciel : « Transfert groupé en facture », pour les bons d’un fournisseur.',
+    'Le « bon de réception » (BR) de Ciel : ici, un bon de livraison de fournisseur, dans « Achats » ou dans « Pièces ».',
+    'L’« affaire » de Ciel : ici, le chantier. Sur un bon de livraison de fournisseur, il se choisit ligne par ligne, et plus pour toute la pièce.',
+    '« Valider » une facture dans Ciel : ici, une facture est figée dès qu’elle est créée. Une erreur se corrige par un avoir.',
+    'Les règlements, les remises en banque et l’échéancier de Ciel : ici, les écrans « Factures » et « Banque ».',
+    'Les « États » et la « liaison comptable » de Ciel ne sont pas encore repris : le dossier du mois pour le comptable est prévu.'] },
 ];
 const ASSIST = { ouvert: false, vue: 'chat', msgs: [], enCours: false, sujet: null };
 /* Le sujet du guide resté ouvert survit aux réaffichages du panneau. */
@@ -3386,6 +3475,7 @@ RÈGLES
 - Tu ne fais aucune action et tu ne modifies rien : tu expliques. Tu peux proposer d'ouvrir un écran.
 - Ta seule source est le GUIDE ci-dessous. N'invente ni fonction, ni bouton, ni chiffre. Si le guide ne répond pas, dis que le logiciel ne le fait pas encore et propose d'enregistrer la demande pour Yoni.
 - Si la personne décrit un problème ou une erreur, ou demande un changement ou un ajout : remplis "demande" avec le type et un résumé fidèle d'une ou deux phrases, écrit à la première personne. Dans "reponse", dis qu'elle peut l'enregistrer pour Yoni avec le bouton.
+- La personne peut employer les mots de Ciel, son ancien logiciel (pièces clients, pièces fournisseurs, bon de réception ou BR, transférer, affaire, valider, états) : traduis-les avec le sujet « Dans Ciel, c’était… » du guide.
 - Pour une question de droit, d'impôts ou de comptabilité, renvoie vers le comptable. Pour une question sans rapport avec le logiciel, dis en une phrase que tu n'aides que sur le logiciel.
 
 ÉCRAN OUVERT : ${ecran}
@@ -5435,9 +5525,253 @@ function detailResultats(p) {
     `<div class="fen-pied">${mois ? '<button class="btn" data-act="detail" data-k="resultats" data-v="annee">Voir toute l’année</button>' : ''}<button class="btn" data-act="aller-chantiers" data-v="termines">Voir les chantiers terminés</button></div>` };
 }
 
+/* ---------- Version 4.7 : les repères de Ciel pour Régine ----------
+   Écran « Pièces » : une seule liste de toutes les pièces, comme dans Ciel. On sélectionne une ligne, puis on clique sur un bouton.
+   « Transférer » : un devis accepté devient une facture, un bon de commande ou un bon de livraison, sans ressaisie.
+   Saisie d'une ligne de devis par son code, au clavier : le code, Tab, la quantité, Entrée.
+   Ces repères viennent du manuel de Ciel, pas encore de leur Ciel à eux : ils restent « à confirmer » avec Régine. */
+const PC_TYPES = {
+  ventes: [['tous', 'Toutes les pièces'], ['devis', 'Devis'], ['commande', 'Bons de commande'], ['livraison', 'Bons de livraison'], ['facture', 'Factures'], ['avoir', 'Avoirs']],
+  fournisseurs: [['tous', 'Toutes les pièces'], ['commande', 'Commandes'], ['bl', 'Bons de livraison (BR dans Ciel)'], ['facture', 'Factures']]
+};
+const PC_STATUTS = {
+  ventes: [['tous', 'Tous les statuts'], ['attente', 'Devis en attente de réponse'], ['afacturer', 'Devis acceptés à facturer'], ['encaisser', 'Factures à encaisser'], ['retard', 'Factures en retard'], ['payees', 'Factures payées']],
+  fournisseurs: [['tous', 'Tous les statuts'], ['afacturer', 'Bons à facturer'], ['payer', 'Factures à payer'], ['retard', 'Factures en retard'], ['payees', 'Factures payées']]
+};
+const PC_COURT = { 'Bon de commande': 'Commande', 'Bon de livraison': 'BL' };
+const PC_PERIODES = [['tout', 'Toutes les dates'], ['mois', 'Ce mois'], ['moisprec', 'Le mois dernier'], ['trim', 'Les 3 derniers mois'], ['annee', 'Cette année']];
+const pcEtat = () => UI.pc || (UI.pc = { onglet: 'ventes', type: 'tous', per: 'tout', tiers: '', chantier: '', statut: 'tous', q: '', sel: '', tri: 'date', sens: -1 });
+function pcDansPeriode(date, per) {
+  if (!per || per === 'tout') return true;
+  if (!date) return false;
+  const m = TODAY.slice(0, 7);
+  if (per === 'mois') return date.slice(0, 7) === m;
+  if (per === 'annee') return date.slice(0, 4) === TODAY.slice(0, 4);
+  if (per === 'trim') return date >= addDaysISO(TODAY, -92);
+  const [y, mo] = m.split('-').map(Number), prec = new Date(Date.UTC(y, mo - 2, 1)).toISOString().slice(0, 7);
+  return date.slice(0, 7) === prec;
+}
+/* Pièces clients : devis (l'affaire porte le devis), bons de commande, bons de livraison, factures et avoirs. Montants en centimes. */
+function pcVentes() {
+  const R = [];
+  affairesListe().filter(a => a.lignes && a.lignes.length).forEach(a => {
+    const D = a.dates || {}, t = totaux(a.lignes, a.remise), signe = estChantier(a);
+    const aFact = signe && etapeAffichee(a) !== 'paye' ? chantier(a).resteAFacturer : 0;
+    const st = a.etape === 'refuse' ? ['Refusé', 'muted'] : signe ? ['Accepté', 'ok'] : D.envoi ? ['Envoyé', 'info'] : ['Brouillon', 'neutral'];
+    R.push({ v: true, cle: 'devis:' + a.id, kind: 'devis', id: a.id, type: 'devis', lib: 'Devis', numero: a.numero || 'sans numéro', date: D.envoi || D.demande || a.creeLe || '', tiersId: a.clientId, affaireId: a.id,
+      ht: t.ht, ttc: t.ttc, reste: null, st, aFact, etats: a.etape === 'envoye' ? ['attente'] : aFact > 0 ? ['afacturer'] : [] });
+  });
+  bonsListe().forEach(b => {
+    const cmd = b.type === 'commande', t = cmd ? totaux(b.lignes, b.remise) : null;
+    R.push({ v: true, cle: 'bon:' + b.id, kind: 'bon', id: b.id, type: cmd ? 'commande' : 'livraison', lib: cmd ? 'Bon de commande' : 'Bon de livraison', numero: b.numero, date: b.date, tiersId: b.clientId, affaireId: b.affaireId || '',
+      ht: t ? t.ht : null, ttc: t ? t.ttc : null, reste: null, st: cmd ? ['Commande', 'accent'] : ['Livraison', 'info'], etats: [] });
+  });
+  facturesListe().forEach(f => {
+    const av = estAvoir(f), t = factTot(f), s = factStatut(f), r = factReste(f);
+    R.push({ v: true, cle: 'facture:' + f.id, kind: 'facture', id: f.id, type: av ? 'avoir' : 'facture', lib: av ? 'Avoir' : 'Facture', sous: av ? '' : typeFact(f), numero: f.numero, date: f.date, tiersId: f.clientId, affaireId: f.affaireId || '',
+      ht: av ? -t.ht : t.ht, ttc: av ? -t.ttc : t.ttc, reste: av ? null : r, st: STATUT_FACT[s] || ['—', 'neutral'], etats: av ? [] : s === 'payee' ? ['payees'] : r > 0 ? (s === 'retard' ? ['encaisser', 'retard'] : ['encaisser']) : [] });
+  });
+  return R;
+}
+/* Pièces fournisseurs : commandes, bons de livraison (les « bons de réception » de Ciel) et factures. */
+function pcFournisseurs() {
+  const R = [];
+  achatsListe().forEach(x => {
+    const cmd = x.statut === 'commande', s = achStatut(x), bs = (x.blIds || []).map(i => S.blf[i]).filter(Boolean);
+    R.push({ v: false, cle: 'achat:' + x.id, kind: 'achat', id: x.id, type: cmd ? 'commande' : 'facture', lib: cmd ? 'Commande' : 'Facture', sous: x.refFacture ? 'n° ' + x.refFacture : '', objet: x.libelle || '', numero: x.numero || 'sans numéro', date: dateAchat(x), tiersId: x.fournisseurId,
+      affaires: bs.length ? [...new Set(bs.flatMap(b => (b.lignes || []).map(l => l.affaireId || '')))] : [x.affaireId || ''], ht: achHT(x), ttc: achTTC(x), reste: cmd ? null : achReste(x), st: STATUT_ACH[s],
+      etats: cmd ? [] : s === 'payee' ? ['payees'] : s === 'retard' ? ['payer', 'retard'] : ['payer'] });
+  });
+  blfListe().forEach(b => R.push({ v: false, cle: 'blf:' + b.id, kind: 'blf', id: b.id, type: 'bl', lib: 'Bon de livraison', numero: b.ref || 'sans numéro', date: b.date, tiersId: b.fournisseurId,
+    affaires: [...new Set((b.lignes || []).map(l => l.affaireId || ''))], ht: blHT(b), ttc: blTTC(b), reste: null, st: b.achatId ? ['Facturé', 'ok'] : ['À facturer', 'warn'], etats: b.achatId ? [] : ['afacturer'] }));
+  return R;
+}
+const pcTiers = p => p.v ? nomClient(p.tiersId) : nomFournisseur(p.tiersId);
+const pcChantier = p => p.v ? (S.affaires[p.affaireId] ? S.affaires[p.affaireId].titre : '—') : p.affaires.length === 1 ? nomChantier(p.affaires[0]) : p.affaires.length + ' chantiers';
+const pcToutes = () => pcEtat().onglet === 'ventes' ? pcVentes() : pcFournisseurs();
+const pcTrouver = cle => cle ? pcToutes().find(p => p.cle === cle) : null;
+function pcLignes() {
+  const E = pcEtat(), V = E.onglet === 'ventes', q = norm(E.q || '').trim(), ch = E.chantier === '-' ? '' : E.chantier;
+  const R = pcToutes().filter(p => (E.type === 'tous' || p.type === E.type) && pcDansPeriode(p.date, E.per) && (!E.tiers || p.tiersId === E.tiers)
+    && (!E.chantier || (V ? p.affaireId === ch : p.affaires.includes(ch))) && (E.statut === 'tous' || p.etats.includes(E.statut))
+    && (!q || norm([p.numero, p.sous, p.objet, p.lib, pcTiers(p), pcChantier(p)].join(' ')).includes(q)));
+  const val = { numero: p => p.numero || '', type: p => p.lib, date: p => p.date || '', tiers: p => norm(pcTiers(p)), ttc: p => p.ttc == null ? -Infinity : p.ttc, reste: p => p.reste == null ? -Infinity : p.reste }[E.tri] || (p => p.date || '');
+  return R.sort((x, y) => { const a = val(x), b = val(y); return (a < b ? -1 : a > b ? 1 : (x.numero || '').localeCompare(y.numero || '')) * E.sens; });
+}
+function pcOutils() {
+  const p = pcTrouver(pcEtat().sel);
+  if (!p) return '<p class="pc-aide">Cliquez sur une ligne pour la sélectionner, puis sur un bouton. Un double-clic ouvre la pièce.</p>';
+  const b = [`<button class="btn btn-primary btn-sm" data-act="pc-ouvrir" data-cle="${esc(p.cle)}">Ouvrir</button>`];
+  if (p.kind === 'devis') {
+    const possible = transfertsPossibles(S.affaires[p.id]).length;
+    b.push(`<button class="btn btn-sm" data-act="transferer" data-id="${esc(p.id)}"${possible ? '' : ' disabled title="Seul un devis accepté se transfère, et tout est peut-être déjà fait."'}>Transférer</button>`,
+      `<button class="btn btn-sm" data-act="devis-dupliquer" data-id="${esc(p.id)}">Dupliquer</button>`);
+  }
+  if (p.kind === 'blf') {
+    const n = blARegrouper(p.tiersId).length, fait = !!(S.blf[p.id] || {}).achatId;
+    b.push(`<button class="btn btn-sm" data-act="blf-regrouper" data-id="${esc(p.tiersId)}"${fait ? ' disabled title="Ce bon est déjà sur une facture."' : ''}>${n > 1 ? 'Transfert groupé en facture' : 'Transférer en facture'}</button>`);
+  }
+  if (['devis', 'bon', 'facture'].includes(p.kind) && pdfPossible()) b.push(`<button class="btn btn-sm" data-act="pdf" data-kind="${p.kind}" data-id="${esc(p.id)}">PDF</button>`);
+  if (p.v && p.affaireId) b.push(`<a class="btn btn-sm" href="#affaire-${esc(p.affaireId)}">${ico('affaires')}Voir l’affaire</a>`);
+  return `<div class="pc-outils-in"><span><b>${esc(p.lib)} ${esc(p.numero)}</b> · ${esc(pcTiers(p))}</span><div class="carte-boutons">${b.join('')}</div></div>`;
+}
+function pcZone() {
+  const E = pcEtat(), V = E.onglet === 'ventes', R = pcLignes();
+  if (E.sel && !R.some(p => p.cle === E.sel)) E.sel = '';
+  const th = (k, lbl, cls) => `<th class="${cls || ''}" aria-sort="${E.tri === k ? (E.sens > 0 ? 'ascending' : 'descending') : 'none'}"><button class="pc-th" data-act="pc-tri" data-v="${k}">${lbl}${E.tri === k ? `<span class="pc-fleche ${E.sens > 0 ? 'haut' : 'bas'}" aria-hidden="true"></span>` : ''}</button></th>`;
+  const rows = R.map(p => { const ch = pcChantier(p), sansTtc = p.ttc == null, sansReste = p.reste == null || p.reste <= 0;
+    return `<tr class="pc-l${p.cle === E.sel ? ' sel' : ''}" data-act="pc-sel" data-cle="${esc(p.cle)}" aria-selected="${p.cle === E.sel}">
+    <td class="pc-c-num"><button class="lien pc-num" data-act="pc-ouvrir" data-cle="${esc(p.cle)}" title="Ouvrir">${esc(p.numero)}</button>${p.sous ? `<small class="pc-desk">${esc(p.sous)}</small>` : ''}<small class="pc-mob">${esc(p.lib)}${p.sous ? ' · ' + esc(p.sous) : ''} · ${fdate(p.date)}</small></td>
+    <td class="pc-c-date">${fdate(p.date)}</td><td class="pc-c-type">${esc(PC_COURT[p.lib] || p.lib)}</td>
+    <td class="pc-c-tiers">${esc(pcTiers(p))}${V ? `<small>${esc(codeClient(S.clients[p.tiersId]))}</small>` : p.objet ? `<small>${esc(p.objet)}</small>` : ''}</td>
+    <td class="pc-c-ch pc-opt" title="${esc(ch)}">${esc(ch)}</td>
+    <td class="num pc-opt">${p.ht == null ? '—' : nbr(p.ht)}</td><td class="num pc-c-ttc${sansTtc ? ' pc-rien' : ''}" data-l="TTC">${sansTtc ? '—' : nbr(p.ttc)}</td>
+    <td class="num pc-c-reste${sansReste ? ' pc-rien' : p.st[1] === 'bad' ? ' rouge' : ''}" data-l="Reste">${sansReste ? '—' : nbr(p.reste)}</td>
+    <td class="pc-c-st">${pill(p.st[0], p.st[1])}${p.aFact > 0 ? pill('À facturer', 'warn') : ''}</td></tr>`; }).join('');
+  const unType = E.type !== 'tous' && E.type !== 'livraison', som = k => R.reduce((s, p) => s + (p[k] > 0 || (k !== 'reste' && p[k] < 0) ? p[k] : 0), 0);
+  const pied = R.length ? `<tfoot><tr><th scope="row">${nb(R.length, 'pièce')}</th><td class="pc-c-date"></td><td class="pc-c-type"></td><td class="pc-c-tiers pc-desk">${unType ? 'Total' : ''}</td><td class="pc-opt"></td><td class="num pc-opt">${unType ? nbr(som('ht')) : ''}</td><td class="num pc-c-ttc" data-l="Total TTC">${unType ? nbr(som('ttc')) : ''}</td><td class="num pc-c-reste" data-l="Reste">${unType && som('reste') ? nbr(som('reste')) : ''}</td><td class="pc-c-st"></td></tr></tfoot>` : '';
+  const filtre = E.type !== 'tous' || E.per !== 'tout' || E.tiers || E.chantier || E.statut !== 'tous' || E.q;
+  return `<div id="pc-outils">${pcOutils()}</div>
+    ${R.length ? `<div class="pc-cadre"><table class="tab-pieces"><thead><tr>${th('numero', 'N°')}${th('date', 'Date')}${th('type', 'Type')}${th('tiers', V ? 'Client' : 'Fournisseur')}<th class="pc-opt"><span class="pc-th">Chantier</span></th><th class="num pc-opt"><span class="pc-th">HT (DH)</span></th>${th('ttc', 'TTC (DH)', 'num')}${th('reste', 'Reste (DH)', 'num')}<th><span class="pc-th">Statut</span></th></tr></thead><tbody>${rows}</tbody>${pied}</table></div>`
+      : vide(filtre ? 'Aucune pièce dans ces filtres.' : 'Aucune pièce pour l’instant.')}
+    ${filtre ? '<div class="carte-boutons"><button class="btn btn-ghost btn-sm" data-act="pc-effacer">Retirer les filtres</button></div>' : ''}`;
+}
+function vuePieces() {
+  const E = pcEtat(), V = E.onglet === 'ventes', toutes = pcToutes();
+  const opts = (liste, val) => liste.map(([v, l]) => `<option value="${esc(v)}"${v === val ? ' selected' : ''}>${esc(l)}</option>`).join('');
+  const tiers = [...new Set(toutes.map(p => p.tiersId))].map(id => [id, V ? nomClient(id) : nomFournisseur(id)]).sort((x, y) => x[1].localeCompare(y[1], 'fr'));
+  const idsCh = [...new Set(toutes.filter(p => !E.tiers || p.tiersId === E.tiers).flatMap(p => V ? [p.affaireId] : p.affaires))];
+  const chantiers = idsCh.filter(id => id && S.affaires[id]).map(id => [id, S.affaires[id].titre]).sort((x, y) => x[1].localeCompare(y[1], 'fr'));
+  if (!V && idsCh.includes('')) chantiers.push(['-', 'Frais généraux']);
+  let rappel = '';
+  if (V) {
+    const af = toutes.filter(p => p.aFact > 0);
+    if (af.length) rappel = `<button class="pc-rappel${E.statut === 'afacturer' ? ' on' : ''}" data-act="pc-statut" data-v="afacturer">${ico('facture')}<span><b>${nb(af.length, 'devis accepté', 'devis acceptés')} à facturer</b><small>${money(af.reduce((s, p) => s + p.aFact, 0))} HT restent à facturer · ${E.statut === 'afacturer' ? 'revenir à toutes les pièces' : 'voir la liste, puis « Transférer »'}</small></span></button>`;
+  } else {
+    const bl = toutes.filter(p => p.kind === 'blf' && p.etats.includes('afacturer'));
+    if (bl.length) rappel = `<button class="pc-rappel${E.statut === 'afacturer' ? ' on' : ''}" data-act="pc-statut" data-v="afacturer">${ico('camion')}<span><b>${nb(bl.length, 'bon de livraison', 'bons de livraison')} à facturer</b><small>${money(bl.reduce((s, p) => s + p.ttc, 0))} TTC chez ${nb(new Set(bl.map(p => p.tiersId)).size, 'fournisseur')} · ${E.statut === 'afacturer' ? 'revenir à toutes les pièces' : 'voir la liste, puis « Transférer en facture »'}</small></span></button>`;
+  }
+  const onglet = (v, l) => `<button class="chip${E.onglet === v ? ' on' : ''}" role="tab" aria-selected="${E.onglet === v}" data-act="pc-onglet" data-v="${v}">${l}</button>`;
+  return `<section class="page-tete"><div><p class="surtitre">Toutes les pièces dans une seule liste, comme dans Ciel</p><h1>Pièces</h1></div>
+    <div class="tete-boutons">${V ? '<button class="btn btn-primary" data-act="nouvelle-affaire">+ Nouvelle demande</button>' : '<button class="btn" data-act="achat-nouveau">+ Nouvel achat</button><button class="btn btn-primary" data-act="blf-nouveau">+ Bon de livraison</button>'}</div></section>
+  <div class="onglets" role="tablist" aria-label="Pièces clients ou pièces fournisseurs">${onglet('ventes', 'Pièces clients (ventes)')}${onglet('fournisseurs', 'Pièces fournisseurs (achats)')}</div>
+  ${rappel}
+  <div class="barre-outils pc-filtres">
+    <select data-pc="type" aria-label="Type de pièce">${opts(PC_TYPES[E.onglet], E.type)}</select>
+    <select data-pc="per" aria-label="Période">${opts(PC_PERIODES, E.per)}</select>
+    <select data-pc="tiers" aria-label="${V ? 'Client' : 'Fournisseur'}">${opts([['', V ? 'Tous les clients' : 'Tous les fournisseurs']].concat(tiers), E.tiers)}</select>
+    <select data-pc="chantier" aria-label="Chantier">${opts([['', 'Tous les chantiers']].concat(chantiers), E.chantier)}</select>
+    <select data-pc="statut" aria-label="Statut">${opts(PC_STATUTS[E.onglet], E.statut)}</select>
+    <input type="search" id="q-pieces" placeholder="Chercher un numéro, un nom, un chantier…" value="${esc(E.q || '')}" aria-label="Chercher dans les pièces"></div>
+  <div id="pc-zone">${pcZone()}</div>
+  <p class="carte-note">Cet écran reprend la façon de faire de Ciel : une liste, on sélectionne une ligne, puis un bouton. S’il vous manque une colonne ou un bouton, dites-le à Yoni avec « Aide ».</p>`;
+}
+function pcRafraichir() { const z = $('#pc-zone'); if (z) { z.innerHTML = pcZone(); decorer(z); } }
+function pcSelectionner(cle) {
+  const E = pcEtat(); if (!cle || E.sel === cle) return;
+  E.sel = cle;
+  document.querySelectorAll('.pc-l').forEach(tr => { const on = tr.dataset.cle === cle; tr.classList.toggle('sel', on); tr.setAttribute('aria-selected', on); });
+  const z = $('#pc-outils'); if (z) { z.innerHTML = pcOutils(); decorer(z); }
+}
+function apercuDevis(a) {
+  if (!a) return;
+  if (!a.numero) a.numero = nextNumero('D', 'affaires');
+  ouvrirFenetre('Aperçu du devis ' + a.numero, (pdfPossible() ? `<div class="fen-pied fen-pied-haut"><button class="btn btn-primary" data-act="pdf" data-kind="devis" data-id="${esc(a.id)}">Télécharger le PDF</button></div>` : '') + documentHTML('devis', a), true);
+}
+function pcOuvrir(cle) {
+  const [kind, id] = String(cle || '').split(':');
+  if (kind === 'devis') apercuDevis(S.affaires[id]); else if (kind === 'bon') ouvrirBon(id); else if (kind === 'facture') ouvrirFacture(id); else if (kind === 'achat') ouvrirAchat(id); else if (kind === 'blf') ouvrirBLF(id);
+}
+
+/* --- Transférer : le mot de Ciel. La pièce reprend les lignes du devis ; rien n'est créé avant le clic sur « Transférer ». --- */
+function lignesSolde(a) {
+  const lignes = copieLignes(a.lignes);
+  affFacturesValides(a).filter(f => f.type === 'acompte').forEach(f => {
+    const net = factTot(f).ht - avoirsDe(f).reduce((s, x) => s + factTot(x).ht, 0);
+    if (net > 0) lignes.push({ designation: 'Déduction acompte ' + f.numero, unite: 'forfait', qte: 1, pu: -net / 100, horsRemise: true });
+  });
+  return lignes;
+}
+function transfertsPossibles(a) {
+  if (!a || !estChantier(a)) return [];
+  const T = [], fsV = affFacturesValides(a), pct = Number(S.params.auto.acompteAuto.pct) || 30;
+  if (!fsV.length) { const ht = Math.round(totaux(a.lignes, a.remise).ht * pct / 100); T.push(['acompte', `Facture d’acompte de ${pct} %`, money(ht + Math.round(ht * 0.2)) + ' TTC', '']); }
+  if (!fsV.some(f => f.type === 'solde')) { const s = totaux(lignesSolde(a), a.remise); if (s.ttc > 0) T.push(['solde', 'Facture de solde, acomptes déduits', money(s.ttc) + ' TTC', a.etape === 'termine' ? '' : 'Le chantier n’est pas encore marqué terminé.']); }
+  if (!affBons(a, 'commande').length) T.push(['bc', 'Bon de commande', 'copié du devis', '']);
+  if (a.lignes.some((l, i) => (Number(l.qte) || 0) - qteLivree(a, i) > 0)) T.push(['bl', 'Bon de livraison', 'vous indiquez les quantités livrées ou posées', '']);
+  return T;
+}
+function ouvrirTransfert(id) {
+  const a = S.affaires[id]; if (!a) return;
+  const T = transfertsPossibles(a);
+  if (!T.length) { toast(estChantier(a) ? 'Tout est déjà fait pour ce devis : rien à transférer.' : 'Seul un devis accepté se transfère.'); return; }
+  const t = totaux(a.lignes, a.remise), ch = chantier(a), deja = Math.max(0, ch.vendu - ch.resteAFacturer);
+  ouvrirFenetre('Transférer le devis ' + a.numero, `<form data-form="transfert" data-id="${esc(a.id)}" class="form">
+    <p><b>${esc(nomClient(a.clientId))}</b> · ${esc(a.titre)}</p>
+    <ul class="liste-simple compact"><li><span>Total du devis</span><b>${money(t.ht)} HT · ${money(t.ttc)} TTC</b></li><li><span>Déjà facturé</span><b>${money(deja)} HT</b></li><li><span>Reste à facturer</span><b>${money(ch.resteAFacturer)} HT</b></li></ul>
+    <fieldset class="transfert"><legend>Transférer en…</legend>${T.map(([v, lbl, sub, note], i) => `<label class="transfert-o"><input type="radio" name="vers" value="${v}"${i ? '' : ' checked'}><span><b>${esc(lbl)}</b><small>${esc(sub)}</small>${note ? `<small class="orange">${esc(note)}</small>` : ''}</span></label>`).join('')}</fieldset>
+    <p class="carte-note">La pièce reprend les lignes du devis, sans ressaisie. Rien n’est créé avant votre clic sur « Transférer ».</p>
+    <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Transférer</button></div></form>`);
+}
+function ouvrirNouveauBL(a) {
+  if (!a) return;
+  const reste = a.lignes.map((l, i) => Math.max(0, (Number(l.qte) || 0) - qteLivree(a, i)));
+  ouvrirFenetre('Nouveau bon de livraison', `<form data-form="bl" data-id="${esc(a.id)}" class="form"><p class="carte-note">Indiquez ce qui est livré ou posé aujourd'hui. Par défaut : tout ce qui reste.</p>
+    <div class="bl-lignes">${a.lignes.map((l, i) => `<label class="bl-ligne"><span>${esc(l.designation)}<small>reste ${String(reste[i]).replace('.', ',')} ${esc(l.unite || '')} sur ${esc(String(l.qte).replace('.', ','))}</small></span><input type="number" name="q${i}" min="0" max="${reste[i]}" step="any" inputmode="decimal" value="${reste[i]}" ${reste[i] ? '' : 'disabled'}></label>`).join('')}</div>
+    <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Créer le bon de livraison</button></div></form>`);
+}
+/* Dupliquer : un nouveau devis en brouillon, avec les mêmes lignes. L'ancien n'est pas touché. */
+function dupliquerDevis(id) {
+  const a = S.affaires[id]; if (!a) return;
+  const n = { id: uid('a'), numero: nextNumero('D', 'affaires'), clientId: a.clientId, titre: a.titre + ' (copie)', adresseChantier: a.adresseChantier || '', etape: 'demande', dates: { demande: TODAY },
+    lignes: clone(a.lignes).map(l => { delete l.plan; return l; }), remise: Number(a.remise) || 0, reserves: a.reserves || '', notes: '', origine: a.origine || '', resp: PROFIL, creeLe: TODAY };
+  if (a.unites) n.unites = clone(a.unites);
+  persist('affaires', n);
+  log(n.clientId, n.id, 'note', `Devis copié de ${a.numero} : mêmes lignes, à vérifier avant l'envoi.`);
+  toast(`Devis ${n.numero} créé à partir de ${a.numero}. Vérifiez les quantités et les prix.`);
+  location.hash = 'affaire-' + n.id;
+}
+
+/* --- Saisie d'une ligne par son code, au clavier : le code ou le début du nom, Tab, la quantité, Entrée. --- */
+function blocSaisieCode() {
+  return `<div class="saisie-code"><label class="champ">Code ou début du nom<input id="saisie-code" list="saisie-liste" autocomplete="off" placeholder="Exemple : DISJ-01 ou disjonc"></label>
+    <label class="champ saisie-q">Qté<input id="saisie-qte" type="number" inputmode="decimal" min="0" step="any" value="1"></label>
+    <button class="btn btn-sm" data-act="saisie-ajout">Ajouter la ligne</button>
+    <datalist id="saisie-liste">${catalogueListe().sort((x, y) => x.code.localeCompare(y.code)).map(x => `<option value="${esc(x.code)}">${esc(x.designation)}</option>`).join('')}</datalist>
+    <p class="saisie-etat" id="saisie-etat" role="status">Au clavier : le code, Tab, la quantité, puis Entrée. Le curseur revient sur le code pour la ligne suivante.</p></div>`;
+}
+function trouverOuvrage(v) {
+  const n = norm(v).trim(); if (!n) return { x: null, nb: 0, ex: [] };
+  const L = catalogueListe(), exact = L.find(x => norm(x.code) === n) || L.find(x => norm(x.designation) === n);
+  if (exact) return { x: exact, nb: 1, ex: [exact] };
+  let c = L.filter(x => norm(x.code).startsWith(n));
+  if (!c.length) c = L.filter(x => norm(x.designation).startsWith(n));
+  if (!c.length) c = L.filter(x => norm(x.designation).includes(n));
+  return { x: c.length === 1 ? c[0] : null, nb: c.length, ex: c.slice(0, 4) };
+}
+function majSaisieEtat() {
+  const ci = $('#saisie-code'), et = $('#saisie-etat'); if (!ci || !et) return;
+  const r = trouverOuvrage(ci.value);
+  et.className = 'saisie-etat' + (r.x ? ' ok' : '');
+  et.textContent = !ci.value.trim() ? 'Au clavier : le code, Tab, la quantité, puis Entrée. Le curseur revient sur le code pour la ligne suivante.'
+    : r.x ? `${r.x.code} · ${r.x.designation} · ${money(Math.round(r.x.pu * 100))} / ${r.x.unite}`
+    : r.nb ? `${r.nb} ouvrages correspondent (${r.ex.map(x => x.code).join(', ')}${r.nb > r.ex.length ? '…' : ''}) : tapez quelques lettres de plus.`
+    : 'Aucun ouvrage ne correspond. « Ligne libre » sert pour ce qui n’est pas au catalogue.';
+}
+function saisieAjouter() {
+  const a = affaireCourante(), ci = $('#saisie-code'), qi = $('#saisie-qte'); if (!a || !ci) return;
+  const r = trouverOuvrage(ci.value);
+  if (!r.x) { majSaisieEtat(); const et = $('#saisie-etat'); if (et && ci.value.trim()) et.className = 'saisie-etat rouge'; ci.focus(); ci.select(); return; }
+  const q = Number(qi && qi.value) > 0 ? Number(qi.value) : 1;
+  a.lignes.push(ligneArticle(r.x, q)); persist('affaires', a); rendre(true);
+  const c2 = $('#saisie-code'), e2 = $('#saisie-etat');
+  if (e2) { e2.className = 'saisie-etat ok'; e2.textContent = `Ligne ajoutée : ${r.x.code} · ${r.x.designation} × ${String(q).replace('.', ',')}.`; }
+  if (c2) c2.focus();
+}
+
 /* ---------- Routage et rendu ---------- */
 let renduEnAttente = false;
-const NAV = [['accueil', 'Tableau de bord'], ['documents', 'Documents'], ['affaires', 'Affaires'], ['chantiers', 'Chantiers'], ['planning', 'Planning'], ['clients', 'Clients'], ['factures', 'Factures'], ['achats', 'Achats'], ['employes', 'Employés'], ['banque', 'Banque'], ['catalogue', 'Catalogue'], ['automatisations', 'Automatisations'], ['reglages', 'Réglages']];
+const NAV = [['accueil', 'Tableau de bord'], ['documents', 'Documents'], ['pieces', 'Pièces'], ['affaires', 'Affaires'], ['chantiers', 'Chantiers'], ['planning', 'Planning'], ['clients', 'Clients'], ['factures', 'Factures'], ['achats', 'Achats'], ['employes', 'Employés'], ['banque', 'Banque'], ['catalogue', 'Catalogue'], ['automatisations', 'Automatisations'], ['reglages', 'Réglages']];
 function routeCourante() {
   const h = location.hash.slice(1);
   const m = /^(client|affaire)-([A-Za-z0-9]+)$/.exec(h);
@@ -5457,7 +5791,7 @@ function rendre(force) {
   majNav();
   document.querySelectorAll('.nav a').forEach(a => a.classList.toggle('on', a.dataset.v === section));
   const html = acc === 'non' ? vueReserve(section) : r.vue === 'client' ? vueClient(r.id) : r.vue === 'affaire' ? vueAffaire(r.id) :
-    ({ accueil: vueAccueil, clients: vueClients, affaires: vueAffaires, factures: vueFactures, catalogue: vueCatalogue, automatisations: vueAutomatisations, reglages: vueReglages, planning: vuePlanning, chantiers: vueChantiers, achats: vueAchats, employes: vueEmployes, banque: vueBanque, documents: vueDocuments }[r.vue])();
+    ({ accueil: vueAccueil, clients: vueClients, affaires: vueAffaires, factures: vueFactures, catalogue: vueCatalogue, automatisations: vueAutomatisations, reglages: vueReglages, planning: vuePlanning, chantiers: vueChantiers, achats: vueAchats, employes: vueEmployes, banque: vueBanque, documents: vueDocuments, pieces: vuePieces }[r.vue])();
   main.innerHTML = html;
   decorer(main);
   if (r.vue === 'clients') filtrerClients();
@@ -5534,7 +5868,7 @@ Object.assign(ACTIONS, {
     ouvrirMessage('envoi', { a, c: S.clients[a.clientId] }, { envoiDevis: a.id }); },
   'relancer-devis': () => { const a = affaireCourante(); if (a) ouvrirMessage('devis1', { a, c: S.clients[a.clientId] }, {}); },
   'relancer-facture': el => { const f = S.factures[el.dataset.id]; if (!f) return; const t = TACHES['fact3_' + f.id] || TACHES['fact2_' + f.id] || TACHES['fact1_' + f.id]; ouvrirMessage(t ? t.msg : 'fact1', { f, a: S.affaires[f.affaireId], c: S.clients[f.clientId] }, t ? { tache: t.key } : {}); },
-  'apercu-devis': () => { const a = affaireCourante(); if (!a) return; if (!a.numero) a.numero = nextNumero('D', 'affaires'); ouvrirFenetre('Aperçu du devis ' + a.numero, (pdfPossible() ? `<div class="fen-pied fen-pied-haut"><button class="btn btn-primary" data-act="pdf" data-kind="devis" data-id="${a.id}">Télécharger le PDF</button></div>` : '') + documentHTML('devis', a), true); },
+  'apercu-devis': () => apercuDevis(affaireCourante()),
   'creer-acompte': () => { const a = affaireCourante(); if (!a) return; const f = creerAcompte(a, false); rendre(true); ouvrirFacture(f.id); },
   'creer-solde': () => { const a = affaireCourante(); if (!a) return; const f = creerSolde(a); rendre(true); ouvrirFacture(f.id); },
   'ouvrir-facture': el => ouvrirFacture(el.dataset.id),
@@ -5778,13 +6112,7 @@ Object.assign(ACTIONS, {
   'exemples-garder': () => { S.params.exemples = { version: EXEMPLES_VERSION }; persistParam('exemples'); rendre(true); },
   'ouvrir-bon': el => ouvrirBon(el.dataset.id),
   'creer-bc': () => { const a = affaireCourante(); if (!a || !a.lignes.length) return; const b = creerBonCommande(a, false); rendre(true); ouvrirBon(b.id); },
-  'nouveau-bl': () => {
-    const a = affaireCourante(); if (!a) return;
-    const reste = a.lignes.map((l, i) => Math.max(0, (Number(l.qte) || 0) - qteLivree(a, i)));
-    ouvrirFenetre('Nouveau bon de livraison', `<form data-form="bl" data-id="${esc(a.id)}" class="form"><p class="carte-note">Indiquez ce qui est livré ou posé aujourd'hui. Par défaut : tout ce qui reste.</p>
-      <div class="bl-lignes">${a.lignes.map((l, i) => `<label class="bl-ligne"><span>${esc(l.designation)}<small>reste ${String(reste[i]).replace('.', ',')} ${esc(l.unite || '')} sur ${esc(String(l.qte).replace('.', ','))}</small></span><input type="number" name="q${i}" min="0" max="${reste[i]}" step="any" inputmode="decimal" value="${reste[i]}" ${reste[i] ? '' : 'disabled'}></label>`).join('')}</div>
-      <div class="fen-pied"><button type="button" class="btn btn-ghost" data-act="fermer">Annuler</button><button class="btn btn-primary" type="submit">Créer le bon de livraison</button></div></form>`);
-  },
+  'nouveau-bl': () => ouvrirNouveauBL(affaireCourante()),
   'avoir': el => {
     const f = S.factures[el.dataset.id]; if (!f) return;
     const max = factTot(f).ttc - factAvoirs(f), premier = !avoirsDe(f).length;
@@ -6075,6 +6403,7 @@ document.addEventListener('submit', e => {
 });
 document.addEventListener('change', e => {
   const el = e.target;
+  if (el.dataset && el.dataset.pc) { const E = pcEtat(), k = el.dataset.pc; E[k] = el.value; if (k === 'tiers') E.chantier = ''; E.sel = ''; rendre(true); const n = document.querySelector('[data-pc="' + k + '"]'); if (n) n.focus(); return; }
   if (el.id === 'dv-plan') { dvLirePlan(el).then(() => { el.value = ''; }); return; }
   if (el.id === 'dv-dxf') { dvLireDXF(el).then(() => { el.value = ''; }); return; }
   if (el.id === 'unites-nb' || el.id === 'unites-nom') { const a = affaireCourante(); if (a) majUnites(a); return; }
@@ -6124,6 +6453,8 @@ document.addEventListener('change', e => {
 });
 document.addEventListener('input', e => {
   const el = e.target;
+  if (el.id === 'q-pieces') { const E = pcEtat(); E.q = el.value; E.sel = ''; pcRafraichir(); return; }
+  if (el.id === 'saisie-code') { majSaisieEtat(); return; }
   if (UI.dv && UI.dv.dxf && el.dataset && el.dataset.dxf && el.closest('#dv')) {
     const X = UI.dv.dxf, [k, i, f] = el.dataset.dxf.split(':');
     if (k === 'unite') { const fac = { mm: 0.001, cm: 0.01, m: 1 }[el.value] || 0.001; X.uniteNom = el.value; X.facteur = fac; X.uniteSure = true; X.longs.forEach(g => { g.m = Math.round(g.brut * fac); }); return rendreDevisAssiste(); }
@@ -6174,12 +6505,22 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('focusout', () => { setTimeout(() => { if (renduEnAttente) rendre(); }, 60); });
 document.addEventListener('keydown', e => {
+  const cible = e.target && e.target.closest ? e.target : null;
+  if (e.key === 'Enter' && cible && (cible.id === 'saisie-code' || cible.id === 'saisie-qte')) { e.preventDefault(); saisieAjouter(); return; }
+  /* Dans un bon de livraison de fournisseur, Entrée passe à la ligne suivante (et en ajoute une) : seul « Enregistrer le bon » enregistre. */
+  if (e.key === 'Enter' && cible && cible.tagName === 'INPUT' && cible.closest('form[data-form="blf"] .blf-l')) {
+    e.preventDefault(); const l = cible.closest('.blf-l'), suiv = l.nextElementSibling;
+    if (suiv && suiv.classList.contains('blf-l')) suiv.querySelector('input').focus(); else if (l.querySelector('[name="des"]').value.trim()) ACTIONS['blf-ligne'](l);
+    return;
+  }
   if (e.key === 'Escape' && !$('#fenetre').hidden) fermerFenetre();
   else if (e.key === 'Escape' && ASSIST.ouvert) fermerAide();
   else if ((e.key === 'Enter' || e.key === ' ') && e.target && e.target.matches && e.target.matches('g[role="button"][data-act]')) { e.preventDefault(); ACTIONS[e.target.dataset.act](e.target, e); }
   else if (e.key === 'Enter' && !e.shiftKey && e.target && e.target.id === 'aide-q') { e.preventDefault(); const q = e.target.value; e.target.value = ''; aideEnvoyer(q); }
   else if (e.key === '/' && $('#fenetre').hidden && !/INPUT|TEXTAREA|SELECT/.test((document.activeElement || {}).tagName || '')) { e.preventDefault(); ouvrirRecherche(); }
 });
+document.addEventListener('dblclick', e => { const tr = e.target.closest && e.target.closest('.pc-l'); if (tr) { pcSelectionner(tr.dataset.cle); pcOuvrir(tr.dataset.cle); } });
+document.addEventListener('focusin', e => { if (e.target && e.target.id === 'saisie-qte') e.target.select(); });
 window.addEventListener('hashchange', () => { if (!$('#fenetre').hidden) fermerFenetre(); renduEnAttente = false; rendre(true); window.scrollTo(0, 0); });
 
 Object.assign(ACTIONS, {
@@ -6248,6 +6589,32 @@ Object.assign(FORMS, {
     log(f.clientId, f.affaireId, 'appel', `Appel pour ${f.numero} : ${texte}${/[.!?]$/.test(texte) ? '' : '.'}${date ? ' Paiement promis le ' + fdateLong(date) + '.' : ''}`);
     fermerFenetre(); toast(date ? 'C’est noté : la facture est attendue le ' + fdate(date) + ' dans la banque.' : 'C’est noté dans le journal.'); rendre(true);
   }
+});
+
+/* Version 4.7 : écran « Pièces », « Transférer », saisie par code. */
+Object.assign(ACTIONS, {
+  'pc-onglet': el => { const E = pcEtat(); if (E.onglet === el.dataset.v) return; Object.assign(E, { onglet: el.dataset.v, type: 'tous', tiers: '', chantier: '', statut: 'tous', sel: '', tri: 'date', sens: -1 }); rendre(true); },
+  'pc-statut': el => { const E = pcEtat(); E.statut = E.statut === el.dataset.v ? 'tous' : el.dataset.v; E.type = 'tous'; E.sel = ''; rendre(true); },
+  'pc-tri': el => { const E = pcEtat(), k = el.dataset.v; if (E.tri === k) E.sens = -E.sens; else { E.tri = k; E.sens = ['date', 'ttc', 'reste'].includes(k) ? -1 : 1; } pcRafraichir(); },
+  'pc-sel': el => pcSelectionner(el.dataset.cle),
+  'pc-ouvrir': el => { pcSelectionner(el.dataset.cle); pcOuvrir(el.dataset.cle); },
+  'pc-effacer': () => { Object.assign(pcEtat(), { type: 'tous', per: 'tout', tiers: '', chantier: '', statut: 'tous', q: '', sel: '' }); rendre(true); },
+  'transferer': el => ouvrirTransfert(el.dataset.id),
+  'devis-dupliquer': el => dupliquerDevis(el.dataset.id),
+  'saisie-ajout': () => saisieAjouter(),
+});
+Object.assign(FORMS, {
+  transfert: (fd, form) => {
+    const a = S.affaires[form.dataset.id]; if (!a) return;
+    const v = fd.get('vers');
+    if (!transfertsPossibles(a).some(x => x[0] === v)) { toast('Ce transfert n’est plus possible : la pièce existe déjà.'); fermerFenetre(); rendre(true); return; }
+    fermerFenetre();
+    if (v === 'bl') { ouvrirNouveauBL(a); return; }
+    const p = v === 'acompte' ? creerAcompte(a, false) : v === 'solde' ? creerSolde(a) : creerBonCommande(a, false);
+    toast(`${v === 'bc' ? 'Bon de commande' : 'Facture'} ${p.numero} : transféré du devis ${a.numero}.`);
+    rendre(true);
+    if (v === 'bc') ouvrirBon(p.id); else ouvrirFacture(p.id);
+  },
 });
 
 /* ---------- Base partagée ---------- */
